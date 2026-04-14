@@ -1,0 +1,8 @@
+---
+title: "Introducción"
+author: "[Luis Raúl](https://github.com/Luis0815), [Haydeé Peruyero](https://haydeeperuyero.github.io/)"
+lang: es
+description: "Material para el taller, basado en la tesis de LR"
+---
+
+Introducción

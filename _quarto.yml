@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "TDA en patrones celulares"
+  navbar:
+    left:
+      - href: 0-index.qmd
+        text: Intro
+      - 1-tda.qmd
+      - 2-classification.qmd
+
+format:
+  html:
+    theme: Lumen
+    css: styles.css
+    toc: true
+    toc-location: left
+    toc-depth: 2
+    toc-expand: 2
+    number-sections: true
+    number-depth: 2
+    code-copy: true
+    code-fold: show
+    code-summary: "Mostrar código"
+    code-tools: true
+    code-overflow: wrap
+
+editor: visual
+
+
+

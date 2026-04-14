@@ -1,0 +1,9 @@
+/* css styles */
+.quarto-title-meta-heading {
+  visibility: hidden;
+}
+
+.quarto-title-meta-heading::before {
+  content: "Autores";
+  visibility: visible;
+}
