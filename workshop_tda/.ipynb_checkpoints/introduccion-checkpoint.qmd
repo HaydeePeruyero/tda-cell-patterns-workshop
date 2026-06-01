@@ -1,0 +1,174 @@
+---
+title: "Introducción"
+---
+
+# Contexto general
+
+El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido y generan patrones de organización que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.
+
+El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante.
+
+Por ejemplo, la proximidad entre células inmunes y tumorales, la formación de agrupamientos o la presencia de regiones con baja densidad celular pueden reflejar procesos como inmunosupresión o evasión inmune.
+
+En este contexto, la caracterización de la organización espacial celular se ha convertido en un problema central en el estudio del microambiente tumoral.
+
+---
+
+# Contexto clínico: Anemia de Fanconi
+
+:::: {.columns}
+::: {.column width="60%"}
+La anemia de Fanconi (FA) es una enfermedad genética caracterizada por defectos en los mecanismos de reparación del ADN, lo que conduce a inestabilidad genómica y un alto riesgo de desarrollar cáncer, particularmente carcinomas.
+
+Los pacientes con FA presentan una mayor incidencia de carcinoma de células escamosas de cabeza y cuello, con aparición temprana y comportamiento clínico agresivo.
+:::
+::: {.column width="40%"}
+![Anemia de Fanconi y cáncer de cabeza y cuello](figures/fanconi.jpg)
+:::
+::::
+
+*Los pacientes con FA presentan una elevada susceptibilidad al desarrollo de carcinomas de células escamosas.*
+
+Sin embargo, el desarrollo tumoral no depende únicamente de las células cancerosas. Los tumores se encuentran inmersos en un entorno complejo denominado **microambiente tumoral**, compuesto por células inmunes, fibroblastos, células endoteliales, matriz extracelular y otros componentes que interactúan continuamente con las células tumorales.
+
+:::: {.columns}
+::: {.column width="60%"}
+Estas interacciones pueden influir en procesos como la progresión tumoral, la invasión, la respuesta inmune y la respuesta al tratamiento. Por ello, en este trabajo nos centraremos en el estudio del **microambiente tumoral**, particularmente en la organización espacial de las distintas poblaciones celulares que lo conforman.
+
+Comparar el microambiente tumoral de muestras provenientes de pacientes con FA y de pacientes no FA permite investigar si existen patrones espaciales distintivos con potencial relevancia biológica y clínica.
+:::
+::: {.column width="40%"}
+![Esquema del microambiente tumoral](figures/microambiente.jpg)
+
+*Representación de los principales componentes celulares presentes en el microambiente tumoral y de sus interacciones.*
+:::
+::::
+---
+
+# De la imagen a los datos espaciales
+
+El análisis del microambiente tumoral se basa en imágenes obtenidas mediante técnicas de inmunofluorescencia cíclica.
+
+![](figures/tejidos.png){fig-align="center" width="70%"}
+
+A partir de estas imágenes se realiza segmentación celular para identificar cada célula y obtener sus coordenadas espaciales en el plano $(x,y)$.
+
+![](figures/segmentacion.png){fig-align="center" width="70%"}
+
+Cada célula es además clasificada según su fenotipo.
+
+
+## Células tumorales
+
+* *Tumor cells*
+* *Ki67+ tumor cells*
+* *IBA1+ tumor cells*
+* *IBA1/HLA-DBP1+ tumor cells*
+
+## Células linfoides
+
+* *NK cells*
+* *B cells*
+* *Effector CD8+ T cells*
+* *CD4+ T cells*
+* *Regulatory T cells*
+
+## Células mieloides
+
+* *Neutrophils*
+* *Dendritic cells*
+* *Other APCs*
+* *M1/M0 macrophages*
+* *M2 macrophages*
+
+## Células no tumorales
+
+* *Endothelial cells*
+* *Stromal cells*
+* *Other*
+
+De esta manera, cada muestra puede representarse como una nube de puntos (*point cloud*), donde cada punto corresponde a una célula localizada en el tejido.
+
+> Imagen → Segmentación → Coordenadas → Nube de puntos
+
+---
+
+# Limitaciones de los métodos clásicos
+
+El análisis espacial tradicional suele basarse en métricas como:
+
+* densidad celular,
+* proporciones entre tipos celulares,
+* distancias promedio,
+* análisis de vecinos cercanos.
+
+Estas aproximaciones describen propiedades locales, pero no capturan completamente la estructura global de la organización espacial.
+
+En particular, dos muestras pueden presentar características estadísticas similares y, sin embargo, diferir significativamente en su patrón de organización espacial.
+
+---
+
+# Pregunta de investigación
+
+Partiendo de estas observaciones se plantea la siguiente hipótesis:
+
+> La organización espacial celular contiene información que puede ser capturada mediante descriptores topológicos y utilizada para comparar distintos contextos biológicos.
+
+Las preguntas centrales son:
+
+* ¿Existen diferencias en la organización espacial entre muestras FA y no-FA?
+* ¿Los patrones observados entre epitelio y estroma reflejan estructuras espaciales distintas?
+
+---
+
+# ¿Por qué Análisis Topológico de Datos?
+
+El Análisis Topológico de Datos (TDA) proporciona herramientas para estudiar la estructura global de datos espaciales.
+
+En este trabajo, cada muestra se modela como una nube de puntos obtenida a partir de coordenadas celulares. Sobre estas nubes se construyen complejos de Vietoris–Rips a múltiples escalas.
+
+Posteriormente se calcula homología persistente para identificar:
+
+* componentes conexas (dimensión 0),
+* ciclos o estructuras tipo bucle (dimensión 1).
+
+Estas características se resumen mediante diagramas de persistencia, que registran la aparición y desaparición de estructuras topológicas a lo largo de una filtración.
+
+Finalmente, las muestras se comparan utilizando distancias de Wasserstein entre diagramas de persistencia.
+
+---
+
+# Objetivo general
+
+Utilizar herramientas de TDA para extraer características topológicas de la organización espacial celular y evaluar su capacidad para comparar y distinguir distintos contextos biológicos en tejido tumoral.
+
+Para ello se emplean:
+
+* Homología persistente.
+* Diagramas de persistencia.
+* Distancias de Wasserstein.
+* Clustering jerárquico.
+* Validación estadística mediante TopKAT.
+
+---
+
+# Workflow general
+
+El pipeline completo del análisis se resume mediante el siguiente esquema:
+
+$$
+\begin{aligned}
+\text{Imagen}
+&\rightarrow \text{Segmentación celular}
+\rightarrow \text{Coordenadas espaciales}
+\rightarrow \text{Point Cloud} \
+&\rightarrow \text{Complejo de Rips}
+\rightarrow \text{Homología persistente}
+\rightarrow \text{Diagramas de persistencia} \
+&\rightarrow \text{Distancias de Wasserstein}
+\rightarrow \text{Clustering}
+\rightarrow \text{Interpretación}
+\end{aligned}
+$$
+
+En las siguientes secciones se desarrollan los fundamentos matemáticos y computacionales que sustentan este enfoque, así como su aplicación al análisis de patrones celulares en tejido tumoral.
