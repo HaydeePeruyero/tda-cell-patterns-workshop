@@ -75,20 +75,25 @@ La construcción de complejos de Vietoris–Rips se realizó en Python utilizand
 
 # Implementación computacional
 
-A continuación construiremos paso a paso un complejo de Vietoris–Rips y calcularemos su homología persistente a partir de coordenadas celulares.
+Hasta ahora hemos introducido los conceptos fundamentales del complejo de Vietoris–Rips y la homología persistente. A continuación veremos cómo construir estos objetos a partir de datos reales utilizando Python y la biblioteca GUDHI.
+
+Trabajaremos con coordenadas celulares obtenidas a partir de imágenes de tejido tumoral. Nuestro objetivo será recorrer paso a paso el flujo completo de análisis, desde una nube de puntos hasta la obtención de un diagrama de persistencia.
 
 ## Objetivos
 
-En este ejercicio construiremos:
+En esta sección aprenderemos a:
 
-1. Una nube de puntos a partir de coordenadas celulares.
-2. Un complejo de Vietoris–Rips.
-3. Un diagrama de persistencia.
+1. Cargar coordenadas celulares y construir una nube de puntos (*point cloud*).
+2. Construir un complejo de Vietoris–Rips a partir de dichas coordenadas.
+3. Calcular la homología persistente.
+4. Visualizar el diagrama de persistencia resultante.
+5. Guardar los resultados para análisis posteriores.
 
-La idea es entender cómo pasamos de datos espaciales a descriptores topológicos.
+Este procedimiento constituye el pipeline básico de TDA que posteriormente utilizaremos para comparar múltiples muestras biológicas.
 
-::: {.callout-tip collapse="true"}
-## Mostrar código
+::: {.callout-tip}
+
+## Código
 
 ```python
 import os
@@ -97,33 +102,29 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import gudhi as gd
 ```
-
 :::
+
+Primero trabajaremos con una única muestra para entender cada paso del proceso. Una vez comprendido el pipeline completo, lo automatizaremos para procesar múltiples muestras de manera simultánea.
+
 
 ## 1. Cargar datos
 
-Vamos a trabajar con un archivo CSV que contiene las coordenadas espaciales de los centroides celulares.
+El primer paso consiste en cargar las coordenadas espaciales de las células que fueron obtenidas durante el proceso de segmentación.
 
-Las columnas que utilizaremos son:
+Trabajaremos con un archivo CSV que contiene, entre otras variables, las coordenadas de los centroides celulares:
 
-- `X_centroid`
-- `Y_centroid`
+* `X_centroid`
+* `Y_centroid`
 
-Estas coordenadas representan nuestra nube de puntos (*point cloud*), que será la entrada para el análisis topológico.
+Cada fila representa una célula y sus coordenadas dentro de la imagen.
 
-### Ejercicio
+A partir de estas coordenadas construiremos una **nube de puntos** (*point cloud*), que será la entrada para el análisis topológico.
 
-Cargue el archivo CSV y construya una matriz llamada `puntos` que contenga las coordenadas \((x,y)\) de cada célula.
+La siguiente celda carga el archivo, extrae las coordenadas y las organiza en una matriz denominada `puntos`, donde cada fila corresponde a una célula y cada columna a una coordenada espacial.
 
-### Pista
+::: {.callout-tip}
 
-1. Utilice `pandas.read_csv()`.
-2. Extraiga las columnas `X_centroid` y `Y_centroid`.
-3. Combine ambas columnas en una matriz usando `np.column_stack()`.
-4. Verifique cuántos puntos contiene la muestra.
-
-::: {.callout-tip collapse="true"}
-## Ver solución
+## Código
 
 ```python
 ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/carcinoma_FA_HN14_2.csv"
@@ -137,35 +138,28 @@ puntos = np.column_stack((x, y))
 
 print(f"Número de puntos: {len(puntos)}")
 ```
-
 :::
-
 
 ## 2. Visualización de la nube de puntos
 
-Antes de aplicar herramientas de TDA es importante observar la distribución espacial de las células.
+Una vez cargadas las coordenadas, es conveniente visualizar la distribución espacial de las células antes de realizar cualquier análisis topológico.
 
-Cada punto de la gráfica corresponde a una célula identificada en el tejido.
+Cada punto de la gráfica representa una célula identificada en el tejido. Esta representación constituye la nube de puntos (*point cloud*) sobre la cual construiremos posteriormente el complejo de Vietoris–Rips.
 
-### Ejercicio
+La siguiente celda genera una visualización simple de las coordenadas celulares.
 
-Genere una gráfica de dispersión (*scatter plot*) utilizando las coordenadas almacenadas en `x` y `y`.
+::: {.callout-tip}
 
-### Preguntas para reflexionar
-
-- ¿Existen regiones con alta densidad celular?
-- ¿Observa agrupamientos?
-- ¿Hay zonas vacías dentro de la muestra?
-
-::: {.callout-tip collapse="true"}
-## Ver solución
+## Código
 
 ```python
 plt.figure(figsize=(6,6))
 plt.scatter(x, y, s=5)
+
 plt.title("Point Cloud (centroides celulares)")
 plt.xlabel("X")
 plt.ylabel("Y")
+
 plt.show()
 ```
 
@@ -173,26 +167,27 @@ plt.show()
 
 ## 3. Construcción del complejo de Vietoris–Rips
 
-El siguiente paso consiste en conectar puntos cercanos mediante un parámetro de escala \(r\).
+Una vez obtenida la nube de puntos, podemos construir un complejo de Vietoris–Rips.
 
-Este parámetro controla qué tan lejos pueden estar dos células para considerarse conectadas.
+Recordemos que este complejo depende de un parámetro de escala \(r\), el cual determina cuándo dos puntos se consideran suficientemente cercanos para estar conectados.
 
-### Ejercicio
+En términos prácticos:
 
-Construya un complejo de Vietoris–Rips utilizando:
+- Si la distancia entre dos puntos es menor o igual que \(r\), se añade una arista entre ellos.
+- Si tres puntos están mutuamente conectados, se forma un triángulo.
+- Si cuatro puntos están mutuamente conectados, se forma un tetraedro.
+- Y así sucesivamente para dimensiones superiores.
 
-- las coordenadas almacenadas en `puntos`,
-- un radio inicial de `50`,
-- dimensión máxima igual a `2`.
+En este ejemplo utilizaremos inicialmente:
 
-### Preguntas para reflexionar
+- \(r = 50\)
+- dimensión máxima = 2
 
-- ¿Qué ocurre si aumenta el valor de `r`?
-- ¿Qué ocurre si disminuye?
-- ¿Cómo cambiaría la estructura del complejo?
+La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada `simplex_tree`, que posteriormente utilizaremos para calcular homología persistente.
 
-::: {.callout-tip collapse="true"}
-## Ver solución
+::: {.callout-tip}
+
+## Código
 
 ```python
 radio = 50
@@ -213,22 +208,19 @@ print("Número de simplices:", simplex_tree.num_simplices())
 
 ## 4. Visualización del complejo de Vietoris–Rips
 
-Una vez construido el complejo, podemos visualizar las conexiones que se generan entre células cercanas.
+Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.
 
-Cada arista representa un par de células cuya distancia es menor o igual al parámetro \(r\).
+En la siguiente visualización:
 
-### Ejercicio
+- Los puntos negros representan las células de la muestra.
+- Las líneas grises representan las aristas del complejo de Vietoris–Rips.
+- Dos células están conectadas si la distancia entre ellas es menor o igual que \(r\).
 
-Visualice la nube de puntos y agregue las aristas del complejo de Vietoris–Rips.
+Esta representación permite identificar visualmente regiones altamente conectadas, posibles agrupamientos y estructuras que podrían dar origen a ciclos topológicos.
 
-### Preguntas para reflexionar
+::: {.callout-tip}
 
-- ¿Qué regiones aparecen más conectadas?
-- ¿Observa posibles ciclos o estructuras cerradas?
-- ¿Cómo cambiaría la visualización si modifica el valor de \(r\)?
-
-::: {.callout-tip collapse="true"}
-## Ver solución
+##  Código
 
 ```python
 plt.figure(figsize=(8,6))
@@ -237,6 +229,7 @@ plt.scatter(x, y, color="black", s=5)
 for simplex in simplex_tree.get_skeleton(1):
     if len(simplex[0]) == 2:
         i, j = simplex[0]
+
         plt.plot(
             [x[i], x[j]],
             [y[i], y[j]],
@@ -244,31 +237,39 @@ for simplex in simplex_tree.get_skeleton(1):
             linewidth=0.5
         )
 
+plt.title(f"Complejo de Rips (r={radio})")
+plt.xlabel("X")
+plt.ylabel("Y")
+
+plt.show()
+```
+
 :::
 
 ## 5. Homología persistente
 
-Hasta ahora hemos construido un complejo de Vietoris–Rips para una escala determinada.
+Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala \(r\).
 
-Sin embargo, uno de los objetivos principales de TDA es estudiar cómo evolucionan las estructuras topológicas cuando la escala cambia. La homología persistente permite registrar la aparición y desaparición de dichas estructuras a lo largo de una filtración.
+Sin embargo, una de las ideas centrales de TDA es que la elección de una única escala puede ocultar información relevante. En lugar de analizar un solo complejo, la homología persistente estudia cómo evolucionan las estructuras topológicas cuando el parámetro de escala aumenta progresivamente.
 
-En este ejercicio nos interesan principalmente:
+Durante este proceso pueden ocurrir distintos eventos:
+
+- Componentes conexas que aparecen y posteriormente se fusionan.
+- Ciclos que nacen al formarse conexiones entre puntos.
+- Ciclos que desaparecen cuando regiones vacías terminan rellenándose.
+
+La homología persistente registra estos eventos mediante pares \((birth, death)\), que indican la escala en la que una característica topológica aparece y la escala en la que desaparece.
+
+En este taller nos centraremos principalmente en:
 
 - \(H_0\): componentes conexas.
 - \(H_1\): ciclos o bucles.
 
-### Ejercicio
+La biblioteca GUDHI permite calcular automáticamente estas características a partir del complejo construido previamente.
 
-Calcule la homología persistente del complejo utilizando GUDHI y examine las primeras características topológicas obtenidas.
+::: {.callout-tip}
 
-### Preguntas para reflexionar
-
-- ¿Qué representa una característica de dimensión 0?
-- ¿Qué representa una característica de dimensión 1?
-- ¿Por qué algunas estructuras persisten más que otras?
-
-::: {.callout-tip collapse="true"}
-## Ver solución
+## Código
 
 ```python
 diag = simplex_tree.persistence()
@@ -281,27 +282,25 @@ print(diag[:10])
 
 ## 6. Diagrama de persistencia
 
-La información obtenida mediante homología persistente suele visualizarse mediante un diagrama de persistencia.
+Una vez calculada la homología persistente, necesitamos una forma de resumir toda la información obtenida durante la filtración.
 
-Cada punto del diagrama representa una característica topológica:
+Para ello utilizamos el **diagrama de persistencia**, una representación gráfica donde cada punto corresponde a una característica topológica detectada en los datos.
 
-- Birth: escala en la que aparece.
-- Death: escala en la que desaparece.
+En este diagrama:
 
-Las características alejadas de la diagonal suelen corresponder a estructuras más persistentes.
+- El eje horizontal (**Birth**) indica la escala en la que aparece una característica.
+- El eje vertical (**Death**) indica la escala en la que desaparece.
+- Cada punto representa una componente conexa (\(H_0\)) o un ciclo (\(H_1\)).
+- Cuanto más alejado esté un punto de la diagonal, mayor será su persistencia y, potencialmente, su relevancia topológica.
 
-### Ejercicio
+De esta forma, el diagrama de persistencia resume cómo evoluciona la estructura topológica de la nube de puntos a diferentes escalas.
 
-Genere el diagrama de persistencia asociado al complejo construido anteriormente.
+### Generación del diagrama
 
-### Preguntas para reflexionar
+El siguiente código permite visualizar el diagrama de persistencia obtenido a partir del complejo de Vietoris–Rips construido previamente.
 
-- ¿Cuántas características persistentes observa?
-- ¿Qué significado tienen los puntos cercanos a la diagonal?
-- ¿Existen ciclos particularmente persistentes?
-
-::: {.callout-tip collapse="true"}
-## Ver solución
+::: {.callout-tip}
+##  Código
 
 ```python
 plt.figure(figsize=(6,6))
@@ -309,32 +308,27 @@ gd.plot_persistence_diagram(diag)
 plt.title("Diagrama de persistencia")
 plt.show()
 ```
-
 :::
 
 
 ## 7. Guardar resultados
 
-Una vez calculado el diagrama de persistencia, es frecuente almacenar los resultados en formato tabular para realizar análisis posteriores o comparaciones entre muestras.
+El diagrama de persistencia es una representación gráfica muy útil para visualizar las características topológicas de una muestra. Sin embargo, para realizar comparaciones sistemáticas entre múltiples muestras resulta conveniente almacenar esta información en formato tabular.
 
-### Ejercicio
+Por ello, extraeremos para cada característica topológica:
 
-Construya un `DataFrame` que contenga:
+- su dimensión (\(H_0\), \(H_1\), etc.),
+- el valor de nacimiento (*birth*),
+- el valor de muerte (*death*).
 
-- dimensión topológica,
-- birth,
-- death.
+Esta tabla será la entrada para las siguientes etapas del análisis, donde calcularemos distancias entre diagramas de persistencia y construiremos matrices de similitud entre muestras.
 
-Posteriormente visualice las primeras filas de la tabla.
+### Construcción de la tabla
 
-### Preguntas para reflexionar
+El siguiente código convierte el diagrama de persistencia en un `DataFrame` de pandas.
 
-- ¿Cuántas características topológicas fueron detectadas?
-- ¿Qué información conserva esta tabla?
-- ¿Cómo podría utilizarse para comparar distintas muestras?
-
-::: {.callout-tip collapse="true"}
-## Ver solución
+::: {.callout-tip}
+## Código
 
 ```python
 output = pd.DataFrame(
@@ -344,17 +338,172 @@ output = pd.DataFrame(
 
 output.head()
 ```
-
 :::
 
-## Conclusiones
+## Resumen
 
-En este ejercicio hemos recorrido el pipeline básico de TDA:
+A partir de las coordenadas celulares hemos construido:
 
-1. Coordenadas celulares.
-2. Nube de puntos.
-3. Complejo de Vietoris–Rips.
-4. Homología persistente.
-5. Diagrama de persistencia.
+1. Una nube de puntos.
+2. Un complejo de Vietoris–Rips.
+3. La homología persistente.
+4. Un diagrama de persistencia.
+5. Una tabla con las características topológicas detectadas.
 
-En las siguientes secciones utilizaremos estas herramientas para comparar muestras biológicas y estudiar patrones de organización espacial en el microambiente tumoral.
+Hasta este punto hemos trabajado únicamente con una muestra. Sin embargo, en aplicaciones reales normalmente disponemos de múltiples muestras biológicas y necesitamos repetir exactamente el mismo procedimiento para cada una de ellas.
+
+Afortunadamente, no es necesario ejecutar manualmente el análisis archivo por archivo. Podemos automatizar el proceso utilizando ciclos (`for`) y aplicar el pipeline completo a todos los archivos de una carpeta.
+
+En teoría, todo lo necesario para construir este análisis ya ha sido presentado en las secciones anteriores. El siguiente ejercicio consiste en completar un script que procese automáticamente múltiples muestras y genere un diagrama de persistencia para cada una de ellas.
+
+# Ejercicio: procesar múltiples muestras
+
+El siguiente esquema muestra la lógica general del proceso:
+
+```text
+archivo_1.csv
+       │
+       ▼
+  Point Cloud
+       ▼
+ Complejo Rips
+       ▼
+ Homología
+       ▼
+ Diagrama
+       ▼
+ archivo_1_diag.csv
+
+
+archivo_2.csv
+       │
+       ▼
+  Point Cloud
+       ▼
+ Complejo Rips
+       ▼
+ Homología
+       ▼
+ Diagrama
+       ▼
+ archivo_2_diag.csv
+
+      ...
+```
+
+### Complete los espacios faltantes
+
+```python
+import os
+import numpy as np
+import pandas as pd
+import gudhi as gd
+
+ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/"
+
+archivos = [
+    "carcinoma_FA_HN14_2.csv",
+    "displasia_FA_HN14_2.csv",
+    "stroma_FA_HN14_2.csv"
+]
+
+for archivo in archivos:
+
+    # 1. Cargar archivo
+    df = pd.read_csv( __________________ )
+
+    # 2. Extraer coordenadas
+    x = __________________
+    y = __________________
+
+    # 3. Construir nube de puntos
+    puntos = __________________
+
+    # 4. Complejo de Rips
+    rips_complex = gd.RipsComplex(
+        points=puntos,
+        max_edge_length=50
+    )
+
+    simplex_tree = rips_complex.create_simplex_tree(
+        max_dimension=2
+    )
+
+    # 5. Homología persistente
+    diag = __________________
+
+    # 6. Convertir a DataFrame
+    output = pd.DataFrame(
+        [[dim, b, d] for dim, (b, d) in diag if dim <= 2],
+        columns=["dimension", "birth", "death"]
+    )
+
+    print(archivo)
+    print(output.head())
+
+```
+
+::: {.callout-important collapse="true"}
+## Ver solución
+
+```python
+import os
+import numpy as np
+import pandas as pd
+import gudhi as gd
+
+ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/"
+
+archivos = [
+    "carcinoma_FA_HN14_2.csv",
+    "displasia_FA_HN14_2.csv",
+    "stroma_FA_HN14_2.csv"
+]
+
+for archivo in archivos:
+
+    # ---------------------------
+    # Cargar archivo
+    # ---------------------------
+    df = pd.read_csv(ruta + archivo)
+
+    # ---------------------------
+    # Extraer coordenadas
+    # ---------------------------
+    x = df["X_centroid"].to_numpy()
+    y = df["Y_centroid"].to_numpy()
+
+    # ---------------------------
+    # Construir nube de puntos
+    # ---------------------------
+    puntos = np.column_stack((x, y))
+
+    # ---------------------------
+    # Construir complejo de Rips
+    # ---------------------------
+    rips_complex = gd.RipsComplex(
+        points=puntos,
+        max_edge_length=50
+    )
+
+    simplex_tree = rips_complex.create_simplex_tree(
+        max_dimension=2
+    )
+
+    # ---------------------------
+    # Calcular homología persistente
+    # ---------------------------
+    diag = simplex_tree.persistence()
+
+    # ---------------------------
+    # Convertir a DataFrame
+    # ---------------------------
+    output = pd.DataFrame(
+        [[dim, b, d] for dim, (b, d) in diag if dim <= 2],
+        columns=["dimension", "birth", "death"]
+    )
+
+    print("\n", archivo)
+    print(output.head())
+```
+:::
