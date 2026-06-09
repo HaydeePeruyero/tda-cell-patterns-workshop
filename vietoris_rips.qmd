@@ -19,36 +19,43 @@ Dado un conjunto de puntos (X) y un parámetro de escala (\varepsilon):
 
 ## Definición
 
-Sea (X={x_1,x_2,\dots,x_n}) un conjunto de puntos en un espacio métrico. El complejo de Vietoris–Rips asociado a una escala (\varepsilon) se define como
+Dado un conjunto de puntos \(X\) y un parámetro de escala \(\varepsilon\), el complejo de Vietoris–Rips se construye conectando puntos que se encuentran suficientemente cerca entre sí.
+
+En términos generales:
+
+- Dos puntos cercanos generan una arista.
+- Tres puntos mutuamente conectados generan un triángulo.
+- Cuatro puntos mutuamente conectados generan un tetraedro.
+
+Formalmente,
 
 $$
-VR_\varepsilon(X)
-=================
-
-\left{
+VR_{\varepsilon}(X)
+=
+\left\{
 \sigma \subseteq X :
 d(x_i,x_j)\leq \varepsilon
 \quad
 \forall x_i,x_j\in\sigma
-\right}.
+\right\}.
 $$
 
 ## Efecto del parámetro de escala
 
-Al variar (\varepsilon), la estructura del complejo cambia:
+Al variar $\varepsilon$, la estructura del complejo cambia:
 
-* Para valores pequeños aparecen componentes aisladas.
-* Conforme aumenta (\varepsilon), comienzan a formarse conexiones.
-* A escalas intermedias pueden aparecer ciclos.
-* Para valores grandes muchas estructuras terminan fusionándose.
+- Para valores pequeños aparecen componentes aisladas.
+- Conforme aumenta $\varepsilon$, comienzan a formarse conexiones.
+- A escalas intermedias pueden aparecer ciclos.
+- Para valores grandes muchas estructuras terminan fusionándose.
 
-Este comportamiento multiescala es precisamente el que estudia la homología persistente.
+Este comportamiento multiescala constituye la base de la homología persistente.
 
 ## Ejemplo visual
 
 ![](figures/rips_filtration.png){fig-align="center" width="90%"}
 
-*Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala (\varepsilon).*
+*Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala $\varepsilon$.*
 
 ## Aplicación en este workshop
 
@@ -119,7 +126,7 @@ Cargue el archivo CSV y construya una matriz llamada `puntos` que contenga las c
 ## Ver solución
 
 ```python
-ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/data/carcinoma_FA_HN14_2.csv"
+ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/carcinoma_FA_HN14_2.csv"
 
 df = pd.read_csv(ruta)
 
@@ -203,3 +210,151 @@ print("Número de simplices:", simplex_tree.num_simplices())
 ```
 
 :::
+
+## 4. Visualización del complejo de Vietoris–Rips
+
+Una vez construido el complejo, podemos visualizar las conexiones que se generan entre células cercanas.
+
+Cada arista representa un par de células cuya distancia es menor o igual al parámetro \(r\).
+
+### Ejercicio
+
+Visualice la nube de puntos y agregue las aristas del complejo de Vietoris–Rips.
+
+### Preguntas para reflexionar
+
+- ¿Qué regiones aparecen más conectadas?
+- ¿Observa posibles ciclos o estructuras cerradas?
+- ¿Cómo cambiaría la visualización si modifica el valor de \(r\)?
+
+::: {.callout-tip collapse="true"}
+## Ver solución
+
+```python
+plt.figure(figsize=(8,6))
+plt.scatter(x, y, color="black", s=5)
+
+for simplex in simplex_tree.get_skeleton(1):
+    if len(simplex[0]) == 2:
+        i, j = simplex[0]
+        plt.plot(
+            [x[i], x[j]],
+            [y[i], y[j]],
+            color="gray",
+            linewidth=0.5
+        )
+
+:::
+
+## 5. Homología persistente
+
+Hasta ahora hemos construido un complejo de Vietoris–Rips para una escala determinada.
+
+Sin embargo, uno de los objetivos principales de TDA es estudiar cómo evolucionan las estructuras topológicas cuando la escala cambia. La homología persistente permite registrar la aparición y desaparición de dichas estructuras a lo largo de una filtración.
+
+En este ejercicio nos interesan principalmente:
+
+- \(H_0\): componentes conexas.
+- \(H_1\): ciclos o bucles.
+
+### Ejercicio
+
+Calcule la homología persistente del complejo utilizando GUDHI y examine las primeras características topológicas obtenidas.
+
+### Preguntas para reflexionar
+
+- ¿Qué representa una característica de dimensión 0?
+- ¿Qué representa una característica de dimensión 1?
+- ¿Por qué algunas estructuras persisten más que otras?
+
+::: {.callout-tip collapse="true"}
+## Ver solución
+
+```python
+diag = simplex_tree.persistence()
+
+print("Primeros valores:")
+print(diag[:10])
+```
+
+:::
+
+## 6. Diagrama de persistencia
+
+La información obtenida mediante homología persistente suele visualizarse mediante un diagrama de persistencia.
+
+Cada punto del diagrama representa una característica topológica:
+
+- Birth: escala en la que aparece.
+- Death: escala en la que desaparece.
+
+Las características alejadas de la diagonal suelen corresponder a estructuras más persistentes.
+
+### Ejercicio
+
+Genere el diagrama de persistencia asociado al complejo construido anteriormente.
+
+### Preguntas para reflexionar
+
+- ¿Cuántas características persistentes observa?
+- ¿Qué significado tienen los puntos cercanos a la diagonal?
+- ¿Existen ciclos particularmente persistentes?
+
+::: {.callout-tip collapse="true"}
+## Ver solución
+
+```python
+plt.figure(figsize=(6,6))
+gd.plot_persistence_diagram(diag)
+plt.title("Diagrama de persistencia")
+plt.show()
+```
+
+:::
+
+
+## 7. Guardar resultados
+
+Una vez calculado el diagrama de persistencia, es frecuente almacenar los resultados en formato tabular para realizar análisis posteriores o comparaciones entre muestras.
+
+### Ejercicio
+
+Construya un `DataFrame` que contenga:
+
+- dimensión topológica,
+- birth,
+- death.
+
+Posteriormente visualice las primeras filas de la tabla.
+
+### Preguntas para reflexionar
+
+- ¿Cuántas características topológicas fueron detectadas?
+- ¿Qué información conserva esta tabla?
+- ¿Cómo podría utilizarse para comparar distintas muestras?
+
+::: {.callout-tip collapse="true"}
+## Ver solución
+
+```python
+output = pd.DataFrame(
+    [[dim, b, d] for dim, (b, d) in diag if dim <= 2],
+    columns=["dimension", "birth", "death"]
+)
+
+output.head()
+```
+
+:::
+
+## Conclusiones
+
+En este ejercicio hemos recorrido el pipeline básico de TDA:
+
+1. Coordenadas celulares.
+2. Nube de puntos.
+3. Complejo de Vietoris–Rips.
+4. Homología persistente.
+5. Diagrama de persistencia.
+
+En las siguientes secciones utilizaremos estas herramientas para comparar muestras biológicas y estudiar patrones de organización espacial en el microambiente tumoral.

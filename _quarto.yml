@@ -11,8 +11,8 @@ website:
         text: Presentación
       - introduccion.qmd
       - vietoris_rips.qmd
-      - homologia.qmd
-      - diagramas.qmd
+      #- homologia.qmd
+      #- diagramas.qmd
       - wasserstein.qmd
       - clustering.qmd
       - topkat.qmd

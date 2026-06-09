@@ -3,22 +3,23 @@ project:
   output-dir: docs
 
 website:
-  title: "Análisis Topológico de Patrones Celulares"
-
+  title: "Workshop TDA"
   navbar:
+    background: primary
     left:
-      - href: 0-index.qmd
-        text: Inicio
-
-      - href: 1-tda.qmd
-        text: Fundamentos TDA
-
-      - href: 2-classification.qmd
-        text: Aplicación y Resultados
+      - href: index.qmd
+        text: Presentación
+      - introduccion.qmd
+      - vietoris_rips.qmd
+      #- homologia.qmd
+      #- diagramas.qmd
+      - wasserstein.qmd
+      - clustering.qmd
+      - topkat.qmd
 
 format:
   html:
-    theme: lumen
+    theme: cosmo
     css: styles.css
     toc: true
     toc-location: left
@@ -27,9 +28,13 @@ format:
     number-sections: true
     number-depth: 2
     code-copy: true
-    code-fold: false
-    code-tools: false
+    code-fold: show
+    code-summary: "Mostrar código"
+    code-tools: true
     code-overflow: wrap
-    smooth-scroll: true
+    page-layout: article
 
 editor: visual
+
+
+

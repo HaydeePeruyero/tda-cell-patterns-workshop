@@ -123,7 +123,7 @@
     "href": "vietoris_rips.html",
     "title": "Complejo de Vietoris–Rips",
     "section": "",
-    "text": "Una de las ideas centrales de TDA consiste en transformar una nube de puntos en un objeto geométrico sobre el cual puedan estudiarse propiedades topológicas.\nEn nuestro contexto, cada muestra biológica se representa mediante las coordenadas espaciales de las células identificadas en una imagen de tejido tumoral. A partir de estas coordenadas construimos un complejo de Vietoris–Rips, que será la base para calcular homología persistente.\n\n\nDado un conjunto de puntos (X) y un parámetro de escala ():\n\nDos puntos se conectan si su distancia es menor o igual que ().\nTres puntos mutuamente conectados generan un triángulo.\nCuatro puntos mutuamente conectados generan un tetraedro.\nEl procedimiento continúa de forma análoga en dimensiones superiores.\n\n\n\n\nSea (X={x_1,x_2,,x_n}) un conjunto de puntos en un espacio métrico. El complejo de Vietoris–Rips asociado a una escala () se define como\n$$ VR_(X) =================\n. $$\n\n\n\nAl variar (), la estructura del complejo cambia:\n\nPara valores pequeños aparecen componentes aisladas.\nConforme aumenta (), comienzan a formarse conexiones.\nA escalas intermedias pueden aparecer ciclos.\nPara valores grandes muchas estructuras terminan fusionándose.\n\nEste comportamiento multiescala es precisamente el que estudia la homología persistente.\n\n\n\n\n\n\n\n\nEvolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala ().\n\n\n\nEn este trabajo construiremos complejos de Vietoris–Rips utilizando las coordenadas espaciales de subconjuntos celulares obtenidos a partir de imágenes de tejido tumoral.\nA partir de estos complejos calcularemos homología persistente en dimensiones:\n\n(H_0): componentes conexas.\n(H_1): ciclos.\n\nEstas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral.\n\n\n\nLa construcción de complejos de Vietoris–Rips se realizó en Python utilizando la biblioteca GUDHI."
+    "text": "Una de las ideas centrales de TDA consiste en transformar una nube de puntos en un objeto geométrico sobre el cual puedan estudiarse propiedades topológicas.\nEn nuestro contexto, cada muestra biológica se representa mediante las coordenadas espaciales de las células identificadas en una imagen de tejido tumoral. A partir de estas coordenadas construimos un complejo de Vietoris–Rips, que será la base para calcular homología persistente.\n\n\nDado un conjunto de puntos (X) y un parámetro de escala ():\n\nDos puntos se conectan si su distancia es menor o igual que ().\nTres puntos mutuamente conectados generan un triángulo.\nCuatro puntos mutuamente conectados generan un tetraedro.\nEl procedimiento continúa de forma análoga en dimensiones superiores.\n\n\n\n\nDado un conjunto de puntos (X) y un parámetro de escala (), el complejo de Vietoris–Rips se construye conectando puntos que se encuentran suficientemente cerca entre sí.\nEn términos generales:\n\nDos puntos cercanos generan una arista.\nTres puntos mutuamente conectados generan un triángulo.\nCuatro puntos mutuamente conectados generan un tetraedro.\n\nFormalmente,\n\\[\nVR_{\\varepsilon}(X)\n=\n\\left\\{\n\\sigma \\subseteq X :\nd(x_i,x_j)\\leq \\varepsilon\n\\quad\n\\forall x_i,x_j\\in\\sigma\n\\right\\}.\n\\]\n\n\n\nAl variar \\(\\varepsilon\\), la estructura del complejo cambia:\n\nPara valores pequeños aparecen componentes aisladas.\nConforme aumenta \\(\\varepsilon\\), comienzan a formarse conexiones.\nA escalas intermedias pueden aparecer ciclos.\nPara valores grandes muchas estructuras terminan fusionándose.\n\nEste comportamiento multiescala constituye la base de la homología persistente.\n\n\n\n\n\n\n\n\nEvolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala \\(\\varepsilon\\).\n\n\n\nEn este trabajo construiremos complejos de Vietoris–Rips utilizando las coordenadas espaciales de subconjuntos celulares obtenidos a partir de imágenes de tejido tumoral.\nA partir de estos complejos calcularemos homología persistente en dimensiones:\n\n(H_0): componentes conexas.\n(H_1): ciclos.\n\nEstas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral.\n\n\n\nLa construcción de complejos de Vietoris–Rips se realizó en Python utilizando la biblioteca GUDHI."
   },
   {
     "objectID": "vietoris_rips.html#construcción",
@@ -137,21 +137,21 @@
     "href": "vietoris_rips.html#definición",
     "title": "Complejo de Vietoris–Rips",
     "section": "",
-    "text": "Sea (X={x_1,x_2,,x_n}) un conjunto de puntos en un espacio métrico. El complejo de Vietoris–Rips asociado a una escala () se define como\n$$ VR_(X) =================\n. $$"
+    "text": "Dado un conjunto de puntos (X) y un parámetro de escala (), el complejo de Vietoris–Rips se construye conectando puntos que se encuentran suficientemente cerca entre sí.\nEn términos generales:\n\nDos puntos cercanos generan una arista.\nTres puntos mutuamente conectados generan un triángulo.\nCuatro puntos mutuamente conectados generan un tetraedro.\n\nFormalmente,\n\\[\nVR_{\\varepsilon}(X)\n=\n\\left\\{\n\\sigma \\subseteq X :\nd(x_i,x_j)\\leq \\varepsilon\n\\quad\n\\forall x_i,x_j\\in\\sigma\n\\right\\}.\n\\]"
   },
   {
     "objectID": "vietoris_rips.html#efecto-del-parámetro-de-escala",
     "href": "vietoris_rips.html#efecto-del-parámetro-de-escala",
     "title": "Complejo de Vietoris–Rips",
     "section": "",
-    "text": "Al variar (), la estructura del complejo cambia:\n\nPara valores pequeños aparecen componentes aisladas.\nConforme aumenta (), comienzan a formarse conexiones.\nA escalas intermedias pueden aparecer ciclos.\nPara valores grandes muchas estructuras terminan fusionándose.\n\nEste comportamiento multiescala es precisamente el que estudia la homología persistente."
+    "text": "Al variar \\(\\varepsilon\\), la estructura del complejo cambia:\n\nPara valores pequeños aparecen componentes aisladas.\nConforme aumenta \\(\\varepsilon\\), comienzan a formarse conexiones.\nA escalas intermedias pueden aparecer ciclos.\nPara valores grandes muchas estructuras terminan fusionándose.\n\nEste comportamiento multiescala constituye la base de la homología persistente."
   },
   {
     "objectID": "vietoris_rips.html#ejemplo-visual",
     "href": "vietoris_rips.html#ejemplo-visual",
     "title": "Complejo de Vietoris–Rips",
     "section": "",
-    "text": "Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala ()."
+    "text": "Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala \\(\\varepsilon\\)."
   },
   {
     "objectID": "vietoris_rips.html#aplicación-en-este-workshop",
@@ -196,6 +196,34 @@
     "text": "2.4 3. Construcción del complejo de Vietoris–Rips\nEl siguiente paso consiste en conectar puntos cercanos mediante un parámetro de escala (r).\nEste parámetro controla qué tan lejos pueden estar dos células para considerarse conectadas.\n\nEjercicio\nConstruya un complejo de Vietoris–Rips utilizando:\n\nlas coordenadas almacenadas en puntos,\nun radio inicial de 50,\ndimensión máxima igual a 2.\n\n\n\nPreguntas para reflexionar\n\n¿Qué ocurre si aumenta el valor de r?\n¿Qué ocurre si disminuye?\n¿Cómo cambiaría la estructura del complejo?\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\nradio = 50\n\nrips_complex = gd.RipsComplex(\n    points=puntos,\n    max_edge_length=radio\n)\n\nsimplex_tree = rips_complex.create_simplex_tree(\n    max_dimension=2\n)\n\nprint(\"Número de simplices:\", simplex_tree.num_simplices())"
   },
   {
+    "objectID": "vietoris_rips.html#visualización-del-complejo-de-vietorisrips",
+    "href": "vietoris_rips.html#visualización-del-complejo-de-vietorisrips",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.5 4. Visualización del complejo de Vietoris–Rips",
+    "text": "2.5 4. Visualización del complejo de Vietoris–Rips\nUna vez construido el complejo, podemos visualizar las conexiones que se generan entre células cercanas.\nCada arista representa un par de células cuya distancia es menor o igual al parámetro (r).\n\nEjercicio\nVisualice la nube de puntos y agregue las aristas del complejo de Vietoris–Rips.\n\n\nPreguntas para reflexionar\n\n¿Qué regiones aparecen más conectadas?\n¿Observa posibles ciclos o estructuras cerradas?\n¿Cómo cambiaría la visualización si modifica el valor de (r)?\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\nplt.figure(figsize=(8,6))\nplt.scatter(x, y, color=\"black\", s=5)\n\nfor simplex in simplex_tree.get_skeleton(1):\n    if len(simplex[0]) == 2:\n        i, j = simplex[0]\n        plt.plot(\n            [x[i], x[j]],\n            [y[i], y[j]],\n            color=\"gray\",\n            linewidth=0.5\n        )\n\n:::\n\n## 5. Homología persistente\n\nHasta ahora hemos construido un complejo de Vietoris–Rips para una escala determinada.\n\nSin embargo, uno de los objetivos principales de TDA es estudiar cómo evolucionan las estructuras topológicas cuando la escala cambia. La homología persistente permite registrar la aparición y desaparición de dichas estructuras a lo largo de una filtración.\n\nEn este ejercicio nos interesan principalmente:\n\n- \\(H_0\\): componentes conexas.\n- \\(H_1\\): ciclos o bucles.\n\n### Ejercicio\n\nCalcule la homología persistente del complejo utilizando GUDHI y examine las primeras características topológicas obtenidas.\n\n### Preguntas para reflexionar\n\n- ¿Qué representa una característica de dimensión 0?\n- ¿Qué representa una característica de dimensión 1?\n- ¿Por qué algunas estructuras persisten más que otras?\n\n::: {.callout-tip collapse=\"true\"}\n## Ver solución\n\n```python\ndiag = simplex_tree.persistence()\n\nprint(\"Primeros valores:\")\nprint(diag[:10])"
+  },
+  {
+    "objectID": "vietoris_rips.html#diagrama-de-persistencia",
+    "href": "vietoris_rips.html#diagrama-de-persistencia",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.6 6. Diagrama de persistencia",
+    "text": "2.6 6. Diagrama de persistencia\nLa información obtenida mediante homología persistente suele visualizarse mediante un diagrama de persistencia.\nCada punto del diagrama representa una característica topológica:\n\nBirth: escala en la que aparece.\nDeath: escala en la que desaparece.\n\nLas características alejadas de la diagonal suelen corresponder a estructuras más persistentes.\n\nEjercicio\nGenere el diagrama de persistencia asociado al complejo construido anteriormente.\n\n\nPreguntas para reflexionar\n\n¿Cuántas características persistentes observa?\n¿Qué significado tienen los puntos cercanos a la diagonal?\n¿Existen ciclos particularmente persistentes?\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\nplt.figure(figsize=(6,6))\ngd.plot_persistence_diagram(diag)\nplt.title(\"Diagrama de persistencia\")\nplt.show()"
+  },
+  {
+    "objectID": "vietoris_rips.html#guardar-resultados",
+    "href": "vietoris_rips.html#guardar-resultados",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.7 7. Guardar resultados",
+    "text": "2.7 7. Guardar resultados\nUna vez calculado el diagrama de persistencia, es frecuente almacenar los resultados en formato tabular para realizar análisis posteriores o comparaciones entre muestras.\n\nEjercicio\nConstruya un DataFrame que contenga:\n\ndimensión topológica,\nbirth,\ndeath.\n\nPosteriormente visualice las primeras filas de la tabla.\n\n\nPreguntas para reflexionar\n\n¿Cuántas características topológicas fueron detectadas?\n¿Qué información conserva esta tabla?\n¿Cómo podría utilizarse para comparar distintas muestras?\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\noutput = pd.DataFrame(\n    [[dim, b, d] for dim, (b, d) in diag if dim &lt;= 2],\n    columns=[\"dimension\", \"birth\", \"death\"]\n)\n\noutput.head()"
+  },
+  {
+    "objectID": "vietoris_rips.html#conclusiones",
+    "href": "vietoris_rips.html#conclusiones",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.8 Conclusiones",
+    "text": "2.8 Conclusiones\nEn este ejercicio hemos recorrido el pipeline básico de TDA:\n\nCoordenadas celulares.\nNube de puntos.\nComplejo de Vietoris–Rips.\nHomología persistente.\nDiagrama de persistencia.\n\nEn las siguientes secciones utilizaremos estas herramientas para comparar muestras biológicas y estudiar patrones de organización espacial en el microambiente tumoral."
+  },
+  {
     "objectID": "diagramas.html",
     "href": "diagramas.html",
     "title": "",
@@ -205,9 +233,114 @@
   {
     "objectID": "wasserstein.html",
     "href": "wasserstein.html",
-    "title": "",
+    "title": "Distancia de Wasserstein",
     "section": "",
-    "text": "Code"
+    "text": "Hasta ahora hemos transformado las coordenadas celulares en diagramas de persistencia mediante complejos de Vietoris–Rips y homología persistente.\nCada diagrama de persistencia resume la estructura topológica de una muestra biológica. Sin embargo, para responder preguntas biológicas necesitamos una forma de comparar dichos diagramas de manera cuantitativa.\nPor ejemplo:\n\n¿Dos muestras tumorales presentan organizaciones espaciales similares?\n¿Las muestras de pacientes con anemia de Fanconi son más parecidas entre sí que a las muestras no FA?\n¿Existen diferencias topológicas entre epitelio y estroma?\n\nPara responder estas preguntas necesitamos definir una métrica entre diagramas de persistencia.\n\n\n\nExisten diversas herramientas para comparar diagramas de persistencia. Algunas de las más utilizadas son:\n\nDistancia de Bottleneck (Bottleneck Distance).\nDistancia de Wasserstein.\nPersistence Landscapes.\nPersistence Images.\nKernels topológicos.\n\nCada una captura distintos aspectos de la información topológica.\nEn este workshop utilizaremos la distancia de Wasserstein, una de las métricas más empleadas en aplicaciones de TDA.\n\n\n\nLa distancia de Wasserstein puede interpretarse como un problema de transporte óptimo.\nLa idea consiste en emparejar los puntos de un diagrama con los puntos de otro diagrama minimizando el costo total de transporte.\nDe manera intuitiva:\n\nDiagramas similares → distancia pequeña.\nDiagramas diferentes → distancia grande.\n\n\n\n\nEn nuestro contexto:\n\nCada muestra genera un diagrama de persistencia.\nCada diagrama resume la organización espacial celular.\nLa distancia de Wasserstein cuantifica qué tan distintas son dichas organizaciones.\n\nPor tanto, muestras con arquitecturas celulares similares deberían producir distancias pequeñas, mientras que muestras con patrones espaciales distintos deberían producir distancias mayores.\n\n\n\n\n\nSean (D_1) y (D_2) dos diagramas de persistencia.\nLa distancia de Wasserstein de orden (p) se define como\n\\[\nW_p(D_1,D_2) = \\left( \\inf_{\\vartheta} \\sum_{x\\in D_1} |x-\\vartheta(x)|_\\infty^p \\right)^{1/p}.\n\\]\ndonde:\n\n() representa un emparejamiento admisible entre los puntos de ambos diagramas.\n(||_) corresponde a la norma infinito.\nEl ínfimo busca el emparejamiento con costo total mínimo.\n\nLa distancia de Wasserstein cuantifica la similitud entre dos diagramas de persistencia considerando el desplazamiento acumulado necesario para emparejar sus características topológicas.\nEn este análisis se ignoran los puntos con muerte infinita, ya que la construcción mediante complejos de Vietoris–Rips produce únicamente una característica infinita por diagrama, asociada a la componente conexa principal. Dado que esta característica aparece de forma consistente en todas las muestras, no aporta información relevante para su comparación.\n\n\n\n\nDistancia de Wasserstein. (a) Proyección ortogonal sobre la diagonal. (b) Intercambio de proyecciones entre diagramas. (c) Emparejamiento óptimo mediante una biyección entre puntos de ambos diagramas. La distancia de Wasserstein evalúa la similitud entre diagramas considerando la suma total de las distancias entre los puntos emparejados.\n\n\n\n\nPara ilustrar el cálculo de la distancia de Wasserstein entre dos diagramas de persistencia, consideremos los diagramas (D_1) y (D_2) mostrados en la figura. Cada diagrama representa características topológicas obtenidas a partir de una filtración, donde los puntos corresponden a clases de homología identificadas durante el análisis.\nEl procedimiento general consiste en:\n\nProyectar puntos sobre la diagonal. Las características con baja persistencia pueden emparejarse con la diagonal, representando estructuras de corta duración.\nEquilibrar la cantidad de puntos entre diagramas. Cuando los diagramas contienen diferente número de características, las proyecciones sobre la diagonal permiten completar los emparejamientos necesarios.\nDeterminar el emparejamiento óptimo. Se busca la correspondencia entre puntos que minimiza el costo total de transporte.\nCalcular la distancia. A partir del emparejamiento óptimo se obtiene el valor de la distancia de Wasserstein, que resume la diferencia topológica global entre ambos diagramas.\n\nEn el contexto de este trabajo, esta métrica permite comparar cuantitativamente la organización espacial celular entre distintas muestras biológicas. Distancias pequeñas indican diagramas topológicamente similares, mientras que distancias mayores sugieren diferencias más marcadas en los patrones espaciales observados.\n\n\n\nSupongamos que hemos calculado diagramas de persistencia para distintas muestras:\n\nCarcinoma\nDisplasia\nEstroma adyacente\n\nCada muestra produce un diagrama que resume su organización espacial celular.\nEl siguiente paso consiste en comparar estos diagramas utilizando la distancia de Wasserstein.\nCarcinoma  ─────┐\n                ├── Wasserstein ──► Distancia(Carcinoma, Displasia)\nDisplasia  ─────┘\n\n\nCarcinoma  ─────┐\n                ├── Wasserstein ──► Distancia(Carcinoma, Estroma)\nEstroma    ─────┘\nSi obtenemos, por ejemplo,\nDistancia(Carcinoma, Displasia) = 15\n\nDistancia(Carcinoma, Estroma) = 48\npodemos interpretar que el patrón topológico observado en la muestra de carcinoma es más parecido al de la displasia que al del estroma adyacente.\nRepitiendo este procedimiento para todos los pares de muestras obtenemos una matriz de distancias, la cual servirá posteriormente como entrada para el análisis de clustering jerárquico."
+  },
+  {
+    "objectID": "wasserstein.html#por-qué-necesitamos-una-distancia",
+    "href": "wasserstein.html#por-qué-necesitamos-una-distancia",
+    "title": "Distancia de Wasserstein",
+    "section": "",
+    "text": "Hasta ahora hemos transformado las coordenadas celulares en diagramas de persistencia mediante complejos de Vietoris–Rips y homología persistente.\nCada diagrama de persistencia resume la estructura topológica de una muestra biológica. Sin embargo, para responder preguntas biológicas necesitamos una forma de comparar dichos diagramas de manera cuantitativa.\nPor ejemplo:\n\n¿Dos muestras tumorales presentan organizaciones espaciales similares?\n¿Las muestras de pacientes con anemia de Fanconi son más parecidas entre sí que a las muestras no FA?\n¿Existen diferencias topológicas entre epitelio y estroma?\n\nPara responder estas preguntas necesitamos definir una métrica entre diagramas de persistencia."
+  },
+  {
+    "objectID": "wasserstein.html#distancias-entre-diagramas",
+    "href": "wasserstein.html#distancias-entre-diagramas",
+    "title": "Distancia de Wasserstein",
+    "section": "",
+    "text": "Existen diversas herramientas para comparar diagramas de persistencia. Algunas de las más utilizadas son:\n\nDistancia de Bottleneck (Bottleneck Distance).\nDistancia de Wasserstein.\nPersistence Landscapes.\nPersistence Images.\nKernels topológicos.\n\nCada una captura distintos aspectos de la información topológica.\nEn este workshop utilizaremos la distancia de Wasserstein, una de las métricas más empleadas en aplicaciones de TDA."
+  },
+  {
+    "objectID": "wasserstein.html#idea-intuitiva",
+    "href": "wasserstein.html#idea-intuitiva",
+    "title": "Distancia de Wasserstein",
+    "section": "",
+    "text": "La distancia de Wasserstein puede interpretarse como un problema de transporte óptimo.\nLa idea consiste en emparejar los puntos de un diagrama con los puntos de otro diagrama minimizando el costo total de transporte.\nDe manera intuitiva:\n\nDiagramas similares → distancia pequeña.\nDiagramas diferentes → distancia grande."
+  },
+  {
+    "objectID": "wasserstein.html#interpretación-biológica",
+    "href": "wasserstein.html#interpretación-biológica",
+    "title": "Distancia de Wasserstein",
+    "section": "",
+    "text": "En nuestro contexto:\n\nCada muestra genera un diagrama de persistencia.\nCada diagrama resume la organización espacial celular.\nLa distancia de Wasserstein cuantifica qué tan distintas son dichas organizaciones.\n\nPor tanto, muestras con arquitecturas celulares similares deberían producir distancias pequeñas, mientras que muestras con patrones espaciales distintos deberían producir distancias mayores."
+  },
+  {
+    "objectID": "wasserstein.html#definición-matemática",
+    "href": "wasserstein.html#definición-matemática",
+    "title": "Distancia de Wasserstein",
+    "section": "",
+    "text": "Sean (D_1) y (D_2) dos diagramas de persistencia.\nLa distancia de Wasserstein de orden (p) se define como\n\\[\nW_p(D_1,D_2) = \\left( \\inf_{\\vartheta} \\sum_{x\\in D_1} |x-\\vartheta(x)|_\\infty^p \\right)^{1/p}.\n\\]\ndonde:\n\n() representa un emparejamiento admisible entre los puntos de ambos diagramas.\n(||_) corresponde a la norma infinito.\nEl ínfimo busca el emparejamiento con costo total mínimo.\n\nLa distancia de Wasserstein cuantifica la similitud entre dos diagramas de persistencia considerando el desplazamiento acumulado necesario para emparejar sus características topológicas.\nEn este análisis se ignoran los puntos con muerte infinita, ya que la construcción mediante complejos de Vietoris–Rips produce únicamente una característica infinita por diagrama, asociada a la componente conexa principal. Dado que esta característica aparece de forma consistente en todas las muestras, no aporta información relevante para su comparación.\n\n\n\n\nDistancia de Wasserstein. (a) Proyección ortogonal sobre la diagonal. (b) Intercambio de proyecciones entre diagramas. (c) Emparejamiento óptimo mediante una biyección entre puntos de ambos diagramas. La distancia de Wasserstein evalúa la similitud entre diagramas considerando la suma total de las distancias entre los puntos emparejados.\n\n\n\n\nPara ilustrar el cálculo de la distancia de Wasserstein entre dos diagramas de persistencia, consideremos los diagramas (D_1) y (D_2) mostrados en la figura. Cada diagrama representa características topológicas obtenidas a partir de una filtración, donde los puntos corresponden a clases de homología identificadas durante el análisis.\nEl procedimiento general consiste en:\n\nProyectar puntos sobre la diagonal. Las características con baja persistencia pueden emparejarse con la diagonal, representando estructuras de corta duración.\nEquilibrar la cantidad de puntos entre diagramas. Cuando los diagramas contienen diferente número de características, las proyecciones sobre la diagonal permiten completar los emparejamientos necesarios.\nDeterminar el emparejamiento óptimo. Se busca la correspondencia entre puntos que minimiza el costo total de transporte.\nCalcular la distancia. A partir del emparejamiento óptimo se obtiene el valor de la distancia de Wasserstein, que resume la diferencia topológica global entre ambos diagramas.\n\nEn el contexto de este trabajo, esta métrica permite comparar cuantitativamente la organización espacial celular entre distintas muestras biológicas. Distancias pequeñas indican diagramas topológicamente similares, mientras que distancias mayores sugieren diferencias más marcadas en los patrones espaciales observados."
+  },
+  {
+    "objectID": "wasserstein.html#comparando-muestras-biológicas",
+    "href": "wasserstein.html#comparando-muestras-biológicas",
+    "title": "Distancia de Wasserstein",
+    "section": "",
+    "text": "Supongamos que hemos calculado diagramas de persistencia para distintas muestras:\n\nCarcinoma\nDisplasia\nEstroma adyacente\n\nCada muestra produce un diagrama que resume su organización espacial celular.\nEl siguiente paso consiste en comparar estos diagramas utilizando la distancia de Wasserstein.\nCarcinoma  ─────┐\n                ├── Wasserstein ──► Distancia(Carcinoma, Displasia)\nDisplasia  ─────┘\n\n\nCarcinoma  ─────┐\n                ├── Wasserstein ──► Distancia(Carcinoma, Estroma)\nEstroma    ─────┘\nSi obtenemos, por ejemplo,\nDistancia(Carcinoma, Displasia) = 15\n\nDistancia(Carcinoma, Estroma) = 48\npodemos interpretar que el patrón topológico observado en la muestra de carcinoma es más parecido al de la displasia que al del estroma adyacente.\nRepitiendo este procedimiento para todos los pares de muestras obtenemos una matriz de distancias, la cual servirá posteriormente como entrada para el análisis de clustering jerárquico."
+  },
+  {
+    "objectID": "wasserstein.html#qué-haremos",
+    "href": "wasserstein.html#qué-haremos",
+    "title": "Distancia de Wasserstein",
+    "section": "2.1 ¿Qué haremos?",
+    "text": "2.1 ¿Qué haremos?\nEl procedimiento general es:\nDiagramas de persistencia\n          ↓\nDistancias de Wasserstein\n          ↓\nMatriz de distancias\nCada archivo CSV contiene un diagrama de persistencia almacenado como una tabla con tres columnas:\n\n\n\ndimension\nbirth\ndeath\n\n\n\n\n0\n…\n…\n\n\n0\n…\n…\n\n\n1\n…\n…\n\n\n\nCalcularemos por separado:\n\nDistancias para (H_0) (componentes conexas).\nDistancias para (H_1) (ciclos).\n\nPosteriormente construiremos dos matrices de distancia, una para cada dimensión homológica."
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-1-importar-bibliotecas",
+    "href": "wasserstein.html#ejercicio-1-importar-bibliotecas",
+    "title": "Distancia de Wasserstein",
+    "section": "2.2 Ejercicio 1: Importar bibliotecas",
+    "text": "2.2 Ejercicio 1: Importar bibliotecas\nImportemos las bibliotecas que utilizaremos durante el análisis.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\nimport os\nimport numpy as np\nimport pandas as pd\nimport gudhi.wasserstein as gw"
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-2-definir-la-carpeta-de-trabajo",
+    "href": "wasserstein.html#ejercicio-2-definir-la-carpeta-de-trabajo",
+    "title": "Distancia de Wasserstein",
+    "section": "2.3 Ejercicio 2: Definir la carpeta de trabajo",
+    "text": "2.3 Ejercicio 2: Definir la carpeta de trabajo\nDefina la ruta donde se encuentran almacenados los diagramas de persistencia.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/\""
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-3-obtener-la-lista-de-archivos",
+    "href": "wasserstein.html#ejercicio-3-obtener-la-lista-de-archivos",
+    "title": "Distancia de Wasserstein",
+    "section": "2.4 Ejercicio 3: Obtener la lista de archivos",
+    "text": "2.4 Ejercicio 3: Obtener la lista de archivos\nLea todos los archivos CSV disponibles en la carpeta.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\narchivos = sorted(\n    [f for f in os.listdir(ruta) if f.endswith(\".csv\")]\n)\n\nprint(\"Archivos encontrados:\")\n\nfor i, archivo in enumerate(archivos):\n    print(f\"{i}: {archivo}\")"
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-4-cargar-los-diagramas",
+    "href": "wasserstein.html#ejercicio-4-cargar-los-diagramas",
+    "title": "Distancia de Wasserstein",
+    "section": "2.5 Ejercicio 4: Cargar los diagramas",
+    "text": "2.5 Ejercicio 4: Cargar los diagramas\nPara cada archivo:\n\nLeer el CSV.\nExtraer los puntos de dimensión 0.\nExtraer los puntos de dimensión 1.\nIgnorar puntos con muerte infinita.\n\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\ndiag_dim0 = []\ndiag_dim1 = []\n\nfor archivo in archivos:\n\n    df = pd.read_csv(os.path.join(ruta, archivo))\n\n    d0 = (\n        df[df[\"dimension\"] == 0]\n        [[\"birth\", \"death\"]]\n        .to_numpy()\n    )\n\n    d1 = (\n        df[\n            (df[\"dimension\"] == 1)\n            & (np.isfinite(df[\"death\"]))\n        ][[\"birth\", \"death\"]]\n        .to_numpy()\n    )\n\n    diag_dim0.append(d0)\n    diag_dim1.append(d1)"
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-5-inicializar-matrices-de-distancia",
+    "href": "wasserstein.html#ejercicio-5-inicializar-matrices-de-distancia",
+    "title": "Distancia de Wasserstein",
+    "section": "2.6 Ejercicio 5: Inicializar matrices de distancia",
+    "text": "2.6 Ejercicio 5: Inicializar matrices de distancia\nCrear una matriz cuadrada para almacenar las distancias entre todas las muestras.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\nn = len(archivos)\n\ndist_dim0 = np.zeros((n, n))\ndist_dim1 = np.zeros((n, n))"
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-6-calcular-distancias-de-wasserstein",
+    "href": "wasserstein.html#ejercicio-6-calcular-distancias-de-wasserstein",
+    "title": "Distancia de Wasserstein",
+    "section": "2.7 Ejercicio 6: Calcular distancias de Wasserstein",
+    "text": "2.7 Ejercicio 6: Calcular distancias de Wasserstein\nCalcule las distancias entre todos los pares de diagramas.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\nfor i in range(n):\n\n    for j in range(n):\n\n        dist_dim0[i, j] = gw.wasserstein_distance(\n            diag_dim0[i],\n            diag_dim0[j],\n            order=1\n        )\n\n        dist_dim1[i, j] = gw.wasserstein_distance(\n            diag_dim1[i],\n            diag_dim1[j],\n            order=1\n        )"
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-7-construir-las-matrices-finales",
+    "href": "wasserstein.html#ejercicio-7-construir-las-matrices-finales",
+    "title": "Distancia de Wasserstein",
+    "section": "2.8 Ejercicio 7: Construir las matrices finales",
+    "text": "2.8 Ejercicio 7: Construir las matrices finales\nConvertir las matrices a formato DataFrame.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\ndf_dist0 = pd.DataFrame(\n    dist_dim0,\n    index=archivos,\n    columns=archivos\n)\n\ndf_dist1 = pd.DataFrame(\n    dist_dim1,\n    index=archivos,\n    columns=archivos\n)\n\nprint(df_dist0)\nprint(df_dist1)"
+  },
+  {
+    "objectID": "wasserstein.html#ejercicio-8-guardar-resultados",
+    "href": "wasserstein.html#ejercicio-8-guardar-resultados",
+    "title": "Distancia de Wasserstein",
+    "section": "2.9 Ejercicio 8: Guardar resultados",
+    "text": "2.9 Ejercicio 8: Guardar resultados\nGuardar las matrices para utilizarlas posteriormente en el clustering jerárquico.\n\n\n\n\n\n\nNoteSolución\n\n\n\n\n\ndf_dist0.to_csv(\n    os.path.join(ruta, \"wasserstein_dim0.csv\")\n)\n\ndf_dist1.to_csv(\n    os.path.join(ruta, \"wasserstein_dim1.csv\")\n)\n\nprint(\"Matrices guardadas.\")\n\n\n\nAl finalizar este ejercicio tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico."
   },
   {
     "objectID": "homologia.html",
