@@ -1,5 +1,0 @@
-,carcinoma_FA_HN14_2_diag.csv,dysplasia_FA_HN11A_1_diag.csv,stroma_ad_carcinoma_FA_HN14_3_diag.csv,stroma_ad_dysplasia_FA_HN11A_5_diag.csv
-carcinoma_FA_HN14_2_diag.csv,0.0,1532.7357033825435,2018.2777334859277,1615.35575681372
-dysplasia_FA_HN11A_1_diag.csv,1532.7357033825435,0.0,733.412646962217,548.7540315098621
-stroma_ad_carcinoma_FA_HN14_3_diag.csv,2018.277733485927,733.4126469622169,0.0,610.0708982001698
-stroma_ad_dysplasia_FA_HN11A_5_diag.csv,1615.3557568137198,548.754031509862,610.0708982001701,0.0
