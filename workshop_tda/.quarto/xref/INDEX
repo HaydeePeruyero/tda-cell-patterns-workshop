@@ -1,0 +1,29 @@
+{
+  "index.qmd": {
+    "index.html": "b373c954"
+  },
+  "homologia.qmd": {
+    "homologia.html": "e15e3590"
+  },
+  "wasserstein.qmd": {
+    "wasserstein.html": "8b2106fa"
+  },
+  "diagramas.qmd": {
+    "diagramas.html": "c532bf73"
+  },
+  "introduccion.qmd": {
+    "introduccion.html": "16fa5017"
+  },
+  "vietoris_rips.qmd": {
+    "vietoris_rips.html": "e79f552f"
+  },
+  "topkat.qmd": {
+    "topkat.html": "2d616bd6"
+  },
+  "clustering.qmd": {
+    "clustering.html": "8c0efd35"
+  },
+  "workshop_tda.qmd": {
+    "workshop_tda.html": "6fa0a745"
+  }
+}

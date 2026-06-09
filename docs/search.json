@@ -1,17 +1,220 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Introducción",
+    "objectID": "workshop_tda.html",
+    "href": "workshop_tda.html",
+    "title": "workshop_tda",
     "section": "",
-    "text": "Introducción"
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
   },
   {
-    "objectID": "0-index.html",
-    "href": "0-index.html",
-    "title": "Introducción",
+    "objectID": "workshop_tda.html#quarto",
+    "href": "workshop_tda.html#quarto",
+    "title": "workshop_tda",
     "section": "",
-    "text": "Introducción"
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "codigos/rips_curso.html",
+    "href": "codigos/rips_curso.html",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "",
+    "text": "Mostrar código\n# ============================================================\n# 1. IMPORTACIONES\n# ============================================================\nimport os\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport gudhi as gd\n\n\n# ============================================================\n# 2. DEFINIR SOLO LA RUTA\n# ============================================================\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/\"\nradio = 100  # valor ya definido\n\n\n# ============================================================\n# 3. DETECTAR ARCHIVOS CSV\n# ============================================================\narchivos = [f for f in os.listdir(ruta) if f.endswith(\".csv\")]\n\nif len(archivos) == 0:\n    raise ValueError(\"No se encontraron archivos CSV en la carpeta.\")\n\nprint(\"Archivos encontrados:\")\nfor i, f in enumerate(archivos):\n    print(f\"{i}: {f}\")\n\n\n# ============================================================\n# 4. CARPETA DE SALIDA\n# ============================================================\nruta_out = os.path.join(ruta, \"resultados\")\nos.makedirs(ruta_out, exist_ok=True)\n\n\n# ============================================================\n# 5. PROCESAR TODOS LOS CSV\n# ============================================================\nfor archivo in archivos:\n    \n    print(f\"\\nProcesando: {archivo}\")\n    \n    ruta_completa = os.path.join(ruta, archivo)\n    \n    # -------------------------------\n    # CARGAR DATOS\n    # -------------------------------\n    df = pd.read_csv(ruta_completa)\n\n    x = df[\"X_centroid\"].to_numpy()\n    y = df[\"Y_centroid\"].to_numpy()\n\n    puntos = np.column_stack((x, y))\n\n    print(f\"Número de puntos: {len(puntos)}\")\n\n\n    # -------------------------------\n    # VISUALIZAR POINT CLOUD\n    # -------------------------------\n    plt.figure(figsize=(6,6))\n    plt.scatter(x, y, s=5)\n    plt.title(f\"Point Cloud - {archivo}\")\n    plt.xlabel(\"X\")\n    plt.ylabel(\"Y\")\n    plt.show()\n\n\n    # -------------------------------\n    # COMPLEJO DE RIPS\n    # -------------------------------\n    rips_complex = gd.RipsComplex(points=puntos, max_edge_length=radio)\n    simplex_tree = rips_complex.create_simplex_tree(max_dimension=2)\n\n    print(\"Número de simplices:\", simplex_tree.num_simplices())\n\n\n    # -------------------------------\n    # VISUALIZAR COMPLEJO\n    # -------------------------------\n    plt.figure(figsize=(8,6))\n    plt.scatter(x, y, color=\"black\", s=5)\n\n    for simplex in simplex_tree.get_skeleton(1):\n        if len(simplex[0]) == 2:\n            i, j = simplex[0]\n            plt.plot([x[i], x[j]], [y[i], y[j]], color=\"gray\", linewidth=0.5)\n\n    plt.title(f\"Rips (r={radio}) - {archivo}\")\n    plt.xlabel(\"X\")\n    plt.ylabel(\"Y\")\n    plt.show()\n\n\n    # -------------------------------\n    # HOMOLOGÍA PERSISTENTE\n    # -------------------------------\n    diag = simplex_tree.persistence()\n\n    print(\"Primeros valores:\")\n    print(diag[:5])\n\n\n    # -------------------------------\n    # DIAGRAMA DE PERSISTENCIA\n    # -------------------------------\n    plt.figure(figsize=(6,6))\n    gd.plot_persistence_diagram(diag)\n    plt.title(f\"Diagrama - {archivo}\")\n    plt.show()\n\n\n    # -------------------------------\n    # GUARDAR RESULTADOS\n    # -------------------------------\n    output = pd.DataFrame(\n        [[dim, b, d] for dim, (b, d) in diag if dim &lt;= 2],\n        columns=[\"dimension\", \"birth\", \"death\"]\n    )\n\n    nombre_salida = archivo.replace(\".csv\", \"_diag.csv\")\n    output_path = os.path.join(ruta_out, nombre_salida)\n    output.to_csv(output_path, index=False)\n\n    print(f\"Guardado en: {output_path}\")\n\n\nArchivos encontrados:\n0: stroma_ad_dysplasia_FA_HN11A_5.csv\n1: dysplasia_FA_HN11A_1.csv\n2: carcinoma_FA_HN14_2.csv\n3: stroma_ad_carcinoma_FA_HN14_3.csv\n\nProcesando: stroma_ad_dysplasia_FA_HN11A_5.csv\nNúmero de puntos: 1049\n\n\n\n\n\n\n\n\n\nNúmero de simplices: 368631\n\n\n\n\n\n\n\n\n\nusetex mode requires TeX.\n\n\nPrimeros valores:\n[(1, (28.93167709459221, inf)), (1, (25.974917831490373, 59.44069934653981)), (1, (28.633869448627546, 61.68222117418402)), (1, (27.41863801437961, 58.64154776201419)), (1, (27.48526939433311, 58.011612321714566))]\n\n\n&lt;Figure size 600x600 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\nGuardado en: /home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/stroma_ad_dysplasia_FA_HN11A_5_diag.csv\n\nProcesando: dysplasia_FA_HN11A_1.csv\nNúmero de puntos: 1035\n\n\n\n\n\n\n\n\n\nNúmero de simplices: 235296\n\n\n\n\n\n\n\n\n\nPrimeros valores:\n[(1, (44.50575239622595, inf)), (1, (26.8677093770225, 61.71119279828924)), (1, (28.711268461412047, 60.45659874631934)), (1, (28.762301689860433, 60.02275215393967)), (1, (28.719254671347294, 57.49479262720702))]\n\n\n&lt;Figure size 600x600 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\nGuardado en: /home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/dysplasia_FA_HN11A_1_diag.csv\n\nProcesando: carcinoma_FA_HN14_2.csv\nNúmero de puntos: 1030\n\n\n\n\n\n\n\n\n\nNúmero de simplices: 107036\n\n\n\n\n\n\n\n\n\nPrimeros valores:\n[(1, (31.80289949119616, 77.65066582721188)), (1, (39.23315548111529, 78.14230316856788)), (1, (32.372198157574125, 68.30224655762743)), (1, (32.09901452219987, 67.65712064701079)), (1, (33.66047254900323, 68.10880650876429))]\n\n\n&lt;Figure size 600x600 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\nGuardado en: /home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/carcinoma_FA_HN14_2_diag.csv\n\nProcesando: stroma_ad_carcinoma_FA_HN14_3.csv\nNúmero de puntos: 1045\n\n\n\n\n\n\n\n\n\nNúmero de simplices: 311072\n\n\n\n\n\n\n\n\n\nPrimeros valores:\n[(1, (29.29065448908302, 65.39919075948575)), (1, (26.878732820845986, 57.955575724171666)), (1, (26.64458660015346, 53.47635977290165)), (1, (24.42163190333645, 50.40255261070409)), (1, (24.22108319490209, 49.65612905611709))]\n\n\n&lt;Figure size 600x600 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\nGuardado en: /home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/stroma_ad_carcinoma_FA_HN14_3_diag.csv\nEn este notebook vamos a construir paso a paso:\nLa idea es entender cómo pasamos de datos espaciales a descriptores topológicos.\nMostrar código\nimport os\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport gudhi as gd"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#cargar-datos",
+    "href": "codigos/rips_curso.html#cargar-datos",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.1 1. Cargar datos",
+    "text": "0.1 1. Cargar datos\nVamos a trabajar con un archivo CSV que contiene coordenadas de centroides celulares:\n\nX_centroid\n\nY_centroid\n\nEsto representa nuestra nube de puntos (point cloud).\n\n\nMostrar código\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/carcinoma_FA_HN14_2.csv\"  # puedes cambiar este valor\n\ndf = pd.read_csv(ruta)\n\nx = df[\"X_centroid\"].to_numpy()\ny = df[\"Y_centroid\"].to_numpy()\n\npuntos = np.column_stack((x, y))\n\nprint(f\"Número de puntos: {len(puntos)}\")\n\n\nNúmero de puntos: 1030"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#visualización-de-la-nube-de-puntos",
+    "href": "codigos/rips_curso.html#visualización-de-la-nube-de-puntos",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.2 2. Visualización de la nube de puntos",
+    "text": "0.2 2. Visualización de la nube de puntos\nAntes de aplicar TDA, es importante observar la estructura espacial de los datos.\nCada punto representa una célula en el tejido.\n\n\nMostrar código\nplt.figure(figsize=(6,6))\nplt.scatter(x, y, s=5)\nplt.title(\"Point Cloud (centroides celulares)\")\nplt.xlabel(\"X\")\nplt.ylabel(\"Y\")\nplt.show()"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#complejo-de-rips",
+    "href": "codigos/rips_curso.html#complejo-de-rips",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.3 3. Complejo de Rips",
+    "text": "0.3 3. Complejo de Rips\nConstruimos un complejo de Rips conectando puntos que están a una distancia menor que un parámetro r.\nEste parámetro controla la escala de análisis.\n\n\nMostrar código\nradio = 50  # puedes cambiar este valor\n\nrips_complex = gd.RipsComplex(points=puntos, max_edge_length=radio)\nsimplex_tree = rips_complex.create_simplex_tree(max_dimension=2) # puedes cambiar este valor\n\nprint(\"Número de simplices:\", simplex_tree.num_simplices())\n\n\nNúmero de simplices: 9121"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#visualización-del-complejo",
+    "href": "codigos/rips_curso.html#visualización-del-complejo",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.4 4. Visualización del complejo",
+    "text": "0.4 4. Visualización del complejo\nAquí observamos cómo se conectan los puntos.\nLas líneas representan conexiones entre puntos cercanos.\n\n\nMostrar código\nplt.figure(figsize=(8,6))\nplt.scatter(x, y, color=\"black\", s=5)\n\nfor simplex in simplex_tree.get_skeleton(1):\n    if len(simplex[0]) == 2:\n        i, j = simplex[0]\n        plt.plot([x[i], x[j]], [y[i], y[j]], color=\"gray\", linewidth=0.5)\n\nplt.title(f\"Complejo de Rips (r={radio})\")\nplt.xlabel(\"X\")\nplt.ylabel(\"Y\")\nplt.show()"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#homología-persistente",
+    "href": "codigos/rips_curso.html#homología-persistente",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.5 5. Homología persistente",
+    "text": "0.5 5. Homología persistente\nCalculamos las características topológicas del complejo:\n\nDimensión 0: componentes conexas\n\nDimensión 1: ciclos\n\nEstas características se analizan a lo largo de distintas escalas.\n\n\nMostrar código\ndiag = simplex_tree.persistence()\n\nprint(\"Primeros valores:\")\nprint(diag[:10])\n\n\nPrimeros valores:\n[(1, (36.50843414019692, inf)), (1, (34.89826559940533, inf)), (1, (34.94464363154827, inf)), (1, (35.07773869438781, inf)), (1, (35.08834896071297, inf)), (1, (35.147632669852634, inf)), (1, (35.21930408753491, inf)), (1, (35.3060076839965, inf)), (1, (35.31815355881978, inf)), (1, (35.488743972397636, inf))]"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#diagrama-de-persistencia",
+    "href": "codigos/rips_curso.html#diagrama-de-persistencia",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.6 6. Diagrama de persistencia",
+    "text": "0.6 6. Diagrama de persistencia\nEl diagrama muestra cuándo aparecen (birth) y desaparecen (death) las estructuras topológicas.\nCada punto representa una característica topológica.\n\n\nMostrar código\nplt.figure(figsize=(6,6))\ngd.plot_persistence_diagram(diag)\nplt.title(\"Diagrama de persistencia\")\nplt.show()\n\n\n&lt;Figure size 600x600 with 0 Axes&gt;"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#guardar-resultados",
+    "href": "codigos/rips_curso.html#guardar-resultados",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "0.7 7. Guardar resultados",
+    "text": "0.7 7. Guardar resultados\nGuardamos el diagrama como tabla para análisis posterior.\n\n\nMostrar código\noutput = pd.DataFrame(\n    [[dim, b, d] for dim, (b, d) in diag if dim &lt;= 2],\n    columns=[\"dimension\", \"birth\", \"death\"]\n)\n\noutput.head()\n\n\n\n\n\n\n\n\n\ndimension\nbirth\ndeath\n\n\n\n\n0\n1\n36.508434\ninf\n\n\n1\n1\n34.898266\ninf\n\n\n2\n1\n34.944644\ninf\n\n\n3\n1\n35.077739\ninf\n\n\n4\n1\n35.088349\ninf\n\n\n\n\n\n\n\n\n\nMostrar código\n# Distancias-\n\n\n\n\nMostrar código\n# ============================================================\n# 1. IMPORTACIONES\n# ============================================================\nimport os\nimport numpy as np\nimport pandas as pd\nimport gudhi.wasserstein as gw\n\n\n# ============================================================\n# 2. DEFINIR RUTA\n# ============================================================\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/\"\n\n# Aquí deben estar los CSV de diagramas\n# (columnas: dimension, birth, death)\n\n\n# ============================================================\n# 3. VER ARCHIVOS DISPONIBLES\n# ============================================================\narchivos = [f for f in os.listdir(ruta) if f.endswith(\".csv\")]\n\nif len(archivos) &lt; 2:\n    raise ValueError(\"Se necesitan al menos 2 archivos CSV.\")\n\nprint(\"Archivos disponibles:\")\nfor i, f in enumerate(archivos):\n    print(f\"{i}: {f}\")\n\n\n# ============================================================\n# 4. SELECCIONAR DOS ARCHIVOS\n# ============================================================\narchivo1 = archivos[0]\narchivo2 = archivos[1]\n\nprint(f\"\\nComparando:\\n{archivo1}\\n{archivo2}\")\n\n\n# ============================================================\n# 5. CARGAR DIAGRAMAS\n# ============================================================\ndf1 = pd.read_csv(os.path.join(ruta, archivo1))\ndf2 = pd.read_csv(os.path.join(ruta, archivo2))\n\n\n# -------------------------------\n# DIMENSIÓN 0 (sin filtrar)\n# -------------------------------\ndiag1_dim0 = df1[df1[\"dimension\"] == 0][[\"birth\", \"death\"]].to_numpy()\ndiag2_dim0 = df2[df2[\"dimension\"] == 0][[\"birth\", \"death\"]].to_numpy()\n\n\n# -------------------------------\n# DIMENSIÓN 1 (QUITAR INFINITOS)\n# -------------------------------\ndiag1_dim1 = df1[\n    (df1[\"dimension\"] == 1) & (np.isfinite(df1[\"death\"]))\n][[\"birth\", \"death\"]].to_numpy()\n\ndiag2_dim1 = df2[\n    (df2[\"dimension\"] == 1) & (np.isfinite(df2[\"death\"]))\n][[\"birth\", \"death\"]].to_numpy()\n\n\n# ============================================================\n# 6. VALIDACIÓN\n# ============================================================\nprint(\"\\nNúmero de puntos en diagramas:\")\nprint(f\"{archivo1} → dim0: {len(diag1_dim0)}, dim1: {len(diag1_dim1)}\")\nprint(f\"{archivo2} → dim0: {len(diag2_dim0)}, dim1: {len(diag2_dim1)}\")\n\nif len(diag1_dim1) == 0 or len(diag2_dim1) == 0:\n    print(\"\\nAdvertencia: uno de los diagramas no tiene ciclos finitos (dim 1)\")\n\n\n# ============================================================\n# 7. DISTANCIA DE WASSERSTEIN\n# ============================================================\nwass_dim0 = gw.wasserstein_distance(diag1_dim0, diag2_dim0, order=1)\nwass_dim1 = gw.wasserstein_distance(diag1_dim1, diag2_dim1, order=1)\n\n\n# ============================================================\n# 8. RESULTADOS\n# ============================================================\nprint(\"\\nDistancias de Wasserstein:\")\nprint(f\"Dimensión 0: {wass_dim0:.4f}\")\nprint(f\"Dimensión 1: {wass_dim1:.4f}\")\n\n\nArchivos disponibles:\n0: dysplasia_FA_HN11A_1_diag.csv\n1: carcinoma_FA_HN14_2_diag.csv\n2: stroma_ad_carcinoma_FA_HN14_3_diag.csv\n3: stroma_ad_dysplasia_FA_HN11A_5_diag.csv\n\nComparando:\ndysplasia_FA_HN11A_1_diag.csv\ncarcinoma_FA_HN14_2_diag.csv\n\nNúmero de puntos en diagramas:\ndysplasia_FA_HN11A_1_diag.csv → dim0: 1035, dim1: 422\ncarcinoma_FA_HN14_2_diag.csv → dim0: 1030, dim1: 412\n\nDistancias de Wasserstein:\nDimensión 0: 4712.9786\nDimensión 1: 1532.7357\n\n\n\n\nMostrar código\n# ============================================================\n# 1. IMPORTACIONES\n# ============================================================\nimport os\nimport numpy as np\nimport pandas as pd\nimport gudhi.wasserstein as gw\n\n\n# ============================================================\n# 2. DEFINIR RUTA\n# ============================================================\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/\"\n\n\n# ============================================================\n# 3. CARGAR ARCHIVOS\n# ============================================================\narchivos = sorted([f for f in os.listdir(ruta) if f.endswith(\".csv\")])\n\nif len(archivos) &lt; 2:\n    raise ValueError(\"Se necesitan al menos 2 archivos CSV.\")\n\nprint(\"Archivos:\")\nfor i, f in enumerate(archivos):\n    print(f\"{i}: {f}\")\n\n\n# ============================================================\n# 4. CARGAR TODOS LOS DIAGRAMAS\n# ============================================================\ndiag_dim0 = []\ndiag_dim1 = []\n\nfor archivo in archivos:\n    \n    df = pd.read_csv(os.path.join(ruta, archivo))\n    \n    # dimensión 0\n    d0 = df[df[\"dimension\"] == 0][[\"birth\", \"death\"]].to_numpy()\n    \n    # dimensión 1 (sin infinitos)\n    d1 = df[\n        (df[\"dimension\"] == 1) & (np.isfinite(df[\"death\"]))\n    ][[\"birth\", \"death\"]].to_numpy()\n    \n    diag_dim0.append(d0)\n    diag_dim1.append(d1)\n\n\n# ============================================================\n# 5. MATRICES DE DISTANCIA\n# ============================================================\nn = len(archivos)\n\ndist_dim0 = np.zeros((n, n))\ndist_dim1 = np.zeros((n, n))\n\n\n# ============================================================\n# 6. CALCULAR TODAS LAS DISTANCIAS\n# ============================================================\nfor i in range(n):\n    for j in range(n):\n        \n        # dimensión 0\n        dist_dim0[i, j] = gw.wasserstein_distance(\n            diag_dim0[i], diag_dim0[j], order=1\n        )\n        \n        # dimensión 1\n        dist_dim1[i, j] = gw.wasserstein_distance(\n            diag_dim1[i], diag_dim1[j], order=1\n        )\n\n\n# ============================================================\n# 7. CONVERTIR A DATAFRAME\n# ============================================================\ndf_dist0 = pd.DataFrame(dist_dim0, index=archivos, columns=archivos)\ndf_dist1 = pd.DataFrame(dist_dim1, index=archivos, columns=archivos)\n\n\n# ============================================================\n# 8. MOSTRAR RESULTADOS\n# ============================================================\nprint(\"\\nMatriz de distancias (Dimensión 0):\")\nprint(df_dist0)\n\nprint(\"\\nMatriz de distancias (Dimensión 1):\")\nprint(df_dist1)\n\n\n# ============================================================\n# 9. GUARDAR RESULTADOS\n# ============================================================\ndf_dist0.to_csv(os.path.join(ruta, \"wasserstein_dim0.csv\"))\ndf_dist1.to_csv(os.path.join(ruta, \"wasserstein_dim1.csv\"))\n\nprint(\"\\nMatrices guardadas en la carpeta.\")\n\n\nArchivos:\n0: carcinoma_FA_HN14_2_diag.csv\n1: dysplasia_FA_HN11A_1_diag.csv\n2: stroma_ad_carcinoma_FA_HN14_3_diag.csv\n3: stroma_ad_dysplasia_FA_HN11A_5_diag.csv\n\nMatriz de distancias (Dimensión 0):\n                                         carcinoma_FA_HN14_2_diag.csv  \\\ncarcinoma_FA_HN14_2_diag.csv                                 0.000000   \ndysplasia_FA_HN11A_1_diag.csv                             4712.978647   \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                    5939.215637   \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                   7942.137418   \n\n                                         dysplasia_FA_HN11A_1_diag.csv  \\\ncarcinoma_FA_HN14_2_diag.csv                               4712.978647   \ndysplasia_FA_HN11A_1_diag.csv                                 0.000000   \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                     1266.004547   \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                    3323.409506   \n\n                                         stroma_ad_carcinoma_FA_HN14_3_diag.csv  \\\ncarcinoma_FA_HN14_2_diag.csv                                        5939.215637   \ndysplasia_FA_HN11A_1_diag.csv                                       1266.004547   \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                                 0.000000   \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                             2227.574660   \n\n                                         stroma_ad_dysplasia_FA_HN11A_5_diag.csv  \ncarcinoma_FA_HN14_2_diag.csv                                         7942.137418  \ndysplasia_FA_HN11A_1_diag.csv                                        3323.409506  \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                               2227.574660  \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                                 0.000000  \n\nMatriz de distancias (Dimensión 1):\n                                         carcinoma_FA_HN14_2_diag.csv  \\\ncarcinoma_FA_HN14_2_diag.csv                                 0.000000   \ndysplasia_FA_HN11A_1_diag.csv                             1532.735703   \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                    2018.277733   \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                   1615.355757   \n\n                                         dysplasia_FA_HN11A_1_diag.csv  \\\ncarcinoma_FA_HN14_2_diag.csv                               1532.735703   \ndysplasia_FA_HN11A_1_diag.csv                                 0.000000   \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                      733.412647   \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                     548.754032   \n\n                                         stroma_ad_carcinoma_FA_HN14_3_diag.csv  \\\ncarcinoma_FA_HN14_2_diag.csv                                        2018.277733   \ndysplasia_FA_HN11A_1_diag.csv                                        733.412647   \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                                 0.000000   \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                              610.070898   \n\n                                         stroma_ad_dysplasia_FA_HN11A_5_diag.csv  \ncarcinoma_FA_HN14_2_diag.csv                                         1615.355757  \ndysplasia_FA_HN11A_1_diag.csv                                         548.754032  \nstroma_ad_carcinoma_FA_HN14_3_diag.csv                                610.070898  \nstroma_ad_dysplasia_FA_HN11A_5_diag.csv                                 0.000000  \n\nMatrices guardadas en la carpeta."
+  },
+  {
+    "objectID": "codigos/rips_curso.html#definir-la-ruta",
+    "href": "codigos/rips_curso.html#definir-la-ruta",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.1 1. Definir la ruta",
+    "text": "1.1 1. Definir la ruta\nEn esta carpeta se encuentran los archivos CSV que contienen los diagramas de persistencia.\nCada archivo tiene las columnas: - dimension - birth - death\n\n\nMostrar código\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/\""
+  },
+  {
+    "objectID": "codigos/rips_curso.html#ver-archivos-disponibles",
+    "href": "codigos/rips_curso.html#ver-archivos-disponibles",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.2 2. Ver archivos disponibles",
+    "text": "1.2 2. Ver archivos disponibles\nListamos los archivos para elegir cuáles comparar.\n\n\nMostrar código\narchivos = [f for f in os.listdir(ruta) if f.endswith(\".csv\")]\n\nif len(archivos) &lt; 2:\n    raise ValueError(\"Se necesitan al menos 2 archivos CSV.\")\n\nprint(\"Archivos disponibles:\")\nfor i, f in enumerate(archivos):\n    print(f\"{i}: {f}\")\n\n\nArchivos disponibles:\n0: dysplasia_FA_HN11A_1_diag.csv\n1: carcinoma_FA_HN14_2_diag.csv\n2: stroma_ad_carcinoma_FA_HN14_3_diag.csv\n3: stroma_ad_dysplasia_FA_HN11A_5_diag.csv"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#seleccionar-dos-archivos",
+    "href": "codigos/rips_curso.html#seleccionar-dos-archivos",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.3 3. Seleccionar dos archivos",
+    "text": "1.3 3. Seleccionar dos archivos\nElegimos dos diagramas para comparar.\nPuedes cambiar los índices para probar diferentes combinaciones.\n\n\nMostrar código\narchivo1 = archivos[0]\narchivo2 = archivos[1]\n\nprint(f\"Comparando:\\n{archivo1}\\n{archivo2}\")\n\n\nComparando:\ndysplasia_FA_HN11A_1_diag.csv\ncarcinoma_FA_HN14_2_diag.csv"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#cargar-diagramas",
+    "href": "codigos/rips_curso.html#cargar-diagramas",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.4 4. Cargar diagramas",
+    "text": "1.4 4. Cargar diagramas\nLeemos los archivos y separamos las estructuras topológicas por dimensión:\n\nDimensión 0 → componentes conexas\n\nDimensión 1 → ciclos\n\nEn dimensión 1 eliminamos los valores infinitos, ya que no los consideraremos en este análisis.\n\n\nMostrar código\ndf1 = pd.read_csv(os.path.join(ruta, archivo1))\ndf2 = pd.read_csv(os.path.join(ruta, archivo2))\n\n# Dimensión 0\ndiag1_dim0 = df1[df1[\"dimension\"] == 0][[\"birth\", \"death\"]].to_numpy()\ndiag2_dim0 = df2[df2[\"dimension\"] == 0][[\"birth\", \"death\"]].to_numpy()\n\n# Dimensión 1 (sin infinitos)\ndiag1_dim1 = df1[\n    (df1[\"dimension\"] == 1) & (np.isfinite(df1[\"death\"]))\n][[\"birth\", \"death\"]].to_numpy()\n\ndiag2_dim1 = df2[\n    (df2[\"dimension\"] == 1) & (np.isfinite(df2[\"death\"]))\n][[\"birth\", \"death\"]].to_numpy()"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#validación",
+    "href": "codigos/rips_curso.html#validación",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.5 5. Validación",
+    "text": "1.5 5. Validación\nVerificamos cuántas estructuras topológicas hay en cada dimensión.\nEsto nos ayuda a entender qué estamos comparando.\n\n\nMostrar código\nprint(\"Número de puntos en diagramas:\")\n\nprint(f\"{archivo1} → dim0: {len(diag1_dim0)}, dim1: {len(diag1_dim1)}\")\nprint(f\"{archivo2} → dim0: {len(diag2_dim0)}, dim1: {len(diag2_dim1)}\")\n\nif len(diag1_dim1) == 0 or len(diag2_dim1) == 0:\n    print(\"Advertencia: uno de los diagramas no tiene ciclos finitos (dim 1)\")\n\n\nNúmero de puntos en diagramas:\ndysplasia_FA_HN11A_1_diag.csv → dim0: 1035, dim1: 422\ncarcinoma_FA_HN14_2_diag.csv → dim0: 1030, dim1: 412"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#distancia-de-wasserstein",
+    "href": "codigos/rips_curso.html#distancia-de-wasserstein",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.6 6. Distancia de Wasserstein",
+    "text": "1.6 6. Distancia de Wasserstein\nCalculamos la distancia entre los diagramas.\n\nDimensión 0 → compara conectividad\n\nDimensión 1 → compara ciclos\n\nEsta distancia mide qué tan diferentes son las estructuras topológicas.\n\n\nMostrar código\nwass_dim0 = gw.wasserstein_distance(diag1_dim0, diag2_dim0, order=1)\nwass_dim1 = gw.wasserstein_distance(diag1_dim1, diag2_dim1, order=1)"
+  },
+  {
+    "objectID": "codigos/rips_curso.html#resultados",
+    "href": "codigos/rips_curso.html#resultados",
+    "title": "Análisis Topológico de Datos (TDA)",
+    "section": "1.7 7. Resultados",
+    "text": "1.7 7. Resultados\nMostramos las distancias obtenidas.\nValores más grandes indican mayor diferencia entre las muestras.\n\n\nMostrar código\nprint(\"Distancias de Wasserstein:\")\nprint(f\"Dimensión 0: {wass_dim0:.4f}\")\nprint(f\"Dimensión 1: {wass_dim1:.4f}\")\n\n\nDistancias de Wasserstein:\nDimensión 0: 4712.9786\nDimensión 1: 1532.7357"
+  },
+  {
+    "objectID": "vietoris_rips.html",
+    "href": "vietoris_rips.html",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "Una de las ideas centrales de TDA consiste en transformar una nube de puntos en un objeto geométrico sobre el cual puedan estudiarse propiedades topológicas.\nEn nuestro contexto, cada muestra biológica se representa mediante las coordenadas espaciales de las células identificadas en una imagen de tejido tumoral. A partir de estas coordenadas construimos un complejo de Vietoris–Rips, que será la base para calcular homología persistente.\n\n\nDado un conjunto de puntos (X) y un parámetro de escala ():\n\nDos puntos se conectan si su distancia es menor o igual que ().\nTres puntos mutuamente conectados generan un triángulo.\nCuatro puntos mutuamente conectados generan un tetraedro.\nEl procedimiento continúa de forma análoga en dimensiones superiores.\n\n\n\n\nSea (X={x_1,x_2,,x_n}) un conjunto de puntos en un espacio métrico. El complejo de Vietoris–Rips asociado a una escala () se define como\n$$ VR_(X) =================\n. $$\n\n\n\nAl variar (), la estructura del complejo cambia:\n\nPara valores pequeños aparecen componentes aisladas.\nConforme aumenta (), comienzan a formarse conexiones.\nA escalas intermedias pueden aparecer ciclos.\nPara valores grandes muchas estructuras terminan fusionándose.\n\nEste comportamiento multiescala es precisamente el que estudia la homología persistente.\n\n\n\n\n\n\n\n\nEvolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala ().\n\n\n\nEn este trabajo construiremos complejos de Vietoris–Rips utilizando las coordenadas espaciales de subconjuntos celulares obtenidos a partir de imágenes de tejido tumoral.\nA partir de estos complejos calcularemos homología persistente en dimensiones:\n\n(H_0): componentes conexas.\n(H_1): ciclos.\n\nEstas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral.\n\n\n\nLa construcción de complejos de Vietoris–Rips se realizó en Python utilizando la biblioteca GUDHI."
+  },
+  {
+    "objectID": "vietoris_rips.html#construcción",
+    "href": "vietoris_rips.html#construcción",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "Dado un conjunto de puntos (X) y un parámetro de escala ():\n\nDos puntos se conectan si su distancia es menor o igual que ().\nTres puntos mutuamente conectados generan un triángulo.\nCuatro puntos mutuamente conectados generan un tetraedro.\nEl procedimiento continúa de forma análoga en dimensiones superiores."
+  },
+  {
+    "objectID": "vietoris_rips.html#definición",
+    "href": "vietoris_rips.html#definición",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "Sea (X={x_1,x_2,,x_n}) un conjunto de puntos en un espacio métrico. El complejo de Vietoris–Rips asociado a una escala () se define como\n$$ VR_(X) =================\n. $$"
+  },
+  {
+    "objectID": "vietoris_rips.html#efecto-del-parámetro-de-escala",
+    "href": "vietoris_rips.html#efecto-del-parámetro-de-escala",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "Al variar (), la estructura del complejo cambia:\n\nPara valores pequeños aparecen componentes aisladas.\nConforme aumenta (), comienzan a formarse conexiones.\nA escalas intermedias pueden aparecer ciclos.\nPara valores grandes muchas estructuras terminan fusionándose.\n\nEste comportamiento multiescala es precisamente el que estudia la homología persistente."
+  },
+  {
+    "objectID": "vietoris_rips.html#ejemplo-visual",
+    "href": "vietoris_rips.html#ejemplo-visual",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala ()."
+  },
+  {
+    "objectID": "vietoris_rips.html#aplicación-en-este-workshop",
+    "href": "vietoris_rips.html#aplicación-en-este-workshop",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "En este trabajo construiremos complejos de Vietoris–Rips utilizando las coordenadas espaciales de subconjuntos celulares obtenidos a partir de imágenes de tejido tumoral.\nA partir de estos complejos calcularemos homología persistente en dimensiones:\n\n(H_0): componentes conexas.\n(H_1): ciclos.\n\nEstas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral."
+  },
+  {
+    "objectID": "vietoris_rips.html#implementación-computacional",
+    "href": "vietoris_rips.html#implementación-computacional",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "",
+    "text": "La construcción de complejos de Vietoris–Rips se realizó en Python utilizando la biblioteca GUDHI."
+  },
+  {
+    "objectID": "vietoris_rips.html#objetivos",
+    "href": "vietoris_rips.html#objetivos",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.1 Objetivos",
+    "text": "2.1 Objetivos\nEn este ejercicio construiremos:\n\nUna nube de puntos a partir de coordenadas celulares.\nUn complejo de Vietoris–Rips.\nUn diagrama de persistencia.\n\nLa idea es entender cómo pasamos de datos espaciales a descriptores topológicos.\n\n\n\n\n\n\nTipMostrar código\n\n\n\n\n\nimport os\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport gudhi as gd"
+  },
+  {
+    "objectID": "vietoris_rips.html#cargar-datos",
+    "href": "vietoris_rips.html#cargar-datos",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.2 1. Cargar datos",
+    "text": "2.2 1. Cargar datos\nVamos a trabajar con un archivo CSV que contiene las coordenadas espaciales de los centroides celulares.\nLas columnas que utilizaremos son:\n\nX_centroid\nY_centroid\n\nEstas coordenadas representan nuestra nube de puntos (point cloud), que será la entrada para el análisis topológico.\n\nEjercicio\nCargue el archivo CSV y construya una matriz llamada puntos que contenga las coordenadas ((x,y)) de cada célula.\n\n\nPista\n\nUtilice pandas.read_csv().\nExtraiga las columnas X_centroid y Y_centroid.\nCombine ambas columnas en una matriz usando np.column_stack().\nVerifique cuántos puntos contiene la muestra.\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\nruta = \"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/carcinoma_FA_HN14_2.csv\"\n\ndf = pd.read_csv(ruta)\n\nx = df[\"X_centroid\"].to_numpy()\ny = df[\"Y_centroid\"].to_numpy()\n\npuntos = np.column_stack((x, y))\n\nprint(f\"Número de puntos: {len(puntos)}\")"
+  },
+  {
+    "objectID": "vietoris_rips.html#visualización-de-la-nube-de-puntos",
+    "href": "vietoris_rips.html#visualización-de-la-nube-de-puntos",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.3 2. Visualización de la nube de puntos",
+    "text": "2.3 2. Visualización de la nube de puntos\nAntes de aplicar herramientas de TDA es importante observar la distribución espacial de las células.\nCada punto de la gráfica corresponde a una célula identificada en el tejido.\n\nEjercicio\nGenere una gráfica de dispersión (scatter plot) utilizando las coordenadas almacenadas en x y y.\n\n\nPreguntas para reflexionar\n\n¿Existen regiones con alta densidad celular?\n¿Observa agrupamientos?\n¿Hay zonas vacías dentro de la muestra?\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\nplt.figure(figsize=(6,6))\nplt.scatter(x, y, s=5)\nplt.title(\"Point Cloud (centroides celulares)\")\nplt.xlabel(\"X\")\nplt.ylabel(\"Y\")\nplt.show()"
+  },
+  {
+    "objectID": "vietoris_rips.html#construcción-del-complejo-de-vietorisrips",
+    "href": "vietoris_rips.html#construcción-del-complejo-de-vietorisrips",
+    "title": "Complejo de Vietoris–Rips",
+    "section": "2.4 3. Construcción del complejo de Vietoris–Rips",
+    "text": "2.4 3. Construcción del complejo de Vietoris–Rips\nEl siguiente paso consiste en conectar puntos cercanos mediante un parámetro de escala (r).\nEste parámetro controla qué tan lejos pueden estar dos células para considerarse conectadas.\n\nEjercicio\nConstruya un complejo de Vietoris–Rips utilizando:\n\nlas coordenadas almacenadas en puntos,\nun radio inicial de 50,\ndimensión máxima igual a 2.\n\n\n\nPreguntas para reflexionar\n\n¿Qué ocurre si aumenta el valor de r?\n¿Qué ocurre si disminuye?\n¿Cómo cambiaría la estructura del complejo?\n\n\n\n\n\n\n\nTipVer solución\n\n\n\n\n\nradio = 50\n\nrips_complex = gd.RipsComplex(\n    points=puntos,\n    max_edge_length=radio\n)\n\nsimplex_tree = rips_complex.create_simplex_tree(\n    max_dimension=2\n)\n\nprint(\"Número de simplices:\", simplex_tree.num_simplices())"
+  },
+  {
+    "objectID": "diagramas.html",
+    "href": "diagramas.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "wasserstein.html",
+    "href": "wasserstein.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "homologia.html",
+    "href": "homologia.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
   },
   {
     "objectID": "index.html#topological-data-analysis-in-biology",
@@ -26,27 +229,6 @@
     "title": "Análisis Topológico de Datos para la Caracterización de Patrones Celulares",
     "section": "2.1 Análisis topológico de datos para la caracterización de patrones celulares",
     "text": "2.1 Análisis topológico de datos para la caracterización de patrones celulares\nMiércoles 1 de julio de 2026\n\nInstructores de la sesión\n\nLuis Raúl Figueroa\nA. Haydeé Contreras Peruyero\nEugenio Martín Azpeitia\n\n\n\nPrograma\n\n\n\n\n\n\n\nHora\nActividad\n\n\n\n\n09:30 – 10:20\nCharla: Análisis topológico de datos para la caracterización de patrones celulares\n\n\n10:30 – 11:30\nTDA in Images – Práctica 1\n\n\n11:30 – 11:45\nReceso\n\n\n11:45 – 12:50\nTDA in Images – Práctica 2\n\n\n13:00 – 14:00\nEspacio libre para trabajo individual"
-  },
-  {
-    "objectID": "clustering.html",
-    "href": "clustering.html",
-    "title": "",
-    "section": "",
-    "text": "Code"
-  },
-  {
-    "objectID": "diagramas.html",
-    "href": "diagramas.html",
-    "title": "",
-    "section": "",
-    "text": "Code"
-  },
-  {
-    "objectID": "homologia.html",
-    "href": "homologia.html",
-    "title": "",
-    "section": "",
-    "text": "Code"
   },
   {
     "objectID": "introduccion.html",
@@ -81,7 +263,7 @@
     "href": "introduccion.html#células-no-tumorales",
     "title": "Introducción",
     "section": "3.4 Células no tumorales",
-    "text": "3.4 Células no tumorales\n\nEndothelial cells\nStromal cells\nOther\n\nDe esta manera, cada muestra puede representarse como una nube de puntos (point cloud), donde cada punto corresponde a una célula localizada en el tejido.\n\n\n\n\n\n\nPoint Cloud\n\n\n\nImagen → Segmentación → Coordenadas → Nube de puntos"
+    "text": "3.4 Células no tumorales\n\nEndothelial cells\nStromal cells\nOther\n\nDe esta manera, cada muestra puede representarse como una nube de puntos (point cloud), donde cada punto corresponde a una célula localizada en el tejido.\n\n\n\n\n\n\nTipPoint Cloud\n\n\n\nImagen → Segmentación → Coordenadas → Nube de puntos"
   },
   {
     "objectID": "topkat.html",
@@ -91,31 +273,10 @@
     "text": "Code"
   },
   {
-    "objectID": "vietoris_rips.html",
-    "href": "vietoris_rips.html",
+    "objectID": "clustering.html",
+    "href": "clustering.html",
     "title": "",
     "section": "",
     "text": "Code"
-  },
-  {
-    "objectID": "wasserstein.html",
-    "href": "wasserstein.html",
-    "title": "",
-    "section": "",
-    "text": "Code"
-  },
-  {
-    "objectID": "workshop_tda.html",
-    "href": "workshop_tda.html",
-    "title": "workshop_tda",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "workshop_tda.html#quarto",
-    "href": "workshop_tda.html#quarto",
-    "title": "workshop_tda",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
   }
 ]

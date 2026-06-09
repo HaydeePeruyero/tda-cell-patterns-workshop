@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Análisis Topológico de Patrones Celulares"
+
+  navbar:
+    left:
+      - href: 0-index.qmd
+        text: Inicio
+
+      - href: 1-tda.qmd
+        text: Fundamentos TDA
+
+      - href: 2-classification.qmd
+        text: Aplicación y Resultados
+
+format:
+  html:
+    theme: lumen
+    css: styles.css
+    toc: true
+    toc-location: left
+    toc-depth: 2
+    toc-expand: 2
+    number-sections: true
+    number-depth: 2
+    code-copy: true
+    code-fold: false
+    code-tools: false
+    code-overflow: wrap
+    smooth-scroll: true
+
+editor: visual
