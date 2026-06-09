@@ -3,17 +3,23 @@ project:
   output-dir: docs
 
 website:
-  title: "TDA en patrones celulares"
+  title: "Workshop TDA"
   navbar:
+    background: primary
     left:
-      - href: 0-index.qmd
-        text: Intro
-      - 1-tda.qmd
-      - 2-classification.qmd
+      - href: index.qmd
+        text: Presentación
+      - introduccion.qmd
+      - vietoris_rips.qmd
+      - homologia.qmd
+      - diagramas.qmd
+      - wasserstein.qmd
+      - clustering.qmd
+      - topkat.qmd
 
 format:
   html:
-    theme: Lumen
+    theme: cosmo
     css: styles.css
     toc: true
     toc-location: left
@@ -26,6 +32,7 @@ format:
     code-summary: "Mostrar código"
     code-tools: true
     code-overflow: wrap
+    page-layout: article
 
 editor: visual
 
