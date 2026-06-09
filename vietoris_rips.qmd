@@ -395,31 +395,78 @@ archivo_2.csv
 
 ```python
 import os
+import requests
 import numpy as np
 import pandas as pd
 import gudhi as gd
 
-ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/"
+# ============================================================
+# 1. OBTENER LISTA DE ARCHIVOS DESDE GITHUB
+# ============================================================
 
-archivos = [
-    "carcinoma_FA_HN14_2.csv",
-    "displasia_FA_HN14_2.csv",
-    "stroma_FA_HN14_2.csv"
-]
+api_url = (
+    "https://api.github.com/repos/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/contents/data"
+)
+
+contenido = requests.get(api_url).json()
+
+archivos = sorted([
+    f["name"]
+    for f in contenido
+    if f["name"].endswith(".csv")
+])
+
+print("Archivos encontrados:")
+for archivo in archivos:
+    print("-", archivo)
+
+# ============================================================
+# 2. RUTA RAW DE GITHUB
+# ============================================================
+
+ruta = (
+    "https://raw.githubusercontent.com/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/main/data/"
+)
+
+# ============================================================
+# 3. CREAR CARPETA DE SALIDA
+# ============================================================
+
+os.makedirs("resultados", exist_ok=True)
+
+# ============================================================
+# 4. PROCESAR TODOS LOS ARCHIVOS
+# ============================================================
 
 for archivo in archivos:
 
-    # 1. Cargar archivo
-    df = pd.read_csv( __________________ )
+    print(f"\nProcesando: {archivo}")
 
-    # 2. Extraer coordenadas
+    # -------------------------
+    # Cargar datos
+    # -------------------------
+
+    df = __________________
+
+    # -------------------------
+    # Coordenadas
+    # -------------------------
+
     x = __________________
     y = __________________
 
-    # 3. Construir nube de puntos
+    # -------------------------
+    # Nube de puntos
+    # -------------------------
+
     puntos = __________________
 
-    # 4. Complejo de Rips
+    # -------------------------
+    # Complejo de Rips
+    # -------------------------
+
     rips_complex = gd.RipsComplex(
         points=puntos,
         max_edge_length=50
@@ -429,17 +476,33 @@ for archivo in archivos:
         max_dimension=2
     )
 
-    # 5. Homología persistente
+    # -------------------------
+    # Homología persistente
+    # -------------------------
+
     diag = __________________
 
-    # 6. Convertir a DataFrame
+    # -------------------------
+    # Convertir a DataFrame
+    # -------------------------
+
     output = pd.DataFrame(
         [[dim, b, d] for dim, (b, d) in diag if dim <= 2],
         columns=["dimension", "birth", "death"]
     )
 
-    print(archivo)
-    print(output.head())
+    # -------------------------
+    # Guardar resultado
+    # -------------------------
+
+    nombre_salida = __________________
+
+    output.to_csv(
+        os.path.join("resultados", nombre_salida),
+        index=False
+    )
+
+    print(f"Guardado: {nombre_salida}")
 
 ```
 
@@ -448,39 +511,80 @@ for archivo in archivos:
 
 ```python
 import os
+import requests
 import numpy as np
 import pandas as pd
 import gudhi as gd
 
-ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/"
+# ============================================================
+# 1. OBTENER LISTA DE ARCHIVOS DESDE GITHUB
+# ============================================================
 
-archivos = [
-    "carcinoma_FA_HN14_2.csv",
-    "displasia_FA_HN14_2.csv",
-    "stroma_FA_HN14_2.csv"
-]
+api_url = (
+    "https://api.github.com/repos/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/contents/data"
+)
+
+contenido = requests.get(api_url).json()
+
+archivos = sorted([
+    f["name"]
+    for f in contenido
+    if f["name"].endswith(".csv")
+])
+
+print("Archivos encontrados:")
+for archivo in archivos:
+    print("-", archivo)
+
+# ============================================================
+# 2. RUTA RAW DE GITHUB
+# ============================================================
+
+ruta = (
+    "https://raw.githubusercontent.com/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/main/data/"
+)
+
+# ============================================================
+# 3. CREAR CARPETA DE SALIDA
+# ============================================================
+
+os.makedirs("resultados", exist_ok=True)
+
+# ============================================================
+# 4. PROCESAR TODOS LOS ARCHIVOS
+# ============================================================
 
 for archivo in archivos:
 
-    # ---------------------------
-    # Cargar archivo
-    # ---------------------------
+    print(f"\nProcesando: {archivo}")
+
+    # -------------------------
+    # Cargar datos
+    # -------------------------
+
     df = pd.read_csv(ruta + archivo)
 
-    # ---------------------------
-    # Extraer coordenadas
-    # ---------------------------
+    # -------------------------
+    # Coordenadas
+    # -------------------------
+
     x = df["X_centroid"].to_numpy()
     y = df["Y_centroid"].to_numpy()
 
-    # ---------------------------
-    # Construir nube de puntos
-    # ---------------------------
+    # -------------------------
+    # Nube de puntos
+    # -------------------------
+
     puntos = np.column_stack((x, y))
 
-    # ---------------------------
-    # Construir complejo de Rips
-    # ---------------------------
+    print(f"Número de puntos: {len(puntos)}")
+
+    # -------------------------
+    # Complejo de Rips
+    # -------------------------
+
     rips_complex = gd.RipsComplex(
         points=puntos,
         max_edge_length=50
@@ -490,20 +594,32 @@ for archivo in archivos:
         max_dimension=2
     )
 
-    # ---------------------------
-    # Calcular homología persistente
-    # ---------------------------
+    # -------------------------
+    # Homología persistente
+    # -------------------------
+
     diag = simplex_tree.persistence()
 
-    # ---------------------------
+    # -------------------------
     # Convertir a DataFrame
-    # ---------------------------
+    # -------------------------
+
     output = pd.DataFrame(
         [[dim, b, d] for dim, (b, d) in diag if dim <= 2],
         columns=["dimension", "birth", "death"]
     )
 
-    print("\n", archivo)
-    print(output.head())
+    # -------------------------
+    # Guardar resultado
+    # -------------------------
+
+    nombre_salida = archivo.replace(".csv", "_diag.csv")
+
+    output.to_csv(
+        os.path.join("resultados", nombre_salida),
+        index=False
+    )
+
+    print(f"Guardado: resultados/{nombre_salida}")
 ```
 :::
