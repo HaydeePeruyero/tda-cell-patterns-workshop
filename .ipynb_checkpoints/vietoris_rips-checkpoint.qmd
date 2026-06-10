@@ -93,7 +93,7 @@ Este procedimiento constituye el pipeline básico de TDA que posteriormente util
 
 ## Importar bibliotecas
 
-En esta etapa construiremos complejos simpliciales y calcularemos homología persistente a partir de datos espaciales.
+En esta etapa construiremos complejos simpliciales y homología persistente a partir de datos espaciales.
 
 Utilizaremos las siguientes bibliotecas:
 
