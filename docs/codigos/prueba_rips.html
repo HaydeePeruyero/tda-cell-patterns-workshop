@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../clustering.html"> 
-<span class="menu-text">clustering.html</span></a>
+<span class="menu-text">Clustering de muestras a partir de distancias topológicas</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../topkat.html"> 
@@ -600,7 +600,7 @@ Número de puntos: 1049
 Guardado: resultados/stroma_ad_dysplasia_FA_HN11A_5_diag.csv</code></pre>
 </div>
 </div>
-<div id="648347a6-d19d-4751-81dd-d5d10ad1c33e" class="cell" data-execution_count="13">
+<div id="648347a6-d19d-4751-81dd-d5d10ad1c33e" class="cell" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Mostrar código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -680,7 +680,7 @@ Guardado: resultados/stroma_ad_dysplasia_FA_HN11A_5_diag.csv</code></pre>
 <span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>    rips_complex <span class="op">=</span> gd.RipsComplex(</span>
 <span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>        points<span class="op">=</span>puntos,</span>
-<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>        max_edge_length<span class="op">=</span><span class="dv">50</span></span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>        max_edge_length<span class="op">=</span><span class="dv">100</span></span>
 <span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>    simplex_tree <span class="op">=</span> rips_complex.create_simplex_tree(</span>
@@ -717,26 +717,76 @@ Guardado: resultados/stroma_ad_dysplasia_FA_HN11A_5_diag.csv</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Archivos encontrados:
-- carcinoma_FA_HN14_2.csv
-- dysplasia_FA_HN11A_1.csv
-- stroma_ad_carcinoma_FA_HN14_3.csv
-- stroma_ad_dysplasia_FA_HN11A_5.csv
+- high_grade_displasia_FAAGSCC_13_HGD_15.csv
+- high_grade_displasia_FAAGSCC_13_HGD_2.csv
+- high_grade_displasia_FAAGSCC_13_HGD_7.csv
+- invasive_carcinoma_AGSCC_1_IC_18.csv
+- invasive_carcinoma_AGSCC_1_IC_24.csv
+- invasive_carcinoma_AGSCC_1_IC_28.csv
+- light_grade_displasia_F82P1_LGD_5.csv
+- light_grade_displasia_F82P1_LGD_6.csv
+- stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4.csv
+- stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7.csv
+- stroma_ad_invasive_carcinoma_AGSCC_1_IC_111.csv
+- stroma_ad_invasive_carcinoma_AGSCC_1_IC_99.csv
+- stroma_ad_light_grade_displasia_F33P1_LGD_7.csv
+- stroma_ad_light_grade_displasia_F81P1_LGD_1.csv
 
-Procesando: carcinoma_FA_HN14_2.csv
-Número de puntos: 1030
-Guardado: resultados/carcinoma_FA_HN14_2_diag.csv
+Procesando: high_grade_displasia_FAAGSCC_13_HGD_15.csv
+Número de puntos: 2005
+Guardado: resultados/high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv
 
-Procesando: dysplasia_FA_HN11A_1.csv
-Número de puntos: 1035
-Guardado: resultados/dysplasia_FA_HN11A_1_diag.csv
+Procesando: high_grade_displasia_FAAGSCC_13_HGD_2.csv
+Número de puntos: 2012
+Guardado: resultados/high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv
 
-Procesando: stroma_ad_carcinoma_FA_HN14_3.csv
-Número de puntos: 1045
-Guardado: resultados/stroma_ad_carcinoma_FA_HN14_3_diag.csv
+Procesando: high_grade_displasia_FAAGSCC_13_HGD_7.csv
+Número de puntos: 2038
+Guardado: resultados/high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv
 
-Procesando: stroma_ad_dysplasia_FA_HN11A_5.csv
-Número de puntos: 1049
-Guardado: resultados/stroma_ad_dysplasia_FA_HN11A_5_diag.csv</code></pre>
+Procesando: invasive_carcinoma_AGSCC_1_IC_18.csv
+Número de puntos: 2008
+Guardado: resultados/invasive_carcinoma_AGSCC_1_IC_18_diag.csv
+
+Procesando: invasive_carcinoma_AGSCC_1_IC_24.csv
+Número de puntos: 2020
+Guardado: resultados/invasive_carcinoma_AGSCC_1_IC_24_diag.csv
+
+Procesando: invasive_carcinoma_AGSCC_1_IC_28.csv
+Número de puntos: 2022
+Guardado: resultados/invasive_carcinoma_AGSCC_1_IC_28_diag.csv
+
+Procesando: light_grade_displasia_F82P1_LGD_5.csv
+Número de puntos: 2006
+Guardado: resultados/light_grade_displasia_F82P1_LGD_5_diag.csv
+
+Procesando: light_grade_displasia_F82P1_LGD_6.csv
+Número de puntos: 2014
+Guardado: resultados/light_grade_displasia_F82P1_LGD_6_diag.csv
+
+Procesando: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4.csv
+Número de puntos: 2005
+Guardado: resultados/stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv
+
+Procesando: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7.csv
+Número de puntos: 2015
+Guardado: resultados/stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv
+
+Procesando: stroma_ad_invasive_carcinoma_AGSCC_1_IC_111.csv
+Número de puntos: 2010
+Guardado: resultados/stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv
+
+Procesando: stroma_ad_invasive_carcinoma_AGSCC_1_IC_99.csv
+Número de puntos: 2031
+Guardado: resultados/stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv
+
+Procesando: stroma_ad_light_grade_displasia_F33P1_LGD_7.csv
+Número de puntos: 2007
+Guardado: resultados/stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv
+
+Procesando: stroma_ad_light_grade_displasia_F81P1_LGD_1.csv
+Número de puntos: 2003
+Guardado: resultados/stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv</code></pre>
 </div>
 </div>
 
