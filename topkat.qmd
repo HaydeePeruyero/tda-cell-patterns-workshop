@@ -1,0 +1,124 @@
+---
+title: "TopKAT: Topological Kernel Association Test"
+---
+
+## Análisis de diferencias entre grupos biológicos mediante TopKAT
+
+Hasta ahora hemos utilizado la homología persistente para describir la organización espacial de las células y hemos comparado muestras mediante distancias entre diagramas de persistencia.
+
+Sin embargo, una pregunta biológica importante permanece abierta:
+
+> ¿Las diferencias topológicas observadas entre las muestras están asociadas con variables clínicas o biológicas de interés?
+
+Por ejemplo, en nuestro conjunto de datos nos interesa determinar si la organización espacial de las células difiere entre pacientes con anemia de Fanconi (FA) y pacientes sin anemia de Fanconi (No-FA), así como estudiar si estas diferencias dependen del tipo de tejido analizado (carcinoma, displasia o estroma).
+
+Para responder este tipo de preguntas utilizaremos **TopKAT** (*Topological Kernel Association Test*), una metodología que combina herramientas de análisis topológico de datos (TDA) con pruebas estadísticas de asociación basadas en kernels. Esta herramienta fue desarrollada por Sarah Samorodnitsky y colaboradores para analizar estructuras topológicas presentes en datos espaciales y evaluar formalmente su relación con variables clínicas o biológicas.
+
+Para obtener más información sobre la metodología, documentación y aplicaciones, puede consultarse el sitio oficial:
+
+[TopKAT Project Page](https://sarahsamorodnitsky.github.io/TopKAT/)
+
+### ¿Qué hace TopKAT?
+
+De manera general, TopKAT sigue el siguiente flujo de trabajo:
+
+```text
+Coordenadas celulares
+          ↓
+Complejo de Vietoris–Rips
+          ↓
+Homología persistente
+          ↓
+Diagramas de persistencia
+          ↓
+Matriz de similitud topológica
+          ↓
+TopKAT
+          ↓
+Prueba estadística de asociación
+```
+
+La idea fundamental consiste en transformar cada muestra en un conjunto de características topológicas mediante homología persistente y posteriormente evaluar si las muestras que presentan topologías similares también comparten características biológicas o clínicas similares.
+
+A diferencia de los análisis realizados anteriormente, cuyo objetivo principal era describir o visualizar similitudes entre muestras, TopKAT permite realizar inferencia estadística y responder preguntas como:
+
+* ¿Existen diferencias topológicas significativas entre muestras FA y No-FA?
+* ¿Las diferencias observadas ocurren en componentes conexas ((H_0)) o en ciclos ((H_1))?
+* ¿A qué escala espacial aparecen las mayores diferencias entre grupos?
+* ¿Hay diferencias entre las interacciones celulares entre muestras FA y No-FA?
+
+
+### Aplicación en este estudio
+
+En este taller utilizaremos TopKAT para comparar muestras provenientes de pacientes con anemia de Fanconi y pacientes sin anemia de Fanconi.
+
+Las comparaciones se realizarán de manera independiente para distintos compartimentos histológicos:
+
+* Carcinoma.
+* Displasia.
+* Estroma.
+
+Nuestro objetivo será determinar si existen diferencias significativas en la organización topológica de las células entre ambos grupos y explorar la escala espacial en la que dichas diferencias son más evidentes.
+
+En las siguientes secciones construiremos las matrices de similitud requeridas por TopKAT, ejecutaremos las pruebas de asociación y analizaremos la interpretación biológica de los resultados obtenidos.
+
+
+## Configuración del entorno computacional
+
+Los análisis de asociación topológica realizados mediante TopKAT se implementarán en el lenguaje **R**.
+
+Antes de comenzar, es necesario instalar el paquete **TopKAT** junto con algunas bibliotecas auxiliares utilizadas para visualización, manipulación de datos y análisis estadístico.
+
+La instalación puede realizarse directamente desde la consola de R mediante los siguientes comandos.
+
+::: {.callout-note}
+
+## Instalación de TopKAT y dependencias
+
+```r
+# Instalar remotes
+install.packages("remotes")
+
+# Instalar TopKAT desde GitHub
+remotes::install_github("sarahsamorodnitsky/TopKAT")
+
+# Instalar paquetes auxiliares
+install.packages(c(
+  "patchwork",
+  "survival",
+  "survminer",
+  "TDAstats",
+  "ggtda",
+  "ggplot2",
+  "readr",
+  "reshape2",
+  "viridis",
+  "dplyr",
+  "stringr"
+))
+```
+:::
+
+Una vez completada la instalación, podemos cargar las bibliotecas que utilizaremos durante el análisis.
+
+::: {.callout-note}
+
+## Cargar bibliotecas
+
+```r
+library(TopKAT)
+library(patchwork)
+library(survival)
+library(survminer)
+library(TDAstats)
+library(ggtda)
+library(ggplot2)
+library(readr)
+library(reshape2)
+library(viridis)
+library(dplyr)
+library(stringr)
+
+```
+:::
+
