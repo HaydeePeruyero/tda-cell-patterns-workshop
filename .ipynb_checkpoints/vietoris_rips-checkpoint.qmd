@@ -107,7 +107,7 @@ import gudhi as gd
 Primero trabajaremos con una única muestra para entender cada paso del proceso. Una vez comprendido el pipeline completo, lo automatizaremos para procesar múltiples muestras de manera simultánea.
 
 
-## 1. Cargar datos
+##  Cargar datos
 
 El primer paso consiste en cargar las coordenadas espaciales de las células que fueron obtenidas durante el proceso de segmentación.
 
@@ -140,7 +140,7 @@ print(f"Número de puntos: {len(puntos)}")
 ```
 :::
 
-## 2. Visualización de la nube de puntos
+##  Visualización de la nube de puntos
 
 Una vez cargadas las coordenadas, es conveniente visualizar la distribución espacial de las células antes de realizar cualquier análisis topológico.
 
@@ -165,7 +165,7 @@ plt.show()
 
 :::
 
-## 3. Construcción del complejo de Vietoris–Rips
+## Construcción del complejo de Vietoris–Rips
 
 Una vez obtenida la nube de puntos, podemos construir un complejo de Vietoris–Rips.
 
@@ -180,7 +180,7 @@ En términos prácticos:
 
 En este ejemplo utilizaremos inicialmente:
 
-- \(r = 50\)
+- \(r = 100\)
 - dimensión máxima = 2
 
 La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada `simplex_tree`, que posteriormente utilizaremos para calcular homología persistente.
@@ -190,7 +190,7 @@ La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructur
 ## Código
 
 ```python
-radio = 50
+radio = 100
 
 rips_complex = gd.RipsComplex(
     points=puntos,
@@ -206,7 +206,7 @@ print("Número de simplices:", simplex_tree.num_simplices())
 
 :::
 
-## 4. Visualización del complejo de Vietoris–Rips
+##  Visualización del complejo de Vietoris–Rips
 
 Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.
 
@@ -246,7 +246,7 @@ plt.show()
 
 :::
 
-## 5. Homología persistente
+##  Homología persistente
 
 Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala \(r\).
 
@@ -280,7 +280,7 @@ print(diag[:10])
 
 :::
 
-## 6. Diagrama de persistencia
+##  Diagrama de persistencia
 
 Una vez calculada la homología persistente, necesitamos una forma de resumir toda la información obtenida durante la filtración.
 
@@ -311,7 +311,7 @@ plt.show()
 :::
 
 
-## 7. Guardar resultados
+##  Guardar resultados
 
 El diagrama de persistencia es una representación gráfica muy útil para visualizar las características topológicas de una muestra. Sin embargo, para realizar comparaciones sistemáticas entre múltiples muestras resulta conveniente almacenar esta información en formato tabular.
 

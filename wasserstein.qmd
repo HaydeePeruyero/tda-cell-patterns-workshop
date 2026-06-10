@@ -169,7 +169,7 @@ Diagramas de persistencia
  Clustering jerárquico
 ```
 
-## 1. Importar bibliotecas
+##  Importar bibliotecas
 
 Importemos las bibliotecas que utilizaremos durante el análisis.
 
@@ -186,7 +186,7 @@ import gudhi.wasserstein as gw
 
 :::
 
-## 2. Definir la carpeta de trabajo
+##  Definir la carpeta de trabajo
 
 Los diagramas de persistencia generados en la sección anterior fueron almacenados como archivos CSV.
 
@@ -197,12 +197,12 @@ El siguiente paso consiste en indicar la carpeta donde se encuentran dichos arch
 ## Mostrar código
 
 ```python
-ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/"
+ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/" # cambiar dependiendo del usuario
 ```
 
 :::
 
-## 3. Obtener la lista de diagramas
+##  Obtener la lista de diagramas
 
 Una vez definida la carpeta de trabajo, podemos identificar automáticamente todos los diagramas de persistencia disponibles.
 
@@ -261,9 +261,11 @@ for archivo in archivos:
     df = pd.read_csv(os.path.join(ruta, archivo))
 
     d0 = (
-        df[df["dimension"] == 0]
-        [["birth", "death"]]
-        .to_numpy()
+    df[
+        (df["dimension"] == 0)
+        & (np.isfinite(df["death"]))
+    ][["birth", "death"]]
+    .to_numpy()
     )
 
     d1 = (

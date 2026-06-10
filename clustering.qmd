@@ -1,4 +1,9 @@
-## Clustering de muestras a partir de distancias topológicas
+---
+title: "Clustering"
+---
+
+
+# Clustering de muestras a partir de distancias topológicas
 
 Una vez construidas las matrices de distancia de Wasserstein, el siguiente paso consiste en analizar la estructura global de similitud entre muestras.
 
@@ -10,7 +15,7 @@ Este tipo de análisis es fundamental porque nos permite responder preguntas com
 - ¿Existen agrupamientos asociados a condiciones biológicas (FA vs no-FA, carcinoma vs estroma, etc.)?
 - ¿La estructura del microambiente tumoral induce separaciones naturales en el espacio de muestras?
 
-### Métodos de clustering
+## Métodos de clustering
 
 Existen múltiples enfoques para realizar agrupamiento a partir de una matriz de distancias, entre los más comunes:
 
@@ -25,7 +30,7 @@ En este trabajo utilizaremos **clustering jerárquico aglomerativo**, ya que:
 - no requiere asumir una forma predefinida de los clusters,
 - y permite visualizar la estructura de agrupamiento en diferentes escalas.
 
-### Clustering jerárquico
+## Clustering jerárquico
 
 El clustering jerárquico construye una estructura en forma de árbol (dendrograma) donde:
 
@@ -45,7 +50,7 @@ Dentro del clustering jerárquico existen distintas formas de definir la distanc
 
 En este trabajo utilizaremos **average linkage**, ya que ha mostrado un comportamiento más estable y consistente en nuestros experimentos, al suavizar la influencia de valores extremos en las distancias.
 
-## Implementación computacional
+# Implementación computacional
 
 En la sección anterior construimos matrices de distancia utilizando la distancia de Wasserstein aplicada a diagramas de persistencia.
 
@@ -94,7 +99,7 @@ Diagramas de persistencia
 A continuación implementaremos este procedimiento utilizando las matrices de distancia obtenidas en la sección anterior.
 
 
-## 1. Importar bibliotecas
+##  Importar bibliotecas
 
 Comenzaremos importando las bibliotecas necesarias para realizar el análisis de clustering y la visualización de los resultados.
 
@@ -120,7 +125,7 @@ from matplotlib.patches import Patch
 ```
 :::
 
-## 2. Definir directorios de trabajo
+##  Definir directorios de trabajo
 
 Las matrices de distancia calculadas en la sección anterior fueron almacenadas como archivos CSV.
 
@@ -140,7 +145,7 @@ os.makedirs(salida, exist_ok=True)
 ```
 :::
 
-## 3. Clasificación automática de las muestras
+##  Clasificación automática de las muestras
 
 Para facilitar la interpretación biológica de los agrupamientos, utilizaremos funciones auxiliares que permiten identificar automáticamente diferentes características de cada muestra a partir de su nombre.
 
@@ -221,7 +226,7 @@ def tejido(nombre):
 ```
 :::
 
-### Definición de colores para las anotaciones
+## Definición de colores para las anotaciones
 
 Una vez clasificadas las muestras, asignaremos una paleta de colores a cada categoría biológica.
 
@@ -266,7 +271,7 @@ En particular:
 Estas anotaciones facilitarán la interpretación biológica de los agrupamientos obtenidos mediante clustering jerárquico.
 :::
 
-## 4. Construcción del clustermap
+## Construcción del clustermap
 
 Una vez definidas las categorías biológicas y sus respectivos colores, podemos proceder a construir los clustermaps a partir de las matrices de distancia.
 

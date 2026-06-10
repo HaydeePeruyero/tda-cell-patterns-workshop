@@ -172,7 +172,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./clustering.html"> 
-<span class="menu-text">Clustering de muestras a partir de distancias topológicas</span></a>
+<span class="menu-text">Clustering</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./topkat.html"> 
@@ -205,13 +205,13 @@ window.Quarto = {
   <li><a href="#implementación-computacional-1" id="toc-implementación-computacional-1" class="nav-link" data-scroll-target="#implementación-computacional-1"><span class="header-section-number">2</span> Implementación computacional</a>
   <ul class="collapse">
   <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos"><span class="header-section-number">2.1</span> Objetivos</a></li>
-  <li><a href="#cargar-datos" id="toc-cargar-datos" class="nav-link" data-scroll-target="#cargar-datos"><span class="header-section-number">2.2</span> 1. Cargar datos</a></li>
-  <li><a href="#visualización-de-la-nube-de-puntos" id="toc-visualización-de-la-nube-de-puntos" class="nav-link" data-scroll-target="#visualización-de-la-nube-de-puntos"><span class="header-section-number">2.3</span> 2. Visualización de la nube de puntos</a></li>
-  <li><a href="#construcción-del-complejo-de-vietorisrips" id="toc-construcción-del-complejo-de-vietorisrips" class="nav-link" data-scroll-target="#construcción-del-complejo-de-vietorisrips"><span class="header-section-number">2.4</span> 3. Construcción del complejo de Vietoris–Rips</a></li>
-  <li><a href="#visualización-del-complejo-de-vietorisrips" id="toc-visualización-del-complejo-de-vietorisrips" class="nav-link" data-scroll-target="#visualización-del-complejo-de-vietorisrips"><span class="header-section-number">2.5</span> 4. Visualización del complejo de Vietoris–Rips</a></li>
-  <li><a href="#homología-persistente" id="toc-homología-persistente" class="nav-link" data-scroll-target="#homología-persistente"><span class="header-section-number">2.6</span> 5. Homología persistente</a></li>
-  <li><a href="#diagrama-de-persistencia" id="toc-diagrama-de-persistencia" class="nav-link" data-scroll-target="#diagrama-de-persistencia"><span class="header-section-number">2.7</span> 6. Diagrama de persistencia</a></li>
-  <li><a href="#guardar-resultados" id="toc-guardar-resultados" class="nav-link" data-scroll-target="#guardar-resultados"><span class="header-section-number">2.8</span> 7. Guardar resultados</a></li>
+  <li><a href="#cargar-datos" id="toc-cargar-datos" class="nav-link" data-scroll-target="#cargar-datos"><span class="header-section-number">2.2</span> Cargar datos</a></li>
+  <li><a href="#visualización-de-la-nube-de-puntos" id="toc-visualización-de-la-nube-de-puntos" class="nav-link" data-scroll-target="#visualización-de-la-nube-de-puntos"><span class="header-section-number">2.3</span> Visualización de la nube de puntos</a></li>
+  <li><a href="#construcción-del-complejo-de-vietorisrips" id="toc-construcción-del-complejo-de-vietorisrips" class="nav-link" data-scroll-target="#construcción-del-complejo-de-vietorisrips"><span class="header-section-number">2.4</span> Construcción del complejo de Vietoris–Rips</a></li>
+  <li><a href="#visualización-del-complejo-de-vietorisrips" id="toc-visualización-del-complejo-de-vietorisrips" class="nav-link" data-scroll-target="#visualización-del-complejo-de-vietorisrips"><span class="header-section-number">2.5</span> Visualización del complejo de Vietoris–Rips</a></li>
+  <li><a href="#homología-persistente" id="toc-homología-persistente" class="nav-link" data-scroll-target="#homología-persistente"><span class="header-section-number">2.6</span> Homología persistente</a></li>
+  <li><a href="#diagrama-de-persistencia" id="toc-diagrama-de-persistencia" class="nav-link" data-scroll-target="#diagrama-de-persistencia"><span class="header-section-number">2.7</span> Diagrama de persistencia</a></li>
+  <li><a href="#guardar-resultados" id="toc-guardar-resultados" class="nav-link" data-scroll-target="#guardar-resultados"><span class="header-section-number">2.8</span> Guardar resultados</a></li>
   <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">2.9</span> Resumen</a></li>
   </ul></li>
   <li><a href="#ejercicio-procesar-múltiples-muestras" id="toc-ejercicio-procesar-múltiples-muestras" class="nav-link" data-scroll-target="#ejercicio-procesar-múltiples-muestras"><span class="header-section-number">3</span> Ejercicio: procesar múltiples muestras</a></li>
@@ -349,7 +349,7 @@ d(x_i,x_j)\leq \varepsilon
 <p>Primero trabajaremos con una única muestra para entender cada paso del proceso. Una vez comprendido el pipeline completo, lo automatizaremos para procesar múltiples muestras de manera simultánea.</p>
 </section>
 <section id="cargar-datos" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="cargar-datos"><span class="header-section-number">2.2</span> 1. Cargar datos</h2>
+<h2 data-number="2.2" class="anchored" data-anchor-id="cargar-datos"><span class="header-section-number">2.2</span> Cargar datos</h2>
 <p>El primer paso consiste en cargar las coordenadas espaciales de las células que fueron obtenidas durante el proceso de segmentación.</p>
 <p>Trabajaremos con un archivo CSV que contiene, entre otras variables, las coordenadas de los centroides celulares:</p>
 <ul>
@@ -383,7 +383,7 @@ d(x_i,x_j)\leq \varepsilon
 </div>
 </section>
 <section id="visualización-de-la-nube-de-puntos" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="visualización-de-la-nube-de-puntos"><span class="header-section-number">2.3</span> 2. Visualización de la nube de puntos</h2>
+<h2 data-number="2.3" class="anchored" data-anchor-id="visualización-de-la-nube-de-puntos"><span class="header-section-number">2.3</span> Visualización de la nube de puntos</h2>
 <p>Una vez cargadas las coordenadas, es conveniente visualizar la distribución espacial de las células antes de realizar cualquier análisis topológico.</p>
 <p>Cada punto de la gráfica representa una célula identificada en el tejido. Esta representación constituye la nube de puntos (<em>point cloud</em>) sobre la cual construiremos posteriormente el complejo de Vietoris–Rips.</p>
 <p>La siguiente celda genera una visualización simple de las coordenadas celulares.</p>
@@ -409,7 +409,7 @@ d(x_i,x_j)\leq \varepsilon
 </div>
 </section>
 <section id="construcción-del-complejo-de-vietorisrips" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="construcción-del-complejo-de-vietorisrips"><span class="header-section-number">2.4</span> 3. Construcción del complejo de Vietoris–Rips</h2>
+<h2 data-number="2.4" class="anchored" data-anchor-id="construcción-del-complejo-de-vietorisrips"><span class="header-section-number">2.4</span> Construcción del complejo de Vietoris–Rips</h2>
 <p>Una vez obtenida la nube de puntos, podemos construir un complejo de Vietoris–Rips.</p>
 <p>Recordemos que este complejo depende de un parámetro de escala (r), el cual determina cuándo dos puntos se consideran suficientemente cercanos para estar conectados.</p>
 <p>En términos prácticos:</p>
@@ -421,7 +421,7 @@ d(x_i,x_j)\leq \varepsilon
 </ul>
 <p>En este ejemplo utilizaremos inicialmente:</p>
 <ul>
-<li>(r = 50)</li>
+<li>(r = 100)</li>
 <li>dimensión máxima = 2</li>
 </ul>
 <p>La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada <code>simplex_tree</code>, que posteriormente utilizaremos para calcular homología persistente.</p>
@@ -435,7 +435,7 @@ d(x_i,x_j)\leq \varepsilon
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>radio <span class="op">=</span> <span class="dv">50</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>radio <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rips_complex <span class="op">=</span> gd.RipsComplex(</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    points<span class="op">=</span>puntos,</span>
@@ -451,7 +451,7 @@ d(x_i,x_j)\leq \varepsilon
 </div>
 </section>
 <section id="visualización-del-complejo-de-vietorisrips" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="visualización-del-complejo-de-vietorisrips"><span class="header-section-number">2.5</span> 4. Visualización del complejo de Vietoris–Rips</h2>
+<h2 data-number="2.5" class="anchored" data-anchor-id="visualización-del-complejo-de-vietorisrips"><span class="header-section-number">2.5</span> Visualización del complejo de Vietoris–Rips</h2>
 <p>Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.</p>
 <p>En la siguiente visualización:</p>
 <ul>
@@ -493,7 +493,7 @@ d(x_i,x_j)\leq \varepsilon
 </div>
 </section>
 <section id="homología-persistente" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="homología-persistente"><span class="header-section-number">2.6</span> 5. Homología persistente</h2>
+<h2 data-number="2.6" class="anchored" data-anchor-id="homología-persistente"><span class="header-section-number">2.6</span> Homología persistente</h2>
 <p>Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala (r).</p>
 <p>Sin embargo, una de las ideas centrales de TDA es que la elección de una única escala puede ocultar información relevante. En lugar de analizar un solo complejo, la homología persistente estudia cómo evolucionan las estructuras topológicas cuando el parámetro de escala aumenta progresivamente.</p>
 <p>Durante este proceso pueden ocurrir distintos eventos:</p>
@@ -527,7 +527,7 @@ d(x_i,x_j)\leq \varepsilon
 </div>
 </section>
 <section id="diagrama-de-persistencia" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="diagrama-de-persistencia"><span class="header-section-number">2.7</span> 6. Diagrama de persistencia</h2>
+<h2 data-number="2.7" class="anchored" data-anchor-id="diagrama-de-persistencia"><span class="header-section-number">2.7</span> Diagrama de persistencia</h2>
 <p>Una vez calculada la homología persistente, necesitamos una forma de resumir toda la información obtenida durante la filtración.</p>
 <p>Para ello utilizamos el <strong>diagrama de persistencia</strong>, una representación gráfica donde cada punto corresponde a una característica topológica detectada en los datos.</p>
 <p>En este diagrama:</p>
@@ -560,7 +560,7 @@ d(x_i,x_j)\leq \varepsilon
 </section>
 </section>
 <section id="guardar-resultados" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="guardar-resultados"><span class="header-section-number">2.8</span> 7. Guardar resultados</h2>
+<h2 data-number="2.8" class="anchored" data-anchor-id="guardar-resultados"><span class="header-section-number">2.8</span> Guardar resultados</h2>
 <p>El diagrama de persistencia es una representación gráfica muy útil para visualizar las características topológicas de una muestra. Sin embargo, para realizar comparaciones sistemáticas entre múltiples muestras resulta conveniente almacenar esta información en formato tabular.</p>
 <p>Por ello, extraeremos para cada característica topológica:</p>
 <ul>
@@ -1443,7 +1443,7 @@ archivo_2.csv
 <span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>Primero trabajaremos con una única muestra para entender cada paso del proceso. Una vez comprendido el pipeline completo, lo automatizaremos para procesar múltiples muestras de manera simultánea.</span>
 <span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Cargar datos</span></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Cargar datos</span></span>
 <span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>El primer paso consiste en cargar las coordenadas espaciales de las células que fueron obtenidas durante el proceso de segmentación.</span>
 <span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a></span>
@@ -1476,7 +1476,7 @@ archivo_2.csv
 <span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Visualización de la nube de puntos</span></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Visualización de la nube de puntos</span></span>
 <span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>Una vez cargadas las coordenadas, es conveniente visualizar la distribución espacial de las células antes de realizar cualquier análisis topológico.</span>
 <span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
@@ -1501,7 +1501,7 @@ archivo_2.csv
 <span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Construcción del complejo de Vietoris–Rips</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## Construcción del complejo de Vietoris–Rips</span></span>
 <span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>Una vez obtenida la nube de puntos, podemos construir un complejo de Vietoris–Rips.</span>
 <span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a></span>
@@ -1516,7 +1516,7 @@ archivo_2.csv
 <span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>En este ejemplo utilizaremos inicialmente:</span>
 <span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="sc">\(</span>r = 50<span class="sc">\)</span></span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="sc">\(</span>r = 100<span class="sc">\)</span></span>
 <span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>dimensión máxima = 2</span>
 <span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada <span class="in">`simplex_tree`</span>, que posteriormente utilizaremos para calcular homología persistente.</span>
@@ -1526,7 +1526,7 @@ archivo_2.csv
 <span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Código</span></span>
 <span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>radio <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>radio <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>rips_complex <span class="op">=</span> gd.RipsComplex(</span>
 <span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>    points<span class="op">=</span>puntos,</span>
@@ -1542,7 +1542,7 @@ archivo_2.csv
 <span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Visualización del complejo de Vietoris–Rips</span></span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Visualización del complejo de Vietoris–Rips</span></span>
 <span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.</span>
 <span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a></span>
@@ -1582,7 +1582,7 @@ archivo_2.csv
 <span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Homología persistente</span></span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Homología persistente</span></span>
 <span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala <span class="sc">\(</span>r<span class="sc">\)</span>.</span>
 <span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a></span>
@@ -1616,7 +1616,7 @@ archivo_2.csv
 <span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Diagrama de persistencia</span></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Diagrama de persistencia</span></span>
 <span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a>Una vez calculada la homología persistente, necesitamos una forma de resumir toda la información obtenida durante la filtración.</span>
 <span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a></span>
@@ -1647,7 +1647,7 @@ archivo_2.csv
 <span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Guardar resultados</span></span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Guardar resultados</span></span>
 <span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a>El diagrama de persistencia es una representación gráfica muy útil para visualizar las características topológicas de una muestra. Sin embargo, para realizar comparaciones sistemáticas entre múltiples muestras resulta conveniente almacenar esta información en formato tabular.</span>
 <span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a></span>
