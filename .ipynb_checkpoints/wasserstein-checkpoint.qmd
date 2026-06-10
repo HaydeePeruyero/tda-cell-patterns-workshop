@@ -171,7 +171,12 @@ Diagramas de persistencia
 
 ##  Importar bibliotecas
 
-Importemos las bibliotecas que utilizaremos durante el análisis.
+Utilizaremos las siguientes bibliotecas durante esta sección del análisis:
+
+* `os` para la gestión de archivos y directorios.
+* `numpy` para operaciones numéricas y manejo de arreglos.
+* `pandas` para la manipulación de datos en formato tabular.
+* `gudhi.wasserstein` para el cálculo de distancias entre diagramas de persistencia.
 
 ::: {.callout-note}
 

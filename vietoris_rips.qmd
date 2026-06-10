@@ -91,6 +91,18 @@ En esta sección aprenderemos a:
 
 Este procedimiento constituye el pipeline básico de TDA que posteriormente utilizaremos para comparar múltiples muestras biológicas.
 
+## Importar bibliotecas
+
+En esta etapa construiremos complejos simpliciales y calcularemos homología persistente a partir de datos espaciales.
+
+Utilizaremos las siguientes bibliotecas:
+
+* `os` para manejo de archivos y rutas.
+* `numpy` para operaciones numéricas.
+* `pandas` para manipulación de datos tabulares.
+* `matplotlib` para visualización de resultados.
+* `gudhi` para la construcción de complejos de Vietoris–Rips y homología persistente.
+
 ::: {.callout-tip}
 
 ## Código
