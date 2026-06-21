@@ -238,8 +238,8 @@ window.Quarto = {
 
 <section id="contexto-general" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Contexto general</h1>
-<p>El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido y generan patrones de organización que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.</p>
-<p>El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante.</p>
+<p>El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido, conoció como el microambiente tumoral.</p>
+<p>El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante, debido a que se generan patrones de organización celular que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.</p>
 <p>Por ejemplo, la proximidad entre células inmunes y tumorales, la formación de agrupamientos o la presencia de regiones con baja densidad celular pueden reflejar procesos como inmunosupresión o evasión inmune.</p>
 <p>En este contexto, la caracterización de la organización espacial celular se ha convertido en un problema central en el estudio del microambiente tumoral.</p>
 <hr>
@@ -291,7 +291,7 @@ window.Quarto = {
 <p><img src="figures/segmentacion.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
-<p>Cada célula es además clasificada según su fenotipo.</p>
+<p>Cada célula es además clasificada según su tipo celular, el cual en este contexto representará su fenotipo.</p>
 <section id="células-tumorales" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="células-tumorales"><span class="header-section-number">3.1</span> Células tumorales</h2>
 <ul>
@@ -376,22 +376,18 @@ window.Quarto = {
 </div>
 <p>Las preguntas centrales son:</p>
 <ul>
-<li>¿Existen diferencias en la organización espacial entre muestras FA y no-FA?</li>
-<li>¿Los patrones observados entre epitelio y estroma reflejan estructuras espaciales distintas?</li>
+<li>¿Es posible clasificar los tumores de paciente con y sin anemia de Fanconi por medio del realizar análisis topológico de datos en su microambiente tumoral?</li>
+</ul>
+<p>De ser este el caso,</p>
+<ul>
+<li>¿es posible identificar cuáles son las propiedades de la organización espacial que los distinguen?</li>
 </ul>
 <hr>
 </section>
 <section id="por-qué-análisis-topológico-de-datos" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> ¿Por qué Análisis Topológico de Datos?</h1>
-<p>El Análisis Topológico de Datos (TDA) proporciona herramientas para estudiar la estructura global de datos espaciales.</p>
-<p>En este trabajo, cada muestra se modela como una nube de puntos obtenida a partir de coordenadas celulares. Sobre estas nubes se construyen complejos de Vietoris–Rips a múltiples escalas.</p>
-<p>Posteriormente se calcula homología persistente para identificar:</p>
-<ul>
-<li>componentes conexas (dimensión 0),</li>
-<li>ciclos o estructuras tipo bucle (dimensión 1).</li>
-</ul>
-<p>Estas características se resumen mediante diagramas de persistencia, que registran la aparición y desaparición de estructuras topológicas a lo largo de una filtración.</p>
-<p>Finalmente, las muestras se comparan utilizando distancias de Wasserstein entre diagramas de persistencia.</p>
+<p>Las preguntas centrales de este trabajo buscan determinar si existen diferencias en la organización espacial del microambiente tumoral entre pacientes con y sin anemia de Fanconi. Dado que estas diferencias pueden involucrar patrones complejos de agrupamiento y conectividad celular, se requieren herramientas capaces de capturar la estructura global de los datos.</p>
+<p>El Análisis Topológico de Datos permite describir y comparar la organización espacial de las células a múltiples escalas. Si los tumores de pacientes con y sin anemia de Fanconi presentan arquitecturas espaciales distintas, estas diferencias deberían reflejarse en sus características topológicas, lo que podría utilizarse tanto para identificarlas como para clasificar las muestras.</p>
 <hr>
 </section>
 <section id="objetivo-general" class="level1" data-number="7">
@@ -899,9 +895,9 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Contexto general</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido y generan patrones de organización que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido, conoció como el microambiente tumoral.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante, debido a que se generan patrones de organización celular que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Por ejemplo, la proximidad entre células inmunes y tumorales, la formación de agrupamientos o la presencia de regiones con baja densidad celular pueden reflejar procesos como inmunosupresión o evasión inmune.</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
@@ -953,7 +949,7 @@ window.Quarto = {
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="al">![](figures/segmentacion.png)</span>{fig-align="center" width="70%"}</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>Cada célula es además clasificada según su fenotipo.</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>Cada célula es además clasificada según su tipo celular, el cual en este contexto representará su fenotipo.</span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Células tumorales</span></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
@@ -1021,62 +1017,56 @@ window.Quarto = {
 <span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>Las preguntas centrales son:</span>
 <span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>¿Existen diferencias en la organización espacial entre muestras FA y no-FA?</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>¿Los patrones observados entre epitelio y estroma reflejan estructuras espaciales distintas?</span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="fu"># ¿Por qué Análisis Topológico de Datos?</span></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>El Análisis Topológico de Datos (TDA) proporciona herramientas para estudiar la estructura global de datos espaciales.</span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>En este trabajo, cada muestra se modela como una nube de puntos obtenida a partir de coordenadas celulares. Sobre estas nubes se construyen complejos de Vietoris–Rips a múltiples escalas.</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>Posteriormente se calcula homología persistente para identificar:</span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>componentes conexas (dimensión 0),</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ciclos o estructuras tipo bucle (dimensión 1).</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>¿Es posible clasificar los tumores de paciente con y sin anemia de Fanconi por medio del realizar análisis topológico de datos en su microambiente tumoral? </span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>De ser este el caso,</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>¿es posible identificar cuáles son las propiedades de la organización espacial que los distinguen?</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="fu"># ¿Por qué Análisis Topológico de Datos?</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>Las preguntas centrales de este trabajo buscan determinar si existen diferencias en la organización espacial del microambiente tumoral entre pacientes con y sin anemia de Fanconi. Dado que estas diferencias pueden involucrar patrones complejos de agrupamiento y conectividad celular, se requieren herramientas capaces de capturar la estructura global de los datos.</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>El Análisis Topológico de Datos permite describir y comparar la organización espacial de las células a múltiples escalas. Si los tumores de pacientes con y sin anemia de Fanconi presentan arquitecturas espaciales distintas, estas diferencias deberían reflejarse en sus características topológicas, lo que podría utilizarse tanto para identificarlas como para clasificar las muestras.</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>Estas características se resumen mediante diagramas de persistencia, que registran la aparición y desaparición de estructuras topológicas a lo largo de una filtración.</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo general</span></span>
 <span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>Finalmente, las muestras se comparan utilizando distancias de Wasserstein entre diagramas de persistencia.</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>Utilizar herramientas de TDA para extraer características topológicas de la organización espacial celular y evaluar su capacidad para comparar y distinguir distintos contextos biológicos en tejido tumoral.</span>
 <span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>Para ello se emplean:</span>
 <span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo general</span></span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>Utilizar herramientas de TDA para extraer características topológicas de la organización espacial celular y evaluar su capacidad para comparar y distinguir distintos contextos biológicos en tejido tumoral.</span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>Para ello se emplean:</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Homología persistente.</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Diagramas de persistencia.</span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Distancias de Wasserstein.</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Clustering jerárquico.</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Validación estadística mediante TopKAT.</span>
 <span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Homología persistente.</span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Diagramas de persistencia.</span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Distancias de Wasserstein.</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Clustering jerárquico.</span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Validación estadística mediante TopKAT.</span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="fu"># Workflow general</span></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>El pipeline completo del análisis se resume mediante el siguiente esquema:</span>
 <span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a><span class="fu"># Workflow general</span></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>El pipeline completo del análisis se resume mediante el siguiente esquema:</span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline</span></span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>1) Imagen</span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>2) Segmentación celular</span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>3) Coordenadas espaciales</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>4) Point Cloud</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>5) Complejo de Rips</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>6) Homología persistente</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>7) Diagramas de persistencia</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>8) Distancia de Wasserstein</span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>9) Clustering</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>10) Interpretación</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>En las siguientes secciones se desarrollan los fundamentos matemáticos y computacionales que sustentan este enfoque, así como su aplicación al análisis de patrones celulares en tejido tumoral.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pipeline</span></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>1) Imagen</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>2) Segmentación celular</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>3) Coordenadas espaciales</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>4) Point Cloud</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>5) Complejo de Rips</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>6) Homología persistente</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>7) Diagramas de persistencia</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>8) Distancia de Wasserstein</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>9) Clustering</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>10) Interpretación</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>En las siguientes secciones se desarrollan los fundamentos matemáticos y computacionales que sustentan este enfoque, así como su aplicación al análisis de patrones celulares en tejido tumoral.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

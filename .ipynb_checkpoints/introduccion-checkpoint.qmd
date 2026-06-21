@@ -4,9 +4,9 @@ title: "Introducción"
 
 # Contexto general
 
-El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido y generan patrones de organización que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.
-
-El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante.
+El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido, conoció como el microambiente tumoral.
+ 
+El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante, debido a que se generan patrones de organización celular que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.
 
 Por ejemplo, la proximidad entre células inmunes y tumorales, la formación de agrupamientos o la presencia de regiones con baja densidad celular pueden reflejar procesos como inmunosupresión o evasión inmune.
 
@@ -58,7 +58,7 @@ A partir de estas imágenes se realiza segmentación celular para identificar ca
 
 ![](figures/segmentacion.png){fig-align="center" width="70%"}
 
-Cada célula es además clasificada según su fenotipo.
+Cada célula es además clasificada según su tipo celular, el cual en este contexto representará su fenotipo.
 
 ## Células tumorales
 
@@ -126,25 +126,19 @@ La organización espacial celular contiene información que puede ser capturada 
 
 Las preguntas centrales son:
 
--   ¿Existen diferencias en la organización espacial entre muestras FA y no-FA?
--   ¿Los patrones observados entre epitelio y estroma reflejan estructuras espaciales distintas?
+-  ¿Es posible clasificar los tumores de paciente con y sin anemia de Fanconi por medio del realizar análisis topológico de datos en su microambiente tumoral? 
+
+De ser este el caso,
+
+-  ¿es posible identificar cuáles son las propiedades de la organización espacial que los distinguen?
 
 ------------------------------------------------------------------------
 
 # ¿Por qué Análisis Topológico de Datos?
 
-El Análisis Topológico de Datos (TDA) proporciona herramientas para estudiar la estructura global de datos espaciales.
+Las preguntas centrales de este trabajo buscan determinar si existen diferencias en la organización espacial del microambiente tumoral entre pacientes con y sin anemia de Fanconi. Dado que estas diferencias pueden involucrar patrones complejos de agrupamiento y conectividad celular, se requieren herramientas capaces de capturar la estructura global de los datos.
 
-En este trabajo, cada muestra se modela como una nube de puntos obtenida a partir de coordenadas celulares. Sobre estas nubes se construyen complejos de Vietoris–Rips a múltiples escalas.
-
-Posteriormente se calcula homología persistente para identificar:
-
--   componentes conexas (dimensión 0),
--   ciclos o estructuras tipo bucle (dimensión 1).
-
-Estas características se resumen mediante diagramas de persistencia, que registran la aparición y desaparición de estructuras topológicas a lo largo de una filtración.
-
-Finalmente, las muestras se comparan utilizando distancias de Wasserstein entre diagramas de persistencia.
+El Análisis Topológico de Datos permite describir y comparar la organización espacial de las células a múltiples escalas. Si los tumores de pacientes con y sin anemia de Fanconi presentan arquitecturas espaciales distintas, estas diferencias deberían reflejarse en sus características topológicas, lo que podría utilizarse tanto para identificarlas como para clasificar las muestras.
 
 ------------------------------------------------------------------------
 

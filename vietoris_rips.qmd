@@ -10,9 +10,9 @@ En nuestro contexto, cada muestra biológica se representa mediante las coordena
 
 ## Construcción
 
-Dado un conjunto de puntos (X) y un parámetro de escala (\varepsilon):
+Dado un conjunto de puntos (X) y un parámetro de escala $$(\varepsilon)$$:
 
-* Dos puntos se conectan si su distancia es menor o igual que (\varepsilon).
+* Dos puntos se conectan si su distancia es menor o igual que $$2(\varepsilon)$$.
 * Tres puntos mutuamente conectados generan un triángulo.
 * Cuatro puntos mutuamente conectados generan un tetraedro.
 * El procedimiento continúa de forma análoga en dimensiones superiores.
@@ -34,7 +34,7 @@ VR_{\varepsilon}(X)
 =
 \left\{
 \sigma \subseteq X :
-d(x_i,x_j)\leq \varepsilon
+d(x_i,x_j)\leq 2 \varepsilon
 \quad
 \forall x_i,x_j\in\sigma
 \right\}.
@@ -67,11 +67,6 @@ A partir de estos complejos calcularemos homología persistente en dimensiones:
 * (H_1): ciclos.
 
 Estas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral.
-
-## Implementación computacional
-
-La construcción de complejos de Vietoris–Rips se realizó en Python utilizando la biblioteca **GUDHI**.
-
 
 # Implementación computacional
 
@@ -179,20 +174,13 @@ plt.show()
 
 ## Construcción del complejo de Vietoris–Rips
 
-Una vez obtenida la nube de puntos, podemos construir un complejo de Vietoris–Rips.
+A partir de la nube de puntos se construye un complejo de Vietoris–Rips para una secuencia de valores del parámetro de escala $$(\varepsilon)$$. Al variar este parámetro, la conectividad entre las células cambia progresivamente, generando una familia de complejos simpliciales que describe la organización espacial de la muestra a múltiples escalas.
 
-Recordemos que este complejo depende de un parámetro de escala \(r\), el cual determina cuándo dos puntos se consideran suficientemente cercanos para estar conectados.
-
-En términos prácticos:
-
-- Si la distancia entre dos puntos es menor o igual que \(r\), se añade una arista entre ellos.
-- Si tres puntos están mutuamente conectados, se forma un triángulo.
-- Si cuatro puntos están mutuamente conectados, se forma un tetraedro.
-- Y así sucesivamente para dimensiones superiores.
+Esta secuencia de complejos constituye una filtración, sobre la cual se calcula posteriormente la homología persistente.
 
 En este ejemplo utilizaremos inicialmente:
 
-- \(r = 100\)
+- $$ \varepsilon = 100\ $$
 - dimensión máxima = 2
 
 La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada `simplex_tree`, que posteriormente utilizaremos para calcular homología persistente.
@@ -221,12 +209,6 @@ print("Número de simplices:", simplex_tree.num_simplices())
 ##  Visualización del complejo de Vietoris–Rips
 
 Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.
-
-En la siguiente visualización:
-
-- Los puntos negros representan las células de la muestra.
-- Las líneas grises representan las aristas del complejo de Vietoris–Rips.
-- Dos células están conectadas si la distancia entre ellas es menor o igual que \(r\).
 
 Esta representación permite identificar visualmente regiones altamente conectadas, posibles agrupamientos y estructuras que podrían dar origen a ciclos topológicos.
 
@@ -372,6 +354,10 @@ En teoría, todo lo necesario para construir este análisis ya ha sido presentad
 
 El siguiente esquema muestra la lógica general del proceso:
 
+:::: {.columns}
+
+::: {.column width="50%"}
+
 ```text
 archivo_1.csv
        │
@@ -385,8 +371,13 @@ archivo_1.csv
  Diagrama
        ▼
  archivo_1_diag.csv
+```
 
+:::
 
+::: {.column width="50%"}
+
+```text
 archivo_2.csv
        │
        ▼
@@ -399,8 +390,14 @@ archivo_2.csv
  Diagrama
        ▼
  archivo_2_diag.csv
+```
 
-      ...
+:::
+
+::::
+
+```text
+...
 ```
 
 ### Complete los espacios faltantes
@@ -479,14 +476,9 @@ for archivo in archivos:
     # Complejo de Rips
     # -------------------------
 
-    rips_complex = gd.RipsComplex(
-        points=puntos,
-        max_edge_length=50
-    )
+    rips_complex = _____________
 
-    simplex_tree = rips_complex.create_simplex_tree(
-        max_dimension=2
-    )
+    simplex_tree = ______________
 
     # -------------------------
     # Homología persistente
