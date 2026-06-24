@@ -5,7 +5,7 @@ title: "Introducción"
 # Contexto general
 
 El cáncer no debe entenderse únicamente como una proliferación descontrolada de células, sino como un proceso complejo en el que múltiples poblaciones celulares interactúan dentro de un tejido. Estas interacciones ocurren en un espacio físico definido, conoció como el microambiente tumoral.
- 
+
 El microambiente tumoral está compuesto por células epiteliales, células del estroma, fibroblastos, vasos sanguíneos y diversas poblaciones inmunes. La forma en la que estas células se organizan espacialmente dentro del tejido constituye una fuente de información biológica relevante, debido a que se generan patrones de organización celular que pueden influir en la progresión tumoral, la invasión, la respuesta inmune y la resistencia al tratamiento.
 
 Por ejemplo, la proximidad entre células inmunes y tumorales, la formación de agrupamientos o la presencia de regiones con baja densidad celular pueden reflejar procesos como inmunosupresión o evasión inmune.
@@ -62,32 +62,32 @@ Cada célula es además clasificada según su tipo celular, el cual en este cont
 
 ## Células tumorales
 
--   *Tumor cells*
--   *Ki67+ tumor cells*
--   *IBA1+ tumor cells*
--   *IBA1/HLA-DBP1+ tumor cells*
+- *Tumor cells*
+- *Ki67+ tumor cells*
+- *IBA1+ tumor cells*
+- *IBA1/HLA-DBP1+ tumor cells*
 
 ## Células linfoides
 
--   *NK cells*
--   *B cells*
--   *Effector CD8+ T cells*
--   *CD4+ T cells*
--   *Regulatory T cells*
+- *NK cells*
+- *B cells*
+- *Effector CD8+ T cells*
+- *CD4+ T cells*
+- *Regulatory T cells*
 
 ## Células mieloides
 
--   *Neutrophils*
--   *Dendritic cells*
--   *Other APCs*
--   *M1/M0 macrophages*
--   *M2 macrophages*
+- *Neutrophils*
+- *Dendritic cells*
+- *Other APCs*
+- *M1/M0 macrophages*
+- *M2 macrophages*
 
 ## Células no tumorales
 
--   *Endothelial cells*
--   *Stromal cells*
--   *Other*
+- *Endothelial cells*
+- *Stromal cells*
+- *Other*
 
 De esta manera, cada muestra puede representarse como una nube de puntos (*point cloud*), donde cada punto corresponde a una célula localizada en el tejido.
 
@@ -103,10 +103,10 @@ Imagen → Segmentación → Coordenadas → Nube de puntos
 
 El análisis espacial tradicional suele basarse en métricas como:
 
--   densidad celular,
--   proporciones entre tipos celulares,
--   distancias promedio,
--   análisis de vecinos cercanos.
+- densidad celular,
+- proporciones entre tipos celulares,
+- distancias promedio,
+- análisis de vecinos cercanos.
 
 Estas aproximaciones describen propiedades locales, pero no capturan completamente la estructura global de la organización espacial.
 
@@ -126,11 +126,11 @@ La organización espacial celular contiene información que puede ser capturada 
 
 Las preguntas centrales son:
 
--  ¿Es posible clasificar los tumores de paciente con y sin anemia de Fanconi por medio del realizar análisis topológico de datos en su microambiente tumoral? 
+- ¿Es posible clasificar los tumores de paciente con y sin anemia de Fanconi por medio del realizar análisis topológico de datos en su microambiente tumoral?
 
 De ser este el caso,
 
--  ¿es posible identificar cuáles son las propiedades de la organización espacial que los distinguen?
+- ¿es posible identificar cuáles son las propiedades de la organización espacial que los distinguen?
 
 ------------------------------------------------------------------------
 
@@ -148,11 +148,11 @@ Utilizar herramientas de TDA para extraer características topológicas de la or
 
 Para ello se emplean:
 
--   Homología persistente.
--   Diagramas de persistencia.
--   Distancias de Wasserstein.
--   Clustering jerárquico.
--   Validación estadística mediante TopKAT.
+- Homología persistente.
+- Diagramas de persistencia.
+- Distancias de Wasserstein.
+- Clustering jerárquico.
+- Validación estadística mediante TopKAT.
 
 ------------------------------------------------------------------------
 
@@ -162,17 +162,17 @@ El pipeline completo del análisis se resume mediante el siguiente esquema:
 
 ::: callout-tip
 ## Pipeline
-1) Imagen
-2) Segmentación celular
-3) Coordenadas espaciales
-4) Point Cloud
-5) Complejo de Rips
-6) Homología persistente
-7) Diagramas de persistencia
-8) Distancia de Wasserstein
-9) Clustering
+
+1)  Imagen
+2)  Segmentación celular
+3)  Coordenadas espaciales
+4)  Point Cloud
+5)  Complejo de Rips
+6)  Homología persistente
+7)  Diagramas de persistencia
+8)  Distancia de Wasserstein
+9)  Clustering
 10) Interpretación
 :::
-
 
 En las siguientes secciones se desarrollan los fundamentos matemáticos y computacionales que sustentan este enfoque, así como su aplicación al análisis de patrones celulares en tejido tumoral.

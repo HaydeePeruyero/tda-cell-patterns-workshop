@@ -22,7 +22,7 @@ Para obtener más información sobre la metodología, documentación y aplicacio
 
 De manera general, TopKAT sigue el siguiente flujo de trabajo:
 
-```text
+``` text
 Coordenadas celulares
           ↓
 Complejo de Vietoris–Rips
@@ -42,11 +42,10 @@ La idea fundamental consiste en transformar cada muestra en un conjunto de carac
 
 A diferencia de los análisis realizados anteriormente, cuyo objetivo principal era describir o visualizar similitudes entre muestras, TopKAT permite realizar inferencia estadística y responder preguntas como:
 
-* ¿Existen diferencias topológicas significativas entre muestras FA y No-FA?
-* ¿Las diferencias observadas ocurren en componentes conexas ((H_0)) o en ciclos ((H_1))?
-* ¿A qué escala espacial aparecen las mayores diferencias entre grupos?
-* ¿Hay diferencias entre las interacciones celulares entre muestras FA y No-FA?
-
+- ¿Existen diferencias topológicas significativas entre muestras FA y No-FA?
+- ¿Las diferencias observadas ocurren en componentes conexas ((H_0)) o en ciclos ((H_1))?
+- ¿A qué escala espacial aparecen las mayores diferencias entre grupos?
+- ¿Hay diferencias entre las interacciones celulares entre muestras FA y No-FA?
 
 ## Aplicación en este estudio
 
@@ -54,14 +53,13 @@ En este taller utilizaremos TopKAT para comparar muestras provenientes de pacien
 
 Las comparaciones se realizarán de manera independiente para distintos compartimentos histológicos:
 
-* Carcinoma.
-* Displasia.
-* Estroma.
+- Carcinoma.
+- Displasia.
+- Estroma.
 
 Nuestro objetivo será determinar si existen diferencias significativas en la organización topológica de las células entre ambos grupos y explorar la escala espacial en la que dichas diferencias son más evidentes.
 
 En las siguientes secciones construiremos las matrices de similitud requeridas por TopKAT, ejecutaremos las pruebas de asociación y analizaremos la interpretación biológica de los resultados obtenidos.
-
 
 # Implementación computacional
 
@@ -71,8 +69,7 @@ Antes de comenzar, es necesario instalar el paquete **TopKAT** junto con algunas
 
 La instalación puede realizarse directamente desde la consola de R mediante los siguientes comandos.
 
-::: {.callout-note}
-
+::: callout-note
 ## Instalación de TopKAT y dependencias
 
 ```{r, eval=FALSE}
@@ -102,8 +99,7 @@ install.packages(c(
 
 Una vez completada la instalación, podemos cargar las bibliotecas que utilizaremos durante el análisis.
 
-::: {.callout-note}
-
+::: callout-note
 ## Cargar bibliotecas
 
 ```{r, eval=FALSE}
@@ -130,9 +126,7 @@ En este ejemplo trabajaremos con un conjunto de datos que contiene la localizaci
 - 50 carcinomas asociados a anemia de Fanconi (FA).
 - 50 carcinomas no asociados a anemia de Fanconi (No FA).
 
-
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 
 ruta <- "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/2934780d4467b58dd961d62c5866f9b8c4317423/data/datos%20topkat/datos_50_FA_50_NOFA_order.csv"
@@ -144,7 +138,6 @@ head(data1.df)
 str(data1.df)
 
 ```
-
 :::
 
 Es importante mencionar que para tener resultados significativos se debe de tener una cantidad minima de 50 muestras por cada grupo de comparación.
@@ -153,8 +146,7 @@ Es importante mencionar que para tener resultados significativos se debe de tene
 
 Antes que todo, es útil observar directamente algunas de las muestras. Esto nos permite familiarizarnos con la estructura de los datos y entender qué tipo de patrones espaciales estamos intentando caracterizar.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 
 p1 <- data1.df %>%
@@ -186,11 +178,7 @@ p4 <- data1.df %>%
   plot_layout(guides = "collect")
 
 ```
-
 :::
-
-
-
 
 ## Cálculo de matrices de similitud topológica
 
@@ -198,13 +186,11 @@ Después de visualizar las distribuciones espaciales de las células, el siguien
 
 Para ello utilizamos la función `rips_similarity_matrix()` del paquete **TopKAT**. Esta función automatiza gran parte del flujo de trabajo de TDA y realiza las siguientes tareas:
 
-1. Construye una filtración de complejos de Vietoris–Rips para cada muestra.
-2. Genera los diagramas de persistencia correspondientes.
-3. Genera matrices kernel que cuantifican la similitud topológica entre pares de muestras.
+1.  Construye una filtración de complejos de Vietoris–Rips para cada muestra.
+2.  Genera los diagramas de persistencia correspondientes.
+3.  Genera matrices kernel que cuantifican la similitud topológica entre pares de muestras.
 
-
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 simmat <- rips_similarity_matrix(
   data1.df,
@@ -212,7 +198,6 @@ simmat <- rips_similarity_matrix(
   print.progress = TRUE
 )
 ```
-
 :::
 
 Dependiendo del número de muestras y de la cantidad de células por imagen, este paso puede requerir varios minutos de cómputo.
@@ -223,12 +208,11 @@ Una vez obtenidos los diagramas de persistencia, al igual que las secciones ante
 
 TopKAT resuelve este problema mediante funciones kernel, que transforman la información topológica en matrices de similitud. Estas matrices resumen la información contenida en los diagramas de persistencia y constituyen la entrada principal para el análisis estadístico posterior.
 
-### Kernel basado en componentes conexas (\(H_0\))
+### Kernel basado en componentes conexas ((H_0))
 
 El primer kernel utiliza información relacionada con la aparición y fusión de componentes conexas durante la filtración.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 K.cc <- simmat$K.list[[1]] %>%
   reshape2::melt() %>%
@@ -247,17 +231,15 @@ K.cc <- simmat$K.list[[1]] %>%
 
 K.cc
 ```
-
 :::
 
-En este caso, la similitud se calcula utilizando información topológica de dimensión 0 (\(H_0\)).
+En este caso, la similitud se calcula utilizando información topológica de dimensión 0 ((H_0)).
 
-### Kernel basado en ciclos (\(H_1\))
+### Kernel basado en ciclos ((H_1))
 
-El segundo kernel utiliza información de dimensión 1 (\(H_1\)).
+El segundo kernel utiliza información de dimensión 1 ((H_1)).
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 K.loop <- simmat$K.list[[2]] %>%
   reshape2::melt() %>%
@@ -276,22 +258,18 @@ K.loop <- simmat$K.list[[2]] %>%
 
 K.loop
 ```
-
 :::
 
 ### Comparación de ambos kernels
 
 Para facilitar la comparación, podemos visualizar ambos kernels simultáneamente.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 K.cc + K.loop &
   theme(legend.position = "bottom")
 ```
-
 :::
-
 
 ## Construcción de la variable de respuesta
 
@@ -299,8 +277,7 @@ Para aplicar TopKAT es necesario proporcionar una variable de respuesta que indi
 
 En este conjunto de datos, la información de grupo se encuentra codificada en el nombre del archivo. A partir de los nombres únicos de las muestras se construyó un vector binario que posteriormente será utilizado por TopKAT durante la prueba de asociación.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 filenames <- unique(data1.df$archivo)
 
@@ -312,25 +289,22 @@ y <- ifelse(
 
 table(y)
 ```
-
 :::
 
 La variable `y` contiene una observación por muestra y define los grupos que serán comparados durante el análisis.
 
 | Valor | Grupo |
-|---------|---------|
-| 0 | No FA |
-| 1 | FA |
+|-------|-------|
+| 0     | No FA |
+| 1     | FA    |
 
 La función `table(y)` permite verificar que las muestras fueron clasificadas correctamente y que ambos grupos contienen el número esperado de observaciones.
-
 
 ## Prueba de asociación topológica con TopKAT
 
 Una vez obtenidas las matrices kernel, podemos evaluar si la organización espacial de las células difiere entre los grupos estudiados. Para ello utilizamos **Topological Kernel Association Test (TopKAT)**. En este ejemplo, la variable de respuesta corresponde al grupo al que pertenece cada muestra (`FA` o `No FA`) definida anteriormente.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res <- TopKAT(
   y = y,
@@ -340,45 +314,40 @@ res <- TopKAT(
   outcome.type = "binary"
 )
 ```
-
 :::
 
 ### Hipótesis evaluadas
 
 TopKAT contrasta las siguientes hipótesis:
 
-- **Hipótesis nula: la estructura topológica es similar entre los grupos.
-- **Hipótesis alternativa: existen diferencias topológicas entre los grupos.
+- \*\*Hipótesis nula: la estructura topológica es similar entre los grupos.
+- \*\*Hipótesis alternativa: existen diferencias topológicas entre los grupos.
 
 ### Valor-p global
 
 El resultado principal del análisis corresponde al valor-p global:
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res$overall.pval
 ```
-
 :::
 
 Este valor resume la evidencia estadística de asociación entre la topología de las muestras y el grupo al que pertenecen.
 
 De manera general:
 
-- Valores pequeños de p (en este caso si \(p < 0.05\) ), existe evidencia estadísticamente significativa de diferencias topológicas entre FA y NoFA.
-- Valores grandes de p (en este caso si \(p \geq 0.05\) ), no existe evidencia suficiente para rechazar la hipótesis nula.
+- Valores pequeños de p (en este caso si (p \< 0.05) ), existe evidencia estadísticamente significativa de diferencias topológicas entre FA y NoFA.
+- Valores grandes de p (en este caso si (p \geq 0.05) ), no existe evidencia suficiente para rechazar la hipótesis nula.
 
 ### Contribución de cada dimensión topológica
 
 Además del valor-p global, TopKAT reporta resultados individuales para cada kernel utilizado en el análisis.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res$p.vals
 ```
-
 :::
 
 Estos resultados permiten explorar si la señal estadística proviene principalmente de características asociadas a componentes conexas, ciclos o de una combinación de ambas.
@@ -387,10 +356,9 @@ Estos resultados permiten explorar si la señal estadística proviene principalm
 
 Hasta este punto hemos evaluado si existen diferencias topológicas entre los grupos. Sin embargo, también es interesante identificar **a qué escala espacial** resaltan esas diferencias.
 
-La función `scale_importance()` permite estudiar cómo cambia la asociación topológica al considerar distintos valores de \(\varepsilon\). Para ello, el procedimiento recorre una secuencia de escalas y calcula nuevamente la evidencia estadística en cada una de ellas.
+La función `scale_importance()` permite estudiar cómo cambia la asociación topológica al considerar distintos valores de (\varepsilon). Para ello, el procedimiento recorre una secuencia de escalas y calcula nuevamente la evidencia estadística en cada una de ellas.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res_scale_import <- scale_importance(
   pd.list = simmat$rips.list,
@@ -401,49 +369,42 @@ res_scale_import <- scale_importance(
   outcome.type = "binary"
 )
 ```
-
 :::
 
 ### Organización de los resultados
 
 Los valores obtenidos pueden almacenarse en un dataframe para facilitar su exploración y visualización.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res_scale_import.df <- data.frame(
   thresh = res_scale_import$threshold.seq,
   pval = res_scale_import$pvals
 )
 ```
-
 :::
 
 ### Escala de mayor relevancia
 
 La función también identifica automáticamente la escala asociada al valor-p mínimo.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res_scale_import$min.thresh
 ```
-
 :::
 
 Este valor puede interpretarse como la escala donde las diferencias topológicas entre los grupos son más evidentes según el criterio utilizado por TopKAT.
 
-
 ## Visualización de la importancia de escala
 
-Una vez identificadas las escalas evaluadas por `scale_importance()`, podemos visualizar cómo cambia la evidencia estadística a medida que aumenta el valor de \(\varepsilon\).
+Una vez identificadas las escalas evaluadas por `scale_importance()`, podemos visualizar cómo cambia la evidencia estadística a medida que aumenta el valor de (\varepsilon).
 
 La línea vertical punteada indica la escala seleccionada automáticamente por TopKAT como la más informativa.
 
 ### Valor-p en función de la escala
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res_scale_import.df %>% 
   ggplot(aes(x = thresh, y = pval)) +
@@ -466,7 +427,6 @@ res_scale_import.df %>%
     axis.title = element_text(size = 12)
   )
 ```
-
 :::
 
 Esta representación permite observar cómo varía la señal estadística a lo largo de las distintas escalas consideradas durante la filtración.
@@ -475,8 +435,7 @@ Esta representación permite observar cómo varía la señal estadística a lo l
 
 Cuando los valores-p cubren varios órdenes de magnitud, una escala logarítmica facilita la identificación de mínimos locales y regiones de interés.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 res_scale_import.df %>% 
   ggplot(aes(x = thresh, y = pval)) +
@@ -500,21 +459,17 @@ res_scale_import.df %>%
     axis.title = element_text(size = 12)
   )
 ```
-
 :::
 
 La escala seleccionada por este procedimiento será utilizada en los análisis siguientes para construir complejos simpliciales y estudiar los patrones de conectividad celular asociados a cada muestra.
-
-
 
 ## Visualización de la red de conectividad celular
 
 Una vez seleccionada la escala espacial de interés, podemos representar explícitamente las relaciones de vecindad entre las células de una muestra.
 
-En esta representación, cada nodo corresponde a una célula y se dibuja una conexión entre dos células cuando la distancia entre ellas es menor o igual al valor de \(\varepsilon\) seleccionado previamente. Esta visualización permite explorar la organización espacial local del tejido.
+En esta representación, cada nodo corresponde a una célula y se dibuja una conexión entre dos células cuando la distancia entre ellas es menor o igual al valor de (\varepsilon) seleccionado previamente. Esta visualización permite explorar la organización espacial local del tejido.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 NUMBER <- 56
 
@@ -537,11 +492,9 @@ c7 <- plot_cell_connections(
 
 c7
 ```
-
 :::
 
 Este tipo de visualización resulta útil para relacionar los resultados topológicos con la estructura espacial original del tejido.
-
 
 ## Conectividad promedio entre grupos FA y NoFA
 
@@ -549,8 +502,7 @@ Hasta este punto hemos explorado muestras individuales. Sin embargo, también re
 
 Para ello, se construyeron matrices de conectividad promedio para los grupos FA y NoFA utilizando la escala óptima identificada previamente. Estas matrices resumen la frecuencia con la que distintos tipos celulares aparecen conectados dentro de cada condición.
 
-::: {.callout-note}
-
+::: callout-note
 ```{r, eval=FALSE}
 # ============================================================
 # Conectividad promedio FA vs NoFA
@@ -667,7 +619,6 @@ p_noFA <- plot_connectivity_matrix(
 
 p_FA + p_noFA
 ```
-
 :::
 
 Para cada muestra se construye una matriz de conectividad entre tipos celulares. Posteriormente, las matrices individuales se agrupan según la condición clínica (FA o NoFA) y se promedian para obtener una representación global de cada grupo. Los mapas de calor permiten identificar qué pares de tipos celulares presentan una mayor conectividad promedio. Comparar ambas matrices puede revelar diferencias en la organización espacial del microambiente tumoral que no son evidentes al analizar muestras individuales de forma aislada.

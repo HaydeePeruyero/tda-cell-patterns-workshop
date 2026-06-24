@@ -183,7 +183,7 @@ import ot
 
 Se necesita instalr `POT`
 
-```python         
+``` python
 pip install POT
 ```
 :::
@@ -377,7 +377,7 @@ print(df_dist1)
 ::: {.callout-tip collapse="true" icon="false"}
 ## Output
 
-```output
+``` output
                                                     high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \
 high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   
 high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          7710.785536   
@@ -411,7 +411,7 @@ print("Matrices guardadas.")
 ::: {.callout-tip collapse="true" icon="false"}
 ## Output
 
-```output
+``` output
 Matrices guardadas.
 ```
 :::

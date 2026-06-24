@@ -109,7 +109,6 @@ Utilizaremos:
 - `os` para gestionar archivos y directorios.
 - `re` para identificar automáticamente características de las muestras a partir de sus nombres.
 
-
 ``` python
 import os
 import re
@@ -119,13 +118,11 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 ```
 
-
 ## Definir directorios de trabajo
 
 Las matrices de distancia calculadas en la sección anterior fueron almacenadas como archivos `.csv`.
 
 El siguiente paso consiste en definir la carpeta donde se encuentran dichas matrices y crear un directorio donde se guardarán automáticamente las visualizaciones generadas durante el análisis.
-
 
 ``` python
 # Ruta de las matrices de distancia
@@ -135,7 +132,6 @@ ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/codigos/resultados/dis
 salida = os.path.join(ruta, "visualizacion")
 os.makedirs(salida, exist_ok=True)
 ```
-
 
 ## Clasificación automática de las muestras
 
@@ -157,8 +153,6 @@ La siguiente función identifica automáticamente si una muestra corresponde a:
 - Displasia de alto grado (HGD).
 - Displasia de bajo grado (LGD).
 
-
-
 ``` python
 def roi(nombre):
 
@@ -176,12 +170,9 @@ def roi(nombre):
     return "Other"
 ```
 
-
 ### Clasificación por estado de Fanconi
 
 A continuación definimos una función que identifica automáticamente si una muestra pertenece a un paciente con anemia de Fanconi.
-
-
 
 ``` python
 def fanconi(nombre):
@@ -197,12 +188,9 @@ def fanconi(nombre):
     return "No Fanconi"
 ```
 
-
 ### Clasificación por compartimento tisular
 
 Finalmente, distinguiremos entre muestras provenientes del epitelio y muestras provenientes del estroma adyacente.
-
-
 
 ``` python
 def tejido(nombre):
@@ -213,7 +201,6 @@ def tejido(nombre):
     return "Epithelium"
 ```
 
-
 ## Definición de colores para las anotaciones
 
 Una vez clasificadas las muestras, asignaremos una paleta de colores a cada categoría biológica.
@@ -223,8 +210,6 @@ Estos colores se utilizarán posteriormente para generar las barras de anotació
 - El tipo de lesión histopatológica.
 - El estado de anemia de Fanconi.
 - El compartimento tisular.
-
-
 
 ``` python
 roi_colors = {
@@ -257,7 +242,6 @@ En particular:
 
 Estas anotaciones facilitarán la interpretación biológica de los agrupamientos obtenidos mediante clustering jerárquico.
 
-
 ## Construcción del clustermap
 
 Una vez definidas las categorías biológicas y sus respectivos colores, podemos proceder a construir los clustermaps a partir de las matrices de distancia.
@@ -272,8 +256,6 @@ El procedimiento general consiste en:
 6.  Guardar la figura para su análisis posterior.
 
 Las barras de colores añadidas a filas y columnas permiten relacionar visualmente los agrupamientos obtenidos con las características biológicas de cada muestra.
-
-
 
 ``` python
 archivos = [
@@ -344,4 +326,3 @@ for archivo in archivos:
 ```
 
 Durante este proceso, el algoritmo reorganiza automáticamente las muestras de acuerdo con sus similitudes topológicas, generando un dendrograma que resume la estructura jerárquica de los agrupamientos. El resultado final es un clustermap anotado que facilita la exploración visual de posibles asociaciones entre la topología de los datos y las características biológicas de las muestras.
-

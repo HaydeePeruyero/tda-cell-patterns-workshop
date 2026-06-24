@@ -19,15 +19,15 @@ Este sitio reúne el material de la sesión **"Análisis topológico de datos pa
 
 ### Instructors
 
--   Adriana Haydeé Contreras Peruyero
--   Shaday Guerrero Flores
--   Yesenia Villicaña Molina
--   Nelly Sélem Mojica
+- Adriana Haydeé Contreras Peruyero
+- Shaday Guerrero Flores
+- Yesenia Villicaña Molina
+- Nelly Sélem Mojica
 
 ### Helpers
 
--   Luis Raúl Figueroa Martínez
--   Eugenio Martín Azpeitia
+- Luis Raúl Figueroa Martínez
+- Eugenio Martín Azpeitia
 
 ------------------------------------------------------------------------
 
@@ -39,14 +39,14 @@ Este sitio reúne el material de la sesión **"Análisis topológico de datos pa
 
 ### Instructores de la sesión
 
--   A. Haydeé Contreras Peruyero
--   Eugenio Martín Azpeitia
--   Luis Raúl Figueroa
+- A. Haydeé Contreras Peruyero
+- Eugenio Martín Azpeitia
+- Luis Raúl Figueroa
 
 ### Programa
 
 | Hora | Actividad |
-|------------------------------------|------------------------------------|
+|----|----|
 | 09:30 – 10:20 | Charla: *Análisis topológico de datos del microambiente tumoral de pacientes con anemia de Fanconi* |
 | 10:30 – 11:30 | TDA in Images – Práctica 1 |
 | 11:30 – 11:45 | Receso |
@@ -61,13 +61,13 @@ Durante esta sesión exploraremos cómo las herramientas de Análisis Topológic
 
 Particularmente abordaremos:
 
--   Representación de tejidos como nubes de puntos.
--   Construcción de complejos de Vietoris–Rips.
--   Homología persistente.
--   Diagramas de persistencia.
--   Distancias de Wasserstein.
--   Agrupamiento jerárquico.
--   Aplicaciones a imágenes biológicas y microambiente tumoral.
+- Representación de tejidos como nubes de puntos.
+- Construcción de complejos de Vietoris–Rips.
+- Homología persistente.
+- Diagramas de persistencia.
+- Distancias de Wasserstein.
+- Agrupamiento jerárquico.
+- Aplicaciones a imágenes biológicas y microambiente tumoral.
 
 ------------------------------------------------------------------------
 

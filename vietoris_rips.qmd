@@ -12,10 +12,10 @@ En nuestro contexto, cada muestra biológica se representa mediante las coordena
 
 Dado un conjunto de puntos $X$ y un parámetro de escala $\varepsilon$:
 
--   Dos puntos se conectan si su distancia es menor o igual que $2\varepsilon$.
--   Tres puntos mutuamente conectados generan un triángulo.
--   Cuatro puntos mutuamente conectados generan un tetraedro.
--   El procedimiento continúa de forma análoga en dimensiones superiores.
+- Dos puntos se conectan si su distancia es menor o igual que $2\varepsilon$.
+- Tres puntos mutuamente conectados generan un triángulo.
+- Cuatro puntos mutuamente conectados generan un tetraedro.
+- El procedimiento continúa de forma análoga en dimensiones superiores.
 
 ## Definición
 
@@ -23,31 +23,29 @@ Dado un conjunto de puntos $X$ y un parámetro de escala $\varepsilon$, el compl
 
 En términos generales:
 
--   Dos puntos cercanos generan una arista.
--   Tres puntos mutuamente conectados generan un triángulo.
--   Cuatro puntos mutuamente conectados generan un tetraedro.
+- Dos puntos cercanos generan una arista.
+- Tres puntos mutuamente conectados generan un triángulo.
+- Cuatro puntos mutuamente conectados generan un tetraedro.
 
 Formalmente,
 
-$$
-VR_{\varepsilon}(X)
+$$VR_{\varepsilon}(X)
 =
 \left\{
 \sigma \subseteq X :
 d(x_i,x_j)\leq 2 \varepsilon
 \quad
 \forall x_i,x_j\in\sigma
-\right\}.
-$$
+\right\}.$$
 
 ## Efecto del parámetro de escala
 
 Al variar $\varepsilon$, la estructura del complejo cambia:
 
--   Para valores pequeños aparecen componentes aisladas.
--   Conforme aumenta $\varepsilon$, comienzan a formarse conexiones.
--   A escalas intermedias pueden aparecer ciclos.
--   Para valores grandes muchas estructuras terminan fusionándose.
+- Para valores pequeños aparecen componentes aisladas.
+- Conforme aumenta $\varepsilon$, comienzan a formarse conexiones.
+- A escalas intermedias pueden aparecer ciclos.
+- Para valores grandes muchas estructuras terminan fusionándose.
 
 Este comportamiento multiescala constituye la base de la homología persistente.
 
@@ -61,8 +59,8 @@ En este trabajo construiremos complejos de Vietoris–Rips utilizando las coorde
 
 A partir de estos complejos, identificaremos las clases de homología persistente en dimensiones 0 y 1 mediante sus tiempos de nacimiento y muerte:
 
--   $H_0$: clases asociadas a las componentes conexas.
--   $H_1$: clases asociadas a ciclos o agujeros unidimensionales.
+- $H_0$: clases asociadas a las componentes conexas.
+- $H_1$: clases asociadas a ciclos o agujeros unidimensionales.
 
 Estas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral.
 
@@ -90,11 +88,11 @@ En esta etapa construiremos complejos simpliciales y obtendremos los pares de na
 
 Utilizaremos las siguientes bibliotecas:
 
--   `os` para manejo de archivos y rutas.
--   `numpy` para operaciones numéricas.
--   `pandas` para manipulación de datos tabulares.
--   `matplotlib` para visualización de resultados.
--   `gudhi` para la construcción de complejos de Vietoris–Rips y homología persistente.
+- `os` para manejo de archivos y rutas.
+- `numpy` para operaciones numéricas.
+- `pandas` para manipulación de datos tabulares.
+- `matplotlib` para visualización de resultados.
+- `gudhi` para la construcción de complejos de Vietoris–Rips y homología persistente.
 
 ::: callout-tip
 ## Código
@@ -116,8 +114,8 @@ El primer paso consiste en cargar las coordenadas espaciales de las células que
 
 Trabajaremos con un archivo CSV que contiene, entre otras variables, las coordenadas de los centroides celulares:
 
--   `X_centroid`
--   `Y_centroid`
+- `X_centroid`
+- `Y_centroid`
 
 Cada fila representa una célula y sus coordenadas dentro de la imagen.
 
@@ -179,8 +177,8 @@ Esta secuencia de complejos constituye una filtración, sobre la cual se calcula
 
 En este ejemplo utilizaremos inicialmente:
 
--   $\varepsilon = 100$
--   dimensión máxima = 2
+- $\varepsilon = 100$
+- dimensión máxima = 2
 
 La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada `simplex_tree`, que posteriormente utilizaremos para calcular homología persistente.
 
@@ -249,16 +247,16 @@ Sin embargo, una de las ideas centrales de TDA es que la elección de una única
 
 Durante este proceso pueden ocurrir distintos eventos:
 
--   Componentes conexas que aparecen y posteriormente se fusionan.
--   Ciclos que nacen al formarse conexiones entre puntos.
--   Ciclos que desaparecen cuando regiones vacías terminan rellenándose.
+- Componentes conexas que aparecen y posteriormente se fusionan.
+- Ciclos que nacen al formarse conexiones entre puntos.
+- Ciclos que desaparecen cuando regiones vacías terminan rellenándose.
 
 La homología persistente registra estos eventos mediante pares $(\text{birth}, \text{death})$, que indican la escala en la que una clase de homología aparece y la escala en la que desaparece.
 
 En este taller nos centraremos principalmente en las dimensiones 0 y 1 de la homología persistente:
 
--   $H_0$: pares nacimiento–muerte correspondientes a componentes conexas.
--   $H_1$: pares nacimiento–muerte correspondientes a ciclos o agujeros unidimensionales.
+- $H_0$: pares nacimiento–muerte correspondientes a componentes conexas.
+- $H_1$: pares nacimiento–muerte correspondientes a ciclos o agujeros unidimensionales.
 
 La biblioteca GUDHI permite calcular automáticamente estos pares o características a partir del complejo construido previamente.
 
@@ -286,10 +284,10 @@ Para ello utilizamos el **diagrama de persistencia**, una representación gráfi
 
 En este diagrama:
 
--   El eje horizontal (**Birth**) indica la escala en la que aparece una característica.
--   El eje vertical (**Death**) indica la escala en la que desaparece.
--   Cada punto representa una componente conexa (clase en $H_0$) o un ciclo (clase en $H_1$).
--   Cuanto más alejado esté un punto de la diagonal, mayor será su persistencia y, potencialmente, su relevancia topológica.
+- El eje horizontal (**Birth**) indica la escala en la que aparece una característica.
+- El eje vertical (**Death**) indica la escala en la que desaparece.
+- Cada punto representa una componente conexa (clase en $H_0$) o un ciclo (clase en $H_1$).
+- Cuanto más alejado esté un punto de la diagonal, mayor será su persistencia y, potencialmente, su relevancia topológica.
 
 De esta forma, el diagrama de persistencia resume cómo evoluciona la estructura topológica de la nube de puntos a diferentes escalas.
 
@@ -316,9 +314,9 @@ El diagrama de persistencia es una representación gráfica muy útil para visua
 
 Por ello, extraeremos para cada característica topológica:
 
--   su dimensión, que indica el tipo de característica topológica que representa (0 para componentes conexas, 1 para ciclos o bucles, etc,
--   el valor de nacimiento (*birth*),
--   el valor de muerte (*death*).
+- su dimensión, que indica el tipo de característica topológica que representa (0 para componentes conexas, 1 para ciclos o bucles, etc,
+- el valor de nacimiento (*birth*),
+- el valor de muerte (*death*).
 
 Esta tabla será la entrada para las siguientes etapas del análisis, donde calcularemos distancias entre diagramas de persistencia y construiremos matrices de similitud entre muestras.
 
@@ -338,14 +336,13 @@ output.head()
 ::: {.callout-tip collapse="true" icon="false"}
 ## Output
 
-|dimension	|birth	|death|
-|-----------|-------|-----|
-|1	|99.550533	|inf|
-|1	|39.077252	|inf|
-|1	|40.121614	|inf|
-|1	|41.054365	|inf|
-|1	|42.475553	|inf|
-
+| dimension | birth     | death |
+|-----------|-----------|-------|
+| 1         | 99.550533 | inf   |
+| 1         | 39.077252 | inf   |
+| 1         | 40.121614 | inf   |
+| 1         | 41.054365 | inf   |
+| 1         | 42.475553 | inf   |
 :::
 
 ## Resumen
@@ -364,8 +361,7 @@ Afortunadamente, no es necesario ejecutar manualmente el análisis archivo por a
 
 En teoría, todo lo necesario para construir este análisis ya ha sido presentado en las secciones anteriores. El siguiente ejercicio consiste en completar un script que procese automáticamente múltiples muestras y genere un diagrama de persistencia para cada una de ellas.
 
-
-::: {.callout-note icon="false"}
+::::::: {.callout-note icon="false"}
 ## 💻 Ejercicio: procesar múltiples muestras
 
 El ejercicio consiste en automatizar este proceso para todas las muestras disponibles. Para cada archivo `.csv`, deberán construir la nube de puntos, generar el complejo de Vietoris–Rips, obtener los pares nacimiento–muerte del diagrama de persistencia y guardar los resultados en una carpeta de salida.
@@ -416,8 +412,7 @@ Complete los espacios faltantes en el código para procesar las $n$ muestras y g
 
 **Nota:** El código mostrado es solo una guía para organizar el proceso. Puede implementar la solución de otra manera, siempre y cuando procese todos los archivos de la carpeta indicada y guarde los resultados correspondientes para cada muestra.
 
-
-```python
+``` python
 import os
 import requests
 import numpy as np
@@ -523,10 +518,10 @@ for archivo in archivos:
 
     print(f"Guardado: {nombre_salida}")
 ```
- 
+
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
- 
+
 ``` python
 import os
 import requests
@@ -639,9 +634,6 @@ for archivo in archivos:
     )
 
     print(f"Guardado: resultados/{nombre_salida}")
-``` 
-
-  
+```
 :::
-:::
-
+:::::::
