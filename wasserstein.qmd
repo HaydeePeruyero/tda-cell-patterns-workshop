@@ -175,7 +175,18 @@ import os
 import numpy as np
 import pandas as pd
 import gudhi.wasserstein as gw
+import ot
 ```
+
+::: callout-warning
+## Nota
+
+Se necesita instalr `POT`
+
+```python         
+pip install POT
+```
+:::
 
 ## Definir la carpeta de trabajo
 
@@ -363,6 +374,20 @@ print(df_dist0)
 print(df_dist1)
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+```output
+                                                    high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          7710.785536   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                          6388.711787   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               4712.810788   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               2600.703114 
+..........
+```
+:::
+
 ## Guardado de resultados
 
 En este punto ya hemos construido las matrices de distancias de Wasserstein entre todas las muestras analizadas.
@@ -382,5 +407,13 @@ df_dist1.to_csv(
 
 print("Matrices guardadas.")
 ```
+
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+```output
+Matrices guardadas.
+```
+:::
 
 Al finalizar, tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico.

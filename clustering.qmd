@@ -2,7 +2,6 @@
 title: "Clustering"
 ---
 
-
 # Clustering de muestras a partir de distancias topológicas
 
 Una vez construidas las matrices de distancia de Wasserstein, el siguiente paso consiste en analizar la estructura global de similitud entre muestras.
@@ -66,23 +65,23 @@ Recordemos que cada elemento de la matriz representa la distancia topológica en
 
 A partir de estas matrices construiremos dendrogramas y clustermaps que nos permitirán visualizar la estructura global de similitud entre muestras y explorar posibles asociaciones con variables biológicas como:
 
-* Grado histopatológico (LGD, HGD, IC).
-* Estado de anemia de Fanconi (FA y no-FA).
-* Compartimento tisular (epitelio y estroma).
+- Grado histopatológico (LGD, HGD, IC).
+- Estado de anemia de Fanconi (FA y no-FA).
+- Compartimento tisular (epitelio y estroma).
 
 ### Objetivos
 
 En esta sección aprenderemos a:
 
-* Cargar matrices de distancia previamente calculadas.
-* Aplicar clustering jerárquico aglomerativo.
-* Construir dendrogramas y clustermaps.
-* Incorporar información biológica mediante anotaciones de color.
-* Interpretar agrupamientos desde una perspectiva topológica.
+- Cargar matrices de distancia previamente calculadas.
+- Aplicar clustering jerárquico aglomerativo.
+- Construir dendrogramas y clustermaps.
+- Incorporar información biológica mediante anotaciones de color.
+- Interpretar agrupamientos desde una perspectiva topológica.
 
 El flujo general del análisis será:
 
-```text
+``` text
 Diagramas de persistencia
             ↓
  Distancias de Wasserstein
@@ -98,24 +97,20 @@ Diagramas de persistencia
 
 A continuación implementaremos este procedimiento utilizando las matrices de distancia obtenidas en la sección anterior.
 
-
-##  Importar bibliotecas
+## Importar bibliotecas
 
 Comenzaremos importando las bibliotecas necesarias para realizar el análisis de clustering y la visualización de los resultados.
 
 Utilizaremos:
 
-* `pandas` para manipular matrices de distancia.
-* `seaborn` para generar clustermaps.
-* `matplotlib` para personalizar las figuras.
-* `os` para gestionar archivos y directorios.
-* `re` para identificar automáticamente características de las muestras a partir de sus nombres.
+- `pandas` para manipular matrices de distancia.
+- `seaborn` para generar clustermaps.
+- `matplotlib` para personalizar las figuras.
+- `os` para gestionar archivos y directorios.
+- `re` para identificar automáticamente características de las muestras a partir de sus nombres.
 
-::: {.callout-note}
 
-## Mostrar código
-
-```python
+``` python
 import os
 import re
 import pandas as pd
@@ -123,19 +118,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 ```
-:::
 
-##  Definir directorios de trabajo
 
-Las matrices de distancia calculadas en la sección anterior fueron almacenadas como archivos CSV.
+## Definir directorios de trabajo
+
+Las matrices de distancia calculadas en la sección anterior fueron almacenadas como archivos `.csv`.
 
 El siguiente paso consiste en definir la carpeta donde se encuentran dichas matrices y crear un directorio donde se guardarán automáticamente las visualizaciones generadas durante el análisis.
 
-::: {.callout-note}
 
-## Mostrar código
-
-```python
+``` python
 # Ruta de las matrices de distancia
 ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/codigos/resultados/distancias"
 
@@ -143,17 +135,17 @@ ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/codigos/resultados/dis
 salida = os.path.join(ruta, "visualizacion")
 os.makedirs(salida, exist_ok=True)
 ```
-:::
 
-##  Clasificación automática de las muestras
+
+## Clasificación automática de las muestras
 
 Para facilitar la interpretación biológica de los agrupamientos, utilizaremos funciones auxiliares que permiten identificar automáticamente diferentes características de cada muestra a partir de su nombre.
 
 En particular, clasificaremos cada muestra según:
 
-* El tipo de lesión histopatológica.
-* El estado de anemia de Fanconi.
-* El compartimento tisular al que pertenece.
+- El tipo de lesión histopatológica.
+- El estado de anemia de Fanconi.
+- El compartimento tisular al que pertenece.
 
 Estas categorías se utilizarán posteriormente para colorear las filas y columnas del clustermap.
 
@@ -161,15 +153,13 @@ Estas categorías se utilizarán posteriormente para colorear las filas y column
 
 La siguiente función identifica automáticamente si una muestra corresponde a:
 
-* Carcinoma invasivo (IC).
-* Displasia de alto grado (HGD).
-* Displasia de bajo grado (LGD).
+- Carcinoma invasivo (IC).
+- Displasia de alto grado (HGD).
+- Displasia de bajo grado (LGD).
 
-::: {.callout-note}
 
-## Mostrar código
 
-```python
+``` python
 def roi(nombre):
 
     nombre = nombre.lower()
@@ -185,16 +175,15 @@ def roi(nombre):
 
     return "Other"
 ```
-:::
+
 
 ### Clasificación por estado de Fanconi
 
 A continuación definimos una función que identifica automáticamente si una muestra pertenece a un paciente con anemia de Fanconi.
 
-::: {.callout-note}
 
-## Mostrar código
-```python
+
+``` python
 def fanconi(nombre):
 
     nombre = nombre.upper()
@@ -207,16 +196,15 @@ def fanconi(nombre):
 
     return "No Fanconi"
 ```
-:::
+
 
 ### Clasificación por compartimento tisular
 
 Finalmente, distinguiremos entre muestras provenientes del epitelio y muestras provenientes del estroma adyacente.
 
-::: {.callout-note}
 
-## Mostrar código
-```python
+
+``` python
 def tejido(nombre):
 
     if nombre.startswith("stroma_ad_"):
@@ -224,7 +212,7 @@ def tejido(nombre):
 
     return "Epithelium"
 ```
-:::
+
 
 ## Definición de colores para las anotaciones
 
@@ -232,15 +220,13 @@ Una vez clasificadas las muestras, asignaremos una paleta de colores a cada cate
 
 Estos colores se utilizarán posteriormente para generar las barras de anotación del clustermap, permitiendo identificar visualmente:
 
-* El tipo de lesión histopatológica.
-* El estado de anemia de Fanconi.
-* El compartimento tisular.
+- El tipo de lesión histopatológica.
+- El estado de anemia de Fanconi.
+- El compartimento tisular.
 
-::: {.callout-note}
 
-## Mostrar código
 
-```python
+``` python
 roi_colors = {
     "IC": "#b30000",
     "HGD": "#2166ac",
@@ -258,18 +244,19 @@ tejido_colors = {
     "Epithelium": "#4d4d4d"
 }
 ```
+
 En particular:
 
-* Rojo representa muestras de carcinoma invasivo (IC).
-* Azul representa muestras de displasia de alto grado (HGD).
-* Amarillo representa muestras de displasia de bajo grado (LGD).
-* Morado indica muestras provenientes de pacientes con anemia de Fanconi.
-* Verde indica muestras de pacientes sin anemia de Fanconi.
-* Naranja identifica muestras de estroma.
-* Gris oscuro identifica muestras de epitelio.
+- Rojo representa muestras de carcinoma invasivo (IC).
+- Azul representa muestras de displasia de alto grado (HGD).
+- Amarillo representa muestras de displasia de bajo grado (LGD).
+- Morado indica muestras provenientes de pacientes con anemia de Fanconi.
+- Verde indica muestras de pacientes sin anemia de Fanconi.
+- Naranja identifica muestras de estroma.
+- Gris oscuro identifica muestras de epitelio.
 
 Estas anotaciones facilitarán la interpretación biológica de los agrupamientos obtenidos mediante clustering jerárquico.
-:::
+
 
 ## Construcción del clustermap
 
@@ -277,20 +264,18 @@ Una vez definidas las categorías biológicas y sus respectivos colores, podemos
 
 El procedimiento general consiste en:
 
-1. Cargar cada matriz de distancia almacenada en formato CSV.
-2. Obtener los nombres de las muestras presentes en la matriz.
-3. Asignar automáticamente colores según el tipo de lesión, el estado de Fanconi y el compartimento tisular.
-4. Aplicar clustering jerárquico utilizando el método **average linkage**.
-5. Visualizar simultáneamente la matriz de distancias y el dendrograma resultante.
-6. Guardar la figura para su análisis posterior.
+1.  Cargar cada matriz de distancia almacenada en formato `.csv`.
+2.  Obtener los nombres de las muestras presentes en la matriz.
+3.  Asignar automáticamente colores según el tipo de lesión, el estado de Fanconi y el compartimento tisular.
+4.  Aplicar clustering jerárquico utilizando el método **average linkage**.
+5.  Visualizar simultáneamente la matriz de distancias y el dendrograma resultante.
+6.  Guardar la figura para su análisis posterior.
 
 Las barras de colores añadidas a filas y columnas permiten relacionar visualmente los agrupamientos obtenidos con las características biológicas de cada muestra.
 
-::: {.callout-note}
 
-## Mostrar código
 
-```python
+``` python
 archivos = [
     f for f in os.listdir(ruta)
     if f.endswith(".csv")
@@ -359,4 +344,4 @@ for archivo in archivos:
 ```
 
 Durante este proceso, el algoritmo reorganiza automáticamente las muestras de acuerdo con sus similitudes topológicas, generando un dendrograma que resume la estructura jerárquica de los agrupamientos. El resultado final es un clustermap anotado que facilita la exploración visual de posibles asociaciones entre la topología de los datos y las características biológicas de las muestras.
-:::
+
