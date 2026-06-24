@@ -258,6 +258,9 @@ El procedimiento general consiste en:
 Las barras de colores añadidas a filas y columnas permiten relacionar visualmente los agrupamientos obtenidos con las características biológicas de cada muestra.
 
 ``` python
+# Cambiar a ruta a donde distancias
+ruta = "/home/jupyterluisraul/resultados/distancias"
+
 archivos = [
     f for f in os.listdir(ruta)
     if f.endswith(".csv")
@@ -324,5 +327,9 @@ for archivo in archivos:
     plt.show()
     plt.close()
 ```
+
+![Clustermap para dimensión 0](figures/Cluster1.png)
+
+![Clustermap para dimensión 1](figures/Cluster2.png)
 
 Durante este proceso, el algoritmo reorganiza automáticamente las muestras de acuerdo con sus similitudes topológicas, generando un dendrograma que resume la estructura jerárquica de los agrupamientos. El resultado final es un clustermap anotado que facilita la exploración visual de posibles asociaciones entre la topología de los datos y las características biológicas de las muestras.

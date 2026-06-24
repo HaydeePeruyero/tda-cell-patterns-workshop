@@ -181,7 +181,7 @@ import ot
 ::: callout-warning
 ## Nota
 
-Se necesita instalr `POT`
+Se necesita instalar `POT`
 
 ``` python
 pip install POT
@@ -397,6 +397,17 @@ El siguiente paso consiste en almacenar estos resultados, ya que serán utilizad
 De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.
 
 ``` python
+# Crear carpeta para almacenar las matrices de distancia
+ruta = "/home/jupyter-luisraul/resultados" # cambiar la ruta
+
+# Carpeta de salida
+salida = os.path.join(ruta, "distancias")
+os.makedirs(salida, exist_ok=True)
+```
+
+``` python
+ruta = "/home/jupyter-luisraul/resultados/distancias" # Cambiar la ruta
+
 df_dist0.to_csv(
     os.path.join(ruta, "wasserstein_dim0.csv")
 )
