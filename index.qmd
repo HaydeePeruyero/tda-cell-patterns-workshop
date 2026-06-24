@@ -46,8 +46,8 @@ Este sitio reúne el material de la sesión **"Análisis topológico de datos pa
 ### Programa
 
 | Hora | Actividad |
-|---------------|---------------------------------------------------------|
-| 09:30 – 10:20 | Charla: *Análisis topológico de datos para la caracterización de patrones celulares* |
+|------------------------------------|------------------------------------|
+| 09:30 – 10:20 | Charla: *Análisis topológico de datos del microambiente tumoral de pacientes con anemia de Fanconi* |
 | 10:30 – 11:30 | TDA in Images – Práctica 1 |
 | 11:30 – 11:45 | Receso |
 | 11:45 – 12:50 | TDA in Images – Práctica 2 |

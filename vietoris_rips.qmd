@@ -10,22 +10,22 @@ En nuestro contexto, cada muestra biológica se representa mediante las coordena
 
 ## Construcción
 
-Dado un conjunto de puntos (X) y un parámetro de escala $$(\varepsilon)$$:
+Dado un conjunto de puntos $X$ y un parámetro de escala $\varepsilon$:
 
-* Dos puntos se conectan si su distancia es menor o igual que $$2(\varepsilon)$$.
-* Tres puntos mutuamente conectados generan un triángulo.
-* Cuatro puntos mutuamente conectados generan un tetraedro.
-* El procedimiento continúa de forma análoga en dimensiones superiores.
+-   Dos puntos se conectan si su distancia es menor o igual que $2\varepsilon$.
+-   Tres puntos mutuamente conectados generan un triángulo.
+-   Cuatro puntos mutuamente conectados generan un tetraedro.
+-   El procedimiento continúa de forma análoga en dimensiones superiores.
 
 ## Definición
 
-Dado un conjunto de puntos \(X\) y un parámetro de escala \(\varepsilon\), el complejo de Vietoris–Rips se construye conectando puntos que se encuentran suficientemente cerca entre sí.
+Dado un conjunto de puntos $X$ y un parámetro de escala $\varepsilon$, el complejo de Vietoris–Rips se construye conectando puntos que se encuentran suficientemente cerca entre sí.
 
 En términos generales:
 
-- Dos puntos cercanos generan una arista.
-- Tres puntos mutuamente conectados generan un triángulo.
-- Cuatro puntos mutuamente conectados generan un tetraedro.
+-   Dos puntos cercanos generan una arista.
+-   Tres puntos mutuamente conectados generan un triángulo.
+-   Cuatro puntos mutuamente conectados generan un tetraedro.
 
 Formalmente,
 
@@ -44,27 +44,25 @@ $$
 
 Al variar $\varepsilon$, la estructura del complejo cambia:
 
-- Para valores pequeños aparecen componentes aisladas.
-- Conforme aumenta $\varepsilon$, comienzan a formarse conexiones.
-- A escalas intermedias pueden aparecer ciclos.
-- Para valores grandes muchas estructuras terminan fusionándose.
+-   Para valores pequeños aparecen componentes aisladas.
+-   Conforme aumenta $\varepsilon$, comienzan a formarse conexiones.
+-   A escalas intermedias pueden aparecer ciclos.
+-   Para valores grandes muchas estructuras terminan fusionándose.
 
 Este comportamiento multiescala constituye la base de la homología persistente.
 
 ## Ejemplo visual
 
-![](figures/rips_filtration.png){fig-align="center" width="90%"}
-
-*Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala $\varepsilon$.*
+![Evolución de un complejo de Vietoris–Rips conforme aumenta el parámetro de escala $\varepsilon$.](figures/rips_filtration.png){fig-align="center" width="90%"}
 
 ## Aplicación en este workshop
 
 En este trabajo construiremos complejos de Vietoris–Rips utilizando las coordenadas espaciales de subconjuntos celulares obtenidos a partir de imágenes de tejido tumoral.
 
-A partir de estos complejos calcularemos homología persistente en dimensiones:
+A partir de estos complejos, identificaremos las clases de homología persistente en dimensiones 0 y 1 mediante sus tiempos de nacimiento y muerte:
 
-* (H_0): componentes conexas.
-* (H_1): ciclos.
+-   $H_0$: clases asociadas a las componentes conexas.
+-   $H_1$: clases asociadas a ciclos o agujeros unidimensionales.
 
 Estas estructuras nos permitirán caracterizar patrones de organización celular presentes en el microambiente tumoral.
 
@@ -78,31 +76,30 @@ Trabajaremos con coordenadas celulares obtenidas a partir de imágenes de tejido
 
 En esta sección aprenderemos a:
 
-1. Cargar coordenadas celulares y construir una nube de puntos (*point cloud*).
-2. Construir un complejo de Vietoris–Rips a partir de dichas coordenadas.
-3. Calcular la homología persistente.
-4. Visualizar el diagrama de persistencia resultante.
-5. Guardar los resultados para análisis posteriores.
+1.  Cargar coordenadas celulares y construir una nube de puntos (*point cloud*).
+2.  Construir un complejo de Vietoris–Rips a partir de dichas coordenadas.
+3.  Obtener los pares nacimiento–muerte de las clases de homología persistente.
+4.  Visualizar el diagrama de persistencia resultante.
+5.  Guardar los resultados para análisis posteriores.
 
 Este procedimiento constituye el pipeline básico de TDA que posteriormente utilizaremos para comparar múltiples muestras biológicas.
 
 ## Importar bibliotecas
 
-En esta etapa construiremos complejos simpliciales y homología persistente a partir de datos espaciales.
+En esta etapa construiremos complejos simpliciales y obtendremos los pares de nacimiento-muerte de las las clases de homología persistente a partir de datos espaciales.
 
 Utilizaremos las siguientes bibliotecas:
 
-* `os` para manejo de archivos y rutas.
-* `numpy` para operaciones numéricas.
-* `pandas` para manipulación de datos tabulares.
-* `matplotlib` para visualización de resultados.
-* `gudhi` para la construcción de complejos de Vietoris–Rips y homología persistente.
+-   `os` para manejo de archivos y rutas.
+-   `numpy` para operaciones numéricas.
+-   `pandas` para manipulación de datos tabulares.
+-   `matplotlib` para visualización de resultados.
+-   `gudhi` para la construcción de complejos de Vietoris–Rips y homología persistente.
 
-::: {.callout-tip}
-
+::: callout-tip
 ## Código
 
-```python
+``` python
 import os
 import numpy as np
 import pandas as pd
@@ -113,15 +110,14 @@ import gudhi as gd
 
 Primero trabajaremos con una única muestra para entender cada paso del proceso. Una vez comprendido el pipeline completo, lo automatizaremos para procesar múltiples muestras de manera simultánea.
 
-
-##  Cargar datos
+## Cargar datos
 
 El primer paso consiste en cargar las coordenadas espaciales de las células que fueron obtenidas durante el proceso de segmentación.
 
 Trabajaremos con un archivo CSV que contiene, entre otras variables, las coordenadas de los centroides celulares:
 
-* `X_centroid`
-* `Y_centroid`
+-   `X_centroid`
+-   `Y_centroid`
 
 Cada fila representa una célula y sus coordenadas dentro de la imagen.
 
@@ -129,12 +125,8 @@ A partir de estas coordenadas construiremos una **nube de puntos** (*point cloud
 
 La siguiente celda carga el archivo, extrae las coordenadas y las organiza en una matriz denominada `puntos`, donde cada fila corresponde a una célula y cada columna a una coordenada espacial.
 
-::: {.callout-tip}
-
-## Código
-
-```python
-ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/carcinoma_FA_HN14_2.csv"
+``` python
+ruta = "https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/high_grade_displasia_FAAGSCC_13_HGD_15.csv"
 
 df = pd.read_csv(ruta)
 
@@ -145,9 +137,16 @@ puntos = np.column_stack((x, y))
 
 print(f"Número de puntos: {len(puntos)}")
 ```
+
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+``` output
+Número de puntos: 2005
+```
 :::
 
-##  Visualización de la nube de puntos
+## Visualización de la nube de puntos
 
 Una vez cargadas las coordenadas, es conveniente visualizar la distribución espacial de las células antes de realizar cualquier análisis topológico.
 
@@ -155,11 +154,7 @@ Cada punto de la gráfica representa una célula identificada en el tejido. Esta
 
 La siguiente celda genera una visualización simple de las coordenadas celulares.
 
-::: {.callout-tip}
-
-## Código
-
-```python
+``` python
 plt.figure(figsize=(6,6))
 plt.scatter(x, y, s=5)
 
@@ -170,26 +165,26 @@ plt.ylabel("Y")
 plt.show()
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+![](figures/VR-1.png)
 :::
 
 ## Construcción del complejo de Vietoris–Rips
 
-A partir de la nube de puntos se construye un complejo de Vietoris–Rips para una secuencia de valores del parámetro de escala $$(\varepsilon)$$. Al variar este parámetro, la conectividad entre las células cambia progresivamente, generando una familia de complejos simpliciales que describe la organización espacial de la muestra a múltiples escalas.
+A partir de la nube de puntos se construye un complejo de Vietoris–Rips para una secuencia de valores del parámetro de escala $\varepsilon$. Al variar este parámetro, la conectividad entre las células cambia progresivamente, generando una familia de complejos simpliciales que describe la organización espacial de la muestra a múltiples escalas.
 
 Esta secuencia de complejos constituye una filtración, sobre la cual se calcula posteriormente la homología persistente.
 
 En este ejemplo utilizaremos inicialmente:
 
-- $$ \varepsilon = 100\ $$
-- dimensión máxima = 2
+-   $\varepsilon = 100$
+-   dimensión máxima = 2
 
 La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada `simplex_tree`, que posteriormente utilizaremos para calcular homología persistente.
 
-::: {.callout-tip}
-
-## Código
-
-```python
+``` python
 radio = 100
 
 rips_complex = gd.RipsComplex(
@@ -204,19 +199,21 @@ simplex_tree = rips_complex.create_simplex_tree(
 print("Número de simplices:", simplex_tree.num_simplices())
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+``` output
+Número de simplices: 105146
+```
 :::
 
-##  Visualización del complejo de Vietoris–Rips
+## Visualización del complejo de Vietoris–Rips
 
 Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.
 
 Esta representación permite identificar visualmente regiones altamente conectadas, posibles agrupamientos y estructuras que podrían dar origen a ciclos topológicos.
 
-::: {.callout-tip}
-
-##  Código
-
-```python
+``` python
 plt.figure(figsize=(8,6))
 plt.scatter(x, y, color="black", s=5)
 
@@ -238,43 +235,50 @@ plt.ylabel("Y")
 plt.show()
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+![](figures/VR-2.png)
 :::
 
-##  Homología persistente
+## Homología persistente
 
-Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala \(r\).
+Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala $r$.
 
-Sin embargo, una de las ideas centrales de TDA es que la elección de una única escala puede ocultar información relevante. En lugar de analizar un solo complejo, la homología persistente estudia cómo evolucionan las estructuras topológicas cuando el parámetro de escala aumenta progresivamente.
+Sin embargo, una de las ideas centrales de TDA es que la elección de una única escala puede ocultar información relevante. En lugar de analizar un solo complejo, la homología persistente estudia cómo evolucionan las estructuras topológicas cuando el parámetro de escala aumenta progresivamente, es decir, estudia un complejo simplicial filtrado.
 
 Durante este proceso pueden ocurrir distintos eventos:
 
-- Componentes conexas que aparecen y posteriormente se fusionan.
-- Ciclos que nacen al formarse conexiones entre puntos.
-- Ciclos que desaparecen cuando regiones vacías terminan rellenándose.
+-   Componentes conexas que aparecen y posteriormente se fusionan.
+-   Ciclos que nacen al formarse conexiones entre puntos.
+-   Ciclos que desaparecen cuando regiones vacías terminan rellenándose.
 
-La homología persistente registra estos eventos mediante pares \((birth, death)\), que indican la escala en la que una característica topológica aparece y la escala en la que desaparece.
+La homología persistente registra estos eventos mediante pares $(\text{birth}, \text{death})$, que indican la escala en la que una clase de homología aparece y la escala en la que desaparece.
 
-En este taller nos centraremos principalmente en:
+En este taller nos centraremos principalmente en las dimensiones 0 y 1 de la homología persistente:
 
-- \(H_0\): componentes conexas.
-- \(H_1\): ciclos o bucles.
+-   $H_0$: pares nacimiento–muerte correspondientes a componentes conexas.
+-   $H_1$: pares nacimiento–muerte correspondientes a ciclos o agujeros unidimensionales.
 
-La biblioteca GUDHI permite calcular automáticamente estas características a partir del complejo construido previamente.
+La biblioteca GUDHI permite calcular automáticamente estos pares o características a partir del complejo construido previamente.
 
-::: {.callout-tip}
-
-## Código
-
-```python
+``` python
 diag = simplex_tree.persistence()
 
 print("Primeros valores:")
 print(diag[:10])
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+``` output
+Primeros valores:
+[(1, (99.55053275871482, inf)), (1, (39.077251776686694, inf)), (1, (40.1216137293936, inf)), (1, (41.05436546309887, inf)), (1, (42.475553089278534, inf)), (1, (43.23362722088161, inf)), (1, (43.729373494197354, inf)), (1, (44.281549713775064, inf)), (1, (48.55522222630029, inf)), (1, (50.262852804172695, inf))]
+```
 :::
 
-##  Diagrama de persistencia
+## Diagrama de persistencia
 
 Una vez calculada la homología persistente, necesitamos una forma de resumir toda la información obtenida durante la filtración.
 
@@ -282,10 +286,10 @@ Para ello utilizamos el **diagrama de persistencia**, una representación gráfi
 
 En este diagrama:
 
-- El eje horizontal (**Birth**) indica la escala en la que aparece una característica.
-- El eje vertical (**Death**) indica la escala en la que desaparece.
-- Cada punto representa una componente conexa (\(H_0\)) o un ciclo (\(H_1\)).
-- Cuanto más alejado esté un punto de la diagonal, mayor será su persistencia y, potencialmente, su relevancia topológica.
+-   El eje horizontal (**Birth**) indica la escala en la que aparece una característica.
+-   El eje vertical (**Death**) indica la escala en la que desaparece.
+-   Cada punto representa una componente conexa (clase en $H_0$) o un ciclo (clase en $H_1$).
+-   Cuanto más alejado esté un punto de la diagonal, mayor será su persistencia y, potencialmente, su relevancia topológica.
 
 De esta forma, el diagrama de persistencia resume cómo evoluciona la estructura topológica de la nube de puntos a diferentes escalas.
 
@@ -293,27 +297,28 @@ De esta forma, el diagrama de persistencia resume cómo evoluciona la estructura
 
 El siguiente código permite visualizar el diagrama de persistencia obtenido a partir del complejo de Vietoris–Rips construido previamente.
 
-::: {.callout-tip}
-##  Código
-
-```python
+``` python
 plt.figure(figsize=(6,6))
 gd.plot_persistence_diagram(diag)
 plt.title("Diagrama de persistencia")
 plt.show()
 ```
+
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+![](figures/VR-3.png)
 :::
 
-
-##  Guardar resultados
+## Guardar resultados
 
 El diagrama de persistencia es una representación gráfica muy útil para visualizar las características topológicas de una muestra. Sin embargo, para realizar comparaciones sistemáticas entre múltiples muestras resulta conveniente almacenar esta información en formato tabular.
 
 Por ello, extraeremos para cada característica topológica:
 
-- su dimensión (\(H_0\), \(H_1\), etc.),
-- el valor de nacimiento (*birth*),
-- el valor de muerte (*death*).
+-   su dimensión, que indica el tipo de característica topológica que representa (0 para componentes conexas, 1 para ciclos o bucles, etc,
+-   el valor de nacimiento (*birth*),
+-   el valor de muerte (*death*).
 
 Esta tabla será la entrada para las siguientes etapas del análisis, donde calcularemos distancias entre diagramas de persistencia y construiremos matrices de similitud entre muestras.
 
@@ -321,10 +326,7 @@ Esta tabla será la entrada para las siguientes etapas del análisis, donde calc
 
 El siguiente código convierte el diagrama de persistencia en un `DataFrame` de pandas.
 
-::: {.callout-tip}
-## Código
-
-```python
+``` python
 output = pd.DataFrame(
     [[dim, b, d] for dim, (b, d) in diag if dim <= 2],
     columns=["dimension", "birth", "death"]
@@ -332,17 +334,29 @@ output = pd.DataFrame(
 
 output.head()
 ```
+
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+|dimension	|birth	|death|
+|-----------|-------|-----|
+|1	|99.550533	|inf|
+|1	|39.077252	|inf|
+|1	|40.121614	|inf|
+|1	|41.054365	|inf|
+|1	|42.475553	|inf|
+
 :::
 
 ## Resumen
 
 A partir de las coordenadas celulares hemos construido:
 
-1. Una nube de puntos.
-2. Un complejo de Vietoris–Rips.
-3. La homología persistente.
-4. Un diagrama de persistencia.
-5. Una tabla con las características topológicas detectadas.
+1.  Una nube de puntos.
+2.  Un complejo de Vietoris–Rips.
+3.  Pares nacimiento–muerte de las clases de homología persistente..
+4.  Un diagrama de persistencia.
+5.  Una tabla con las características topológicas detectadas.
 
 Hasta este punto hemos trabajado únicamente con una muestra. Sin embargo, en aplicaciones reales normalmente disponemos de múltiples muestras biológicas y necesitamos repetir exactamente el mismo procedimiento para cada una de ellas.
 
@@ -350,15 +364,17 @@ Afortunadamente, no es necesario ejecutar manualmente el análisis archivo por a
 
 En teoría, todo lo necesario para construir este análisis ya ha sido presentado en las secciones anteriores. El siguiente ejercicio consiste en completar un script que procese automáticamente múltiples muestras y genere un diagrama de persistencia para cada una de ellas.
 
-# Ejercicio: procesar múltiples muestras
+
+::: {.callout-note icon="false"}
+## 💻 Ejercicio: procesar múltiples muestras
+
+El ejercicio consiste en automatizar este proceso para todas las muestras disponibles. Para cada archivo `.csv`, deberán construir la nube de puntos, generar el complejo de Vietoris–Rips, obtener los pares nacimiento–muerte del diagrama de persistencia y guardar los resultados en una carpeta de salida.
 
 El siguiente esquema muestra la lógica general del proceso:
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="50%"}
-
-```text
+``` text
 archivo_1.csv
        │
        ▼
@@ -372,12 +388,10 @@ archivo_1.csv
        ▼
  archivo_1_diag.csv
 ```
-
 :::
 
 ::: {.column width="50%"}
-
-```text
+``` text
 archivo_2.csv
        │
        ▼
@@ -391,16 +405,17 @@ archivo_2.csv
        ▼
  archivo_2_diag.csv
 ```
-
 :::
+:::::
 
-::::
-
-```text
+``` text
 ...
 ```
 
-### Complete los espacios faltantes
+Complete los espacios faltantes en el código para procesar las $n$ muestras y guardar un archivo de resultados por cada una.
+
+**Nota:** El código mostrado es solo una guía para organizar el proceso. Puede implementar la solución de otra manera, siempre y cuando procese todos los archivos de la carpeta indicada y guarde los resultados correspondientes para cada muestra.
+
 
 ```python
 import os
@@ -507,13 +522,12 @@ for archivo in archivos:
     )
 
     print(f"Guardado: {nombre_salida}")
-
 ```
-
-::: {.callout-important collapse="true"}
-## Ver solución
-
-```python
+ 
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+ 
+``` python
 import os
 import requests
 import numpy as np
@@ -625,5 +639,9 @@ for archivo in archivos:
     )
 
     print(f"Guardado: resultados/{nombre_salida}")
-```
+``` 
+
+  
 :::
+:::
+
