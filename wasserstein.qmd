@@ -170,8 +170,6 @@ Utilizaremos las siguientes bibliotecas durante esta sección del análisis:
 - `pandas` para la manipulación de datos en formato tabular.
 - `gudhi.wasserstein` para el cálculo de distancias entre diagramas de persistencia.
 
-
-
 ``` python
 import os
 import numpy as np
@@ -179,19 +177,15 @@ import pandas as pd
 import gudhi.wasserstein as gw
 ```
 
-
 ## Definir la carpeta de trabajo
 
 Los diagramas de persistencia generados en la sección anterior fueron almacenados como archivos CSV.
 
 El siguiente paso consiste en indicar la carpeta donde se encuentran dichos archivos para poder cargarlos y compararlos entre sí mediante la distancia de Wasserstein.
 
-
-
 ``` python
 ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/" # cambiar dependiendo del usuario
 ```
-
 
 ## Obtener la lista de diagramas
 
@@ -200,7 +194,6 @@ Una vez definida la carpeta de trabajo, podemos identificar automáticamente tod
 La siguiente celda busca todos los archivos con extensión `.csv`, los ordena alfabéticamente y muestra la lista de muestras que serán utilizadas en el análisis.
 
 Esto resulta especialmente útil cuando se trabaja con decenas o cientos de muestras, ya que evita tener que especificar manualmente cada archivo.
-
 
 ``` python
 archivos = sorted(
@@ -216,7 +209,7 @@ for i, archivo in enumerate(archivos):
 ::: {.callout-tip collapse="true" icon="false"}
 ## Output
 
-```output
+``` output
 Archivos encontrados:
 0: high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv
 1: high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv
@@ -234,7 +227,6 @@ Archivos encontrados:
 13: stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv
 ```
 :::
-
 
 ## Carga de los diagramas de persistencia
 
@@ -256,7 +248,6 @@ En el caso de $H_1$, eliminaremos las características con muerte infinita. Esto
 Recordemos que, al construir una filtración de Vietoris–Rips con un radio suficientemente grande, todas las componentes conexas terminan fusionándose en una sola. Como consecuencia, en dimensión $0$ suele existir una única componente que persiste hasta infinito, representando la componente conexa final del espacio. Dado que esta característica aparece de manera sistemática en todas las muestras, su presencia no aporta información discriminante para la comparación entre diagramas.
 
 Por esta razón, es común ignorar los puntos con muerte infinita al calcular distancias entre diagramas de persistencia.
-
 
 ``` python
 diag_dim0 = []
@@ -286,7 +277,6 @@ for archivo in archivos:
     diag_dim1.append(d1)
 ```
 
-
 ## Inicialización de las matrices de distancia
 
 Una vez cargados todos los diagramas de persistencia, necesitamos una estructura donde almacenar las distancias de Wasserstein entre cada par de muestras.
@@ -304,14 +294,12 @@ $$W(D_i,D_j)=W(D_j,D_i).$$
 
 Además, la diagonal principal contendrá únicamente ceros, pues la distancia entre un diagrama y sí mismo es igual a cero.
 
-
 ``` python
 n = len(archivos)
 
 dist_dim0 = np.zeros((n, n))
 dist_dim1 = np.zeros((n, n))
 ```
-
 
 ## Cálculo de las distancias de Wasserstein
 
@@ -320,7 +308,6 @@ Una vez cargados todos los diagramas de persistencia, podemos comparar cada mues
 El procedimiento consiste en recorrer todos los pares de diagramas y calcular la distancia correspondiente. El resultado se almacena en las matrices `dist_dim0` y `dist_dim1`, que contendrán las distancias para $dim 0$ y $dim 1$, respectivamente.
 
 En este trabajo utilizaremos la distancia de Wasserstein de orden 1. Sin embargo, existen otras métricas ampliamente utilizadas para comparar diagramas de persistencia, como la distancia de cuello de botella (*bottleneck distance*), la cual también está implementada en GUDHI.
-
 
 ``` python
 for i in range(n):
@@ -345,7 +332,6 @@ for i in range(n):
         #     diag_dim0[j]
         # )
 ```
-
 
 ## Construcción de las matrices de distancia
 
@@ -377,7 +363,6 @@ print(df_dist0)
 print(df_dist1)
 ```
 
-
 ## Guardado de resultados
 
 En este punto ya hemos construido las matrices de distancias de Wasserstein entre todas las muestras analizadas.
@@ -397,6 +382,5 @@ df_dist1.to_csv(
 
 print("Matrices guardadas.")
 ```
-
 
 Al finalizar, tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico.
