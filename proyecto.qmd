@@ -17,10 +17,34 @@ Los datos utilizados en este proyecto están disponibles en el repositorio del w
 Se pueden descargar directamente desde la API de GitHub mediante el siguiente enlace:
 
 ```python
+
 api_url = (
     "https://api.github.com/repos/"
     "HaydeePeruyero/tda-cell-patterns-workshop/contents/data/datos_proyecto"
 )
+
+contenido = requests.get(api_url).json()
+
+archivos = sorted([
+    f["name"]
+    for f in contenido
+    if f["name"].endswith(".csv")
+])
+
+print("Archivos encontrados:")
+for archivo in archivos:
+    print("-", archivo)
+
+# ============================================================
+# 2. RUTA RAW DE GITHUB (CORREGIDA)
+# ============================================================
+
+base_url = (
+    "https://raw.githubusercontent.com/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/main/data/datos_proyecto/"
+)
+
+
 ```
 
 ## Punto de partida
