@@ -12,10 +12,10 @@ website:
       - introduccion.qmd
       - vietoris_rips.qmd
       #- homologia.qmd
-      #- diagramas.qmd
       - wasserstein.qmd
       - clustering.qmd
       - topkat.qmd
+      - proyecto.qmd
 
 format:
   html:

@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Luis Raúl, Haydeé Peruyero">
 
-<title>Análisis Topológico de Datos para la Caracterización de Patrones Celulares – Workshop TDA</title>
+<title>Proyecto Final – Workshop TDA</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -91,17 +90,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No se han encontrado resultados",
-    "search-matching-documents-text": "documentos encontrados",
-    "search-copy-link-title": "Copiar el enlace en la búsqueda",
-    "search-hide-matches-text": "Ocultar resultados adicionales",
-    "search-more-match-text": "resultado adicional en este documento",
-    "search-more-matches-text": "resultados adicionales en este documento",
-    "search-clear-button-title": "Borrar",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar",
-    "search-label": "Buscar"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -120,14 +119,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Workshop TDA</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Buscar"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Presentación</span></a>
   </li>  
   <li class="nav-item">
@@ -151,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">TopKAT: Topological Kernel Association Test</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./proyecto.html"> 
+    <a class="nav-link active" href="./proyecto.html" aria-current="page"> 
 <span class="menu-text">Proyecto Final</span></a>
   </li>  
 </ul>
@@ -166,19 +165,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
-    <h2 id="toc-title">En esta página</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#bienvenidos" id="toc-bienvenidos" class="nav-link active" data-scroll-target="#bienvenidos"><span class="header-section-number">1</span> Bienvenidos</a>
+  <li><a href="#proyecto-final" id="toc-proyecto-final" class="nav-link active" data-scroll-target="#proyecto-final"><span class="header-section-number">1</span> Proyecto Final</a>
   <ul class="collapse">
-  <li><a href="#topological-data-analysis-in-biology" id="toc-topological-data-analysis-in-biology" class="nav-link" data-scroll-target="#topological-data-analysis-in-biology"><span class="header-section-number">1.1</span> Topological Data Analysis in Biology</a></li>
+  <li><a href="#objetivo" id="toc-objetivo" class="nav-link" data-scroll-target="#objetivo"><span class="header-section-number">1.1</span> Objetivo</a></li>
+  <li><a href="#obtención-de-los-datos" id="toc-obtención-de-los-datos" class="nav-link" data-scroll-target="#obtención-de-los-datos"><span class="header-section-number">1.2</span> Obtención de los datos</a></li>
+  <li><a href="#punto-de-partida" id="toc-punto-de-partida" class="nav-link" data-scroll-target="#punto-de-partida"><span class="header-section-number">1.3</span> Punto de partida</a></li>
+  <li><a href="#complejos-simpliciales" id="toc-complejos-simpliciales" class="nav-link" data-scroll-target="#complejos-simpliciales"><span class="header-section-number">1.4</span> Complejos simpliciales</a></li>
+  <li><a href="#comparación-de-métricas" id="toc-comparación-de-métricas" class="nav-link" data-scroll-target="#comparación-de-métricas"><span class="header-section-number">1.5</span> Comparación de métricas</a></li>
+  <li><a href="#agrupamiento-jerárquico" id="toc-agrupamiento-jerárquico" class="nav-link" data-scroll-target="#agrupamiento-jerárquico"><span class="header-section-number">1.6</span> Agrupamiento jerárquico</a></li>
+  <li><a href="#interpretación" id="toc-interpretación" class="nav-link" data-scroll-target="#interpretación"><span class="header-section-number">1.7</span> Interpretación</a></li>
+  <li><a href="#comentarios-finales" id="toc-comentarios-finales" class="nav-link" data-scroll-target="#comentarios-finales"><span class="header-section-number">1.8</span> Comentarios finales</a></li>
   </ul></li>
-  <li><a href="#sesión-del-curso" id="toc-sesión-del-curso" class="nav-link" data-scroll-target="#sesión-del-curso"><span class="header-section-number">2</span> Sesión del curso</a>
-  <ul class="collapse">
-  <li><a href="#análisis-topológico-de-datos-para-la-caracterización-de-patrones-celulares" id="toc-análisis-topológico-de-datos-para-la-caracterización-de-patrones-celulares" class="nav-link" data-scroll-target="#análisis-topológico-de-datos-para-la-caracterización-de-patrones-celulares"><span class="header-section-number">2.1</span> Análisis topológico de datos para la caracterización de patrones celulares</a></li>
-  </ul></li>
-  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos"><span class="header-section-number">3</span> Objetivos</a></li>
-  <li><a href="#navegación" id="toc-navegación" class="nav-link" data-scroll-target="#navegación"><span class="header-section-number">4</span> Navegación</a></li>
   </ul>
 </nav>
 </nav>
@@ -191,19 +191,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Análisis Topológico de Datos para la Caracterización de Patrones Celulares</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Proyecto Final</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
-    <div class="quarto-title-meta-contents">
-             <p>Luis Raúl, Haydeé Peruyero </p>
-          </div>
-  </div>
     
   
     
@@ -214,108 +208,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><img src="figures/portada.jpg" class="img-fluid"></p>
-<section id="bienvenidos" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Bienvenidos</h1>
-<p>Este sitio reúne el material de la sesión <strong>“Análisis topológico de datos para la caracterización de patrones celulares”</strong>, impartida dentro del workshop:</p>
-<section id="topological-data-analysis-in-biology" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="topological-data-analysis-in-biology"><span class="header-section-number">1.1</span> Topological Data Analysis in Biology</h2>
-<p><strong>29 de junio al 3 de julio de 2026</strong></p>
-<p><strong>Casa Matemática Oaxaca</strong></p>
-<section id="instructors" class="level3">
-<h3 class="anchored" data-anchor-id="instructors">Instructors</h3>
-<ul>
-<li>Adriana Haydeé Contreras Peruyero</li>
-<li>Shaday Guerrero Flores</li>
-<li>Yesenia Villicaña Molina</li>
-<li>Nelly Sélem Mojica</li>
-</ul>
+<section id="proyecto-final" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Proyecto Final</h1>
+<section id="objetivo" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="objetivo"><span class="header-section-number">1.1</span> Objetivo</h2>
+<p>El objetivo de este proyecto es que cada participante replique, adapte y explore las herramientas vistas durante el workshop utilizando un conjunto de datos diferente.</p>
+<p>No existe una única forma correcta de realizar el análisis. La idea es experimentar con distintas opciones, comparar resultados e interpretar qué nos dicen los datos desde una perspectiva topológica.</p>
 </section>
-<section id="helpers" class="level3">
-<h3 class="anchored" data-anchor-id="helpers">Helpers</h3>
+<section id="obtención-de-los-datos" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="obtención-de-los-datos"><span class="header-section-number">1.2</span> Obtención de los datos</h2>
+<p>Los datos utilizados en este proyecto están disponibles en el repositorio del workshop.</p>
+<p>Se pueden descargar directamente desde la API de GitHub mediante el siguiente enlace:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>api_url <span class="op">=</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://api.github.com/repos/"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HaydeePeruyero/tda-cell-patterns-workshop/contents/data/datos_proyecto"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="punto-de-partida" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="punto-de-partida"><span class="header-section-number">1.3</span> Punto de partida</h2>
+<p>Antes de aplicar cualquier técnica de TDA, es importante familiarizarse con los datos.</p>
+<p>Algunas preguntas que pueden ayudar son:</p>
 <ul>
-<li>Luis Raúl Figueroa Martínez</li>
-<li>Eugenio Martín Azpeitia</li>
+<li>¿Qué representa cada observación?</li>
+<li>¿Cuántas observaciones hay?</li>
+<li>¿Existen patrones visibles?</li>
+<li>¿Se observan agrupamientos o regiones de alta densidad?</li>
+<li>¿Existen posibles valores atípicos?</li>
+</ul>
+<p>Se recomienda comenzar con visualizaciones y estadísticas descriptivas que permitan entender mejor el conjunto de datos.</p>
+<hr>
+</section>
+<section id="complejos-simpliciales" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="complejos-simpliciales"><span class="header-section-number">1.4</span> Complejos simpliciales</h2>
+<p>Construyan y comparen al menos dos complejos simpliciales:</p>
+<ul>
+<li>Vietoris–Rips</li>
+<li>Čech</li>
+</ul>
+<p>Analicen las diferencias observadas entre ambos enfoques y discutan si las conclusiones obtenidas son similares o distintas.</p>
+<hr>
+</section>
+<section id="comparación-de-métricas" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="comparación-de-métricas"><span class="header-section-number">1.5</span> Comparación de métricas</h2>
+<p>Comparen diagramas de persistencia utilizando distintas métricas.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>Distancia de Wasserstein.</li>
+<li>Distancia Bottleneck.</li>
+</ul>
+<p>Analicen cómo cambian los resultados y qué información aporta cada métrica.</p>
+<hr>
+</section>
+<section id="agrupamiento-jerárquico" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="agrupamiento-jerárquico"><span class="header-section-number">1.6</span> Agrupamiento jerárquico</h2>
+<p>Construyan dendrogramas utilizando diferentes métodos de enlace.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>Single linkage.</li>
+<li>Complete linkage.</li>
+<li>Average linkage.</li>
+<li>Ward linkage.</li>
+</ul>
+<p>Comparen las agrupaciones obtenidas y discutan las diferencias observadas.</p>
+<hr>
+</section>
+<section id="interpretación" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="interpretación"><span class="header-section-number">1.7</span> Interpretación</h2>
+<p>Más allá de generar figuras y resultados numéricos, el objetivo principal es interpretar lo que observan.</p>
+<p>Algunas preguntas orientadoras son:</p>
+<ul>
+<li>¿Qué estructura parece tener el conjunto de datos?</li>
+<li>¿Los resultados son consistentes entre Vietoris–Rips y Čech?</li>
+<li>¿Qué diferencias aparecen al cambiar la métrica?</li>
+<li>¿Qué diferencias aparecen al cambiar el método de enlace?</li>
+<li>¿Qué herramientas resultaron más útiles para comprender los datos?</li>
 </ul>
 <hr>
 </section>
-</section>
-</section>
-<section id="sesión-del-curso" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Sesión del curso</h1>
-<section id="análisis-topológico-de-datos-para-la-caracterización-de-patrones-celulares" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="análisis-topológico-de-datos-para-la-caracterización-de-patrones-celulares"><span class="header-section-number">2.1</span> Análisis topológico de datos para la caracterización de patrones celulares</h2>
-<p><strong>Miércoles 1 de julio de 2026</strong></p>
-<section id="instructores-de-la-sesión" class="level3">
-<h3 class="anchored" data-anchor-id="instructores-de-la-sesión">Instructores de la sesión</h3>
-<ul>
-<li>A. Haydeé Contreras Peruyero</li>
-<li>Eugenio Martín Azpeitia</li>
-<li>Luis Raúl Figueroa</li>
-</ul>
-</section>
-<section id="programa" class="level3">
-<h3 class="anchored" data-anchor-id="programa">Programa</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Hora</th>
-<th>Actividad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>09:30 – 10:20</td>
-<td>Charla: <em>Análisis topológico de datos del microambiente tumoral de pacientes con anemia de Fanconi</em></td>
-</tr>
-<tr class="even">
-<td>10:30 – 11:30</td>
-<td>TDA in Images – Práctica 1</td>
-</tr>
-<tr class="odd">
-<td>11:30 – 11:45</td>
-<td>Receso</td>
-</tr>
-<tr class="even">
-<td>11:45 – 12:50</td>
-<td>TDA in Images – Práctica 2</td>
-</tr>
-<tr class="odd">
-<td>13:00 – 14:00</td>
-<td>Espacio libre para trabajo individual</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-</section>
-</section>
-<section id="objetivos" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Objetivos</h1>
-<p>Durante esta sesión exploraremos cómo las herramientas de Análisis Topológico de Datos (TDA) pueden utilizarse para estudiar patrones espaciales presentes en tejidos biológicos.</p>
-<p>Particularmente abordaremos:</p>
-<ul>
-<li>Representación de tejidos como nubes de puntos.</li>
-<li>Construcción de complejos de Vietoris–Rips.</li>
-<li>Homología persistente.</li>
-<li>Diagramas de persistencia.</li>
-<li>Distancias de Wasserstein.</li>
-<li>Agrupamiento jerárquico.</li>
-<li>Aplicaciones a imágenes biológicas y microambiente tumoral.</li>
-</ul>
-<hr>
-</section>
-<section id="navegación" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Navegación</h1>
-<p>Utilice el menú superior para acceder a cada una de las secciones del material del curso.</p>
+<section id="comentarios-finales" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="comentarios-finales"><span class="header-section-number">1.8</span> Comentarios finales</h2>
+<p>Pueden incorporar cualquier técnica adicional vista durante el workshop o explorar variantes que les resulten interesantes.</p>
+<p>La intención es reproducir el flujo de trabajo desarrollado durante las sesiones, experimentar con nuevas configuraciones y construir una interpretación propia de los resultados obtenidos.</p>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -344,12 +322,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copiado");
+      button.setAttribute("title", "Copied!");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copiado");
+        button.setAttribute("data-bs-title", "Copied!");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
@@ -769,83 +747,106 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
     }
   });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Ejecutar el código</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Análisis Topológico de Datos para la Caracterización de Patrones Celulares"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Luis Raúl, Haydeé Peruyero"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> es</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> ""</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="al">![](figures/portada.jpg)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Bienvenidos</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Este sitio reúne el material de la sesión **"Análisis topológico de datos para la caracterización de patrones celulares"**, impartida dentro del workshop:</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Topological Data Analysis in Biology</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>**29 de junio al 3 de julio de 2026**</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>**Casa Matemática Oaxaca**</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">### Instructors</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adriana Haydeé Contreras Peruyero</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Shaday Guerrero Flores</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Yesenia Villicaña Molina</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Nelly Sélem Mojica</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### Helpers</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Luis Raúl Figueroa Martínez</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Eugenio Martín Azpeitia</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sesión del curso</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Análisis topológico de datos para la caracterización de patrones celulares</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>**Miércoles 1 de julio de 2026**</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">### Instructores de la sesión</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A. Haydeé Contreras Peruyero</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Eugenio Martín Azpeitia</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Luis Raúl Figueroa</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Programa</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Hora <span class="pp">|</span> Actividad <span class="pp">|</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|----|</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 09:30 – 10:20 <span class="pp">|</span> Charla: *Análisis topológico de datos del microambiente tumoral de pacientes con anemia de Fanconi* <span class="pp">|</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10:30 – 11:30 <span class="pp">|</span> TDA in Images – Práctica 1 <span class="pp">|</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 11:30 – 11:45 <span class="pp">|</span> Receso <span class="pp">|</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 11:45 – 12:50 <span class="pp">|</span> TDA in Images – Práctica 2 <span class="pp">|</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 13:00 – 14:00 <span class="pp">|</span> Espacio libre para trabajo individual <span class="pp">|</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivos</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>Durante esta sesión exploraremos cómo las herramientas de Análisis Topológico de Datos (TDA) pueden utilizarse para estudiar patrones espaciales presentes en tejidos biológicos.</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>Particularmente abordaremos:</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Representación de tejidos como nubes de puntos.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Construcción de complejos de Vietoris–Rips.</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Homología persistente.</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Diagramas de persistencia.</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distancias de Wasserstein.</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Agrupamiento jerárquico.</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Aplicaciones a imágenes biológicas y microambiente tumoral.</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="fu"># Navegación</span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>Utilice el menú superior para acceder a cada una de las secciones del material del curso.</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Proyecto Final"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Proyecto Final</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objetivo</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>El objetivo de este proyecto es que cada participante replique, adapte y explore las herramientas vistas durante el workshop utilizando un conjunto de datos diferente.</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>No existe una única forma correcta de realizar el análisis. La idea es experimentar con distintas opciones, comparar resultados e interpretar qué nos dicen los datos desde una perspectiva topológica.</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Obtención de los datos</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>Los datos utilizados en este proyecto están disponibles en el repositorio del workshop.</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Se pueden descargar directamente desde la API de GitHub mediante el siguiente enlace:</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>api_url <span class="op">=</span> (</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://api.github.com/repos/"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HaydeePeruyero/tda-cell-patterns-workshop/contents/data/datos_proyecto"</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Punto de partida</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Antes de aplicar cualquier técnica de TDA, es importante familiarizarse con los datos.</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>Algunas preguntas que pueden ayudar son:</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Qué representa cada observación?</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Cuántas observaciones hay?</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Existen patrones visibles?</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Se observan agrupamientos o regiones de alta densidad?</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Existen posibles valores atípicos?</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>Se recomienda comenzar con visualizaciones y estadísticas descriptivas que permitan entender mejor el conjunto de datos.</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Complejos simpliciales</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>Construyan y comparen al menos dos complejos simpliciales:</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Vietoris–Rips</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Čech</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>Analicen las diferencias observadas entre ambos enfoques y discutan si las conclusiones obtenidas son similares o distintas.</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparación de métricas</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>Comparen diagramas de persistencia utilizando distintas métricas.</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>Por ejemplo:</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Distancia de Wasserstein.</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Distancia Bottleneck.</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>Analicen cómo cambian los resultados y qué información aporta cada métrica.</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Agrupamiento jerárquico</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>Construyan dendrogramas utilizando diferentes métodos de enlace.</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>Por ejemplo:</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Single linkage.</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Complete linkage.</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Average linkage.</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Ward linkage.</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>Comparen las agrupaciones obtenidas y discutan las diferencias observadas.</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpretación</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>Más allá de generar figuras y resultados numéricos, el objetivo principal es interpretar lo que observan.</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>Algunas preguntas orientadoras son:</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Qué estructura parece tener el conjunto de datos?</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Los resultados son consistentes entre Vietoris–Rips y Čech?</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Qué diferencias aparecen al cambiar la métrica?</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Qué diferencias aparecen al cambiar el método de enlace?</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>¿Qué herramientas resultaron más útiles para comprender los datos?</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comentarios finales</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>Pueden incorporar cualquier técnica adicional vista durante el workshop o explorar variantes que les resulten interesantes.</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>La intención es reproducir el flujo de trabajo desarrollado durante las sesiones, experimentar con nuevas configuraciones y construir una interpretación propia de los resultados obtenidos.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

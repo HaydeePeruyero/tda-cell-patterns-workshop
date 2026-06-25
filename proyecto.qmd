@@ -1,0 +1,99 @@
+---
+title: "Proyecto Final"
+---
+
+# Proyecto Final
+
+## Objetivo
+
+El objetivo de este proyecto es que cada participante replique, adapte y explore las herramientas vistas durante el workshop utilizando un conjunto de datos diferente.
+
+No existe una única forma correcta de realizar el análisis. La idea es experimentar con distintas opciones, comparar resultados e interpretar qué nos dicen los datos desde una perspectiva topológica.
+
+## Obtención de los datos
+
+Los datos utilizados en este proyecto están disponibles en el repositorio del workshop.
+
+Se pueden descargar directamente desde la API de GitHub mediante el siguiente enlace:
+
+```python
+api_url = (
+    "https://api.github.com/repos/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/contents/data/datos_proyecto"
+)
+```
+
+## Punto de partida
+
+Antes de aplicar cualquier técnica de TDA, es importante familiarizarse con los datos.
+
+Algunas preguntas que pueden ayudar son:
+
+* ¿Qué representa cada observación?
+* ¿Cuántas observaciones hay?
+* ¿Existen patrones visibles?
+* ¿Se observan agrupamientos o regiones de alta densidad?
+* ¿Existen posibles valores atípicos?
+
+Se recomienda comenzar con visualizaciones y estadísticas descriptivas que permitan entender mejor el conjunto de datos.
+
+---
+
+## Complejos simpliciales
+
+Construyan y comparen al menos dos complejos simpliciales:
+
+* Vietoris–Rips
+* Čech
+
+Analicen las diferencias observadas entre ambos enfoques y discutan si las conclusiones obtenidas son similares o distintas.
+
+---
+
+## Comparación de métricas
+
+Comparen diagramas de persistencia utilizando distintas métricas.
+
+Por ejemplo:
+
+* Distancia de Wasserstein.
+* Distancia Bottleneck.
+
+Analicen cómo cambian los resultados y qué información aporta cada métrica.
+
+---
+
+## Agrupamiento jerárquico
+
+Construyan dendrogramas utilizando diferentes métodos de enlace.
+
+Por ejemplo:
+
+* Single linkage.
+* Complete linkage.
+* Average linkage.
+* Ward linkage.
+
+Comparen las agrupaciones obtenidas y discutan las diferencias observadas.
+
+---
+
+## Interpretación
+
+Más allá de generar figuras y resultados numéricos, el objetivo principal es interpretar lo que observan.
+
+Algunas preguntas orientadoras son:
+
+* ¿Qué estructura parece tener el conjunto de datos?
+* ¿Los resultados son consistentes entre Vietoris–Rips y Čech?
+* ¿Qué diferencias aparecen al cambiar la métrica?
+* ¿Qué diferencias aparecen al cambiar el método de enlace?
+* ¿Qué herramientas resultaron más útiles para comprender los datos?
+
+---
+
+## Comentarios finales
+
+Pueden incorporar cualquier técnica adicional vista durante el workshop o explorar variantes que les resulten interesantes.
+
+La intención es reproducir el flujo de trabajo desarrollado durante las sesiones, experimentar con nuevas configuraciones y construir una interpretación propia de los resultados obtenidos.
