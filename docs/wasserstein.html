@@ -361,7 +361,6 @@ Distancia(Carcinoma, Estroma) = 48</code></pre>
 <blockquote class="blockquote">
 <p>¿Cómo podemos comparar cuantitativamente dos diagramas de persistencia?</p>
 </blockquote>
-<p>Para responder esta pregunta utilizaremos la distancia de Wasserstein, una métrica que permite medir la similitud entre diagramas de persistencia y, por lo tanto, entre las estructuras topológicas observadas en distintas muestras.</p>
 <p>Recordemos que cada diagrama resume la evolución de componentes conexas y ciclos a lo largo de una filtración. La distancia de Wasserstein nos permite cuantificar qué tan parecidos o diferentes son dichos patrones topológicos.</p>
 <p>En esta sección construiremos una matriz de distancias entre muestras a partir de sus diagramas de persistencia. Posteriormente, estas matrices servirán como entrada para métodos de análisis exploratorio como el clustering jerárquico.</p>
 <section id="objetivos" class="level2" data-number="2.1">
@@ -601,23 +600,20 @@ invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                       
 <p>En este punto ya hemos construido las matrices de distancias de Wasserstein entre todas las muestras analizadas.</p>
 <p>El siguiente paso consiste en almacenar estos resultados, ya que serán utilizados posteriormente como entrada para el análisis de clustering jerárquico.</p>
 <p>De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear carpeta para almacenar las matrices de distancia</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"/home/jupyter-luisraul/resultados"</span> <span class="co"># cambiar la ruta</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Carpeta de salida</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>salida <span class="op">=</span> os.path.join(ruta, <span class="st">"distancias"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>os.makedirs(salida, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"/home/jupyter-luisraul/resultados/distancias"</span> <span class="co"># Cambiar la ruta</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_dist0.to_csv(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim0.csv"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>df_dist1.to_csv(</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim1.csv"</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrices guardadas."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Carpeta de salida</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>salida <span class="op">=</span> os.path.join(ruta, <span class="st">"distancias"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>os.makedirs(salida, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_dist0.to_csv(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim0.csv"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>df_dist1.to_csv(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim1.csv"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrices guardadas."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1229,301 +1225,296 @@ invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                       
 <span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ¿Cómo podemos comparar cuantitativamente dos diagramas de persistencia?</span></span>
 <span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a>Para responder esta pregunta utilizaremos la distancia de Wasserstein, una métrica que permite medir la similitud entre diagramas de persistencia y, por lo tanto, entre las estructuras topológicas observadas en distintas muestras.</span>
+<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a>Recordemos que cada diagrama resume la evolución de componentes conexas y ciclos a lo largo de una filtración. La distancia de Wasserstein nos permite cuantificar qué tan parecidos o diferentes son dichos patrones topológicos.</span>
 <span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a>Recordemos que cada diagrama resume la evolución de componentes conexas y ciclos a lo largo de una filtración. La distancia de Wasserstein nos permite cuantificar qué tan parecidos o diferentes son dichos patrones topológicos.</span>
+<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a>En esta sección construiremos una matriz de distancias entre muestras a partir de sus diagramas de persistencia. Posteriormente, estas matrices servirán como entrada para métodos de análisis exploratorio como el clustering jerárquico.</span>
 <span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>En esta sección construiremos una matriz de distancias entre muestras a partir de sus diagramas de persistencia. Posteriormente, estas matrices servirán como entrada para métodos de análisis exploratorio como el clustering jerárquico.</span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objetivos</span></span>
 <span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objetivos</span></span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a>En esta sección aprenderemos a:</span>
 <span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a>En esta sección aprenderemos a:</span>
-<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cargar múltiples diagramas de persistencia previamente calculados.</span>
-<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Extraer las características topológicas de dimensiones 0 y 1.</span>
-<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calcular distancias de Wasserstein entre pares de muestras.</span>
-<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Construir matrices de distancia.</span>
-<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Guardar los resultados para análisis posteriores.</span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cargar múltiples diagramas de persistencia previamente calculados.</span>
+<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Extraer las características topológicas de dimensiones 0 y 1.</span>
+<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calcular distancias de Wasserstein entre pares de muestras.</span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Construir matrices de distancia.</span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Guardar los resultados para análisis posteriores.</span>
+<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a>El flujo general del análisis será:</span>
 <span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>El flujo general del análisis será:</span>
-<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="in">``` text</span></span>
-<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a><span class="in">Diagramas de persistencia</span></span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a><span class="in">``` text</span></span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a><span class="in">Diagramas de persistencia</span></span>
+<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="in">            ↓</span></span>
+<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a><span class="in"> Distancias de Wasserstein</span></span>
 <span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a><span class="in">            ↓</span></span>
-<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="in"> Distancias de Wasserstein</span></span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="in">   Matriz de distancias</span></span>
 <span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a><span class="in">            ↓</span></span>
-<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a><span class="in">   Matriz de distancias</span></span>
-<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a><span class="in">            ↓</span></span>
-<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a><span class="in"> Clustering jerárquico</span></span>
-<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a><span class="in"> Clustering jerárquico</span></span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importar bibliotecas</span></span>
 <span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importar bibliotecas</span></span>
+<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a>Utilizaremos las siguientes bibliotecas durante esta sección del análisis:</span>
 <span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a>Utilizaremos las siguientes bibliotecas durante esta sección del análisis:</span>
-<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`os`</span> para la gestión de archivos y directorios.</span>
-<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`numpy`</span> para operaciones numéricas y manejo de arreglos.</span>
-<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pandas`</span> para la manipulación de datos en formato tabular.</span>
-<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`gudhi.wasserstein`</span> para el cálculo de distancias entre diagramas de persistencia.</span>
-<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gudhi.wasserstein <span class="im">as</span> gw</span>
-<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ot</span>
-<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a>::: callout-warning</span>
-<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nota</span></span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`os`</span> para la gestión de archivos y directorios.</span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`numpy`</span> para operaciones numéricas y manejo de arreglos.</span>
+<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pandas`</span> para la manipulación de datos en formato tabular.</span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`gudhi.wasserstein`</span> para el cálculo de distancias entre diagramas de persistencia.</span>
+<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gudhi.wasserstein <span class="im">as</span> gw</span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ot</span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a>::: callout-warning</span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nota</span></span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a>Se necesita instalar <span class="in">`POT`</span></span>
 <span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a>Se necesita instalar <span class="in">`POT`</span></span>
-<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a>pip install POT</span>
-<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a>pip install POT</span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## Definir la carpeta de trabajo</span></span>
 <span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Definir la carpeta de trabajo</span></span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a>Los diagramas de persistencia generados en la sección anterior fueron almacenados como archivos CSV.</span>
 <span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>Los diagramas de persistencia generados en la sección anterior fueron almacenados como archivos CSV.</span>
+<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>El siguiente paso consiste en indicar la carpeta donde se encuentran dichos archivos para poder cargarlos y compararlos entre sí mediante la distancia de Wasserstein.</span>
 <span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>El siguiente paso consiste en indicar la carpeta donde se encuentran dichos archivos para poder cargarlos y compararlos entre sí mediante la distancia de Wasserstein.</span>
-<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/"</span> <span class="co"># cambiar dependiendo del usuario</span></span>
-<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/"</span> <span class="co"># cambiar dependiendo del usuario</span></span>
+<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Obtener la lista de diagramas</span></span>
 <span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## Obtener la lista de diagramas</span></span>
+<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>Una vez definida la carpeta de trabajo, podemos identificar automáticamente todos los diagramas de persistencia disponibles.</span>
 <span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a>Una vez definida la carpeta de trabajo, podemos identificar automáticamente todos los diagramas de persistencia disponibles.</span>
+<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a>La siguiente celda busca todos los archivos con extensión <span class="in">`.csv`</span>, los ordena alfabéticamente y muestra la lista de muestras que serán utilizadas en el análisis.</span>
 <span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>La siguiente celda busca todos los archivos con extensión <span class="in">`.csv`</span>, los ordena alfabéticamente y muestra la lista de muestras que serán utilizadas en el análisis.</span>
+<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>Esto resulta especialmente útil cuando se trabaja con decenas o cientos de muestras, ya que evita tener que especificar manualmente cada archivo.</span>
 <span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a>Esto resulta especialmente útil cuando se trabaja con decenas o cientos de muestras, ya que evita tener que especificar manualmente cada archivo.</span>
-<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>archivos <span class="op">=</span> <span class="bu">sorted</span>(</span>
-<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a>    [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(ruta) <span class="cf">if</span> f.endswith(<span class="st">".csv"</span>)]</span>
-<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>archivos <span class="op">=</span> <span class="bu">sorted</span>(</span>
+<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a>    [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(ruta) <span class="cf">if</span> f.endswith(<span class="st">".csv"</span>)]</span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Archivos encontrados:"</span>)</span>
 <span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Archivos encontrados:"</span>)</span>
-<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, archivo <span class="kw">in</span> <span class="bu">enumerate</span>(archivos):</span>
-<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>archivo<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" icon="false"}</span>
-<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output</span></span>
-<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a><span class="in">``` output</span></span>
-<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a><span class="in">Archivos encontrados:</span></span>
-<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a><span class="in">0: high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv</span></span>
-<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a><span class="in">1: high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv</span></span>
-<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a><span class="in">2: high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv</span></span>
-<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a><span class="in">3: invasive_carcinoma_AGSCC_1_IC_18_diag.csv</span></span>
-<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a><span class="in">4: invasive_carcinoma_AGSCC_1_IC_24_diag.csv</span></span>
-<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a><span class="in">5: invasive_carcinoma_AGSCC_1_IC_28_diag.csv</span></span>
-<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a><span class="in">6: light_grade_displasia_F82P1_LGD_5_diag.csv</span></span>
-<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a><span class="in">7: light_grade_displasia_F82P1_LGD_6_diag.csv</span></span>
-<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a><span class="in">8: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv</span></span>
-<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a><span class="in">9: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv</span></span>
-<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a><span class="in">10: stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv</span></span>
-<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a><span class="in">11: stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv</span></span>
-<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a><span class="in">12: stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv</span></span>
-<span id="cb17-238"><a href="#cb17-238" aria-hidden="true" tabindex="-1"></a><span class="in">13: stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv</span></span>
-<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-240"><a href="#cb17-240" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, archivo <span class="kw">in</span> <span class="bu">enumerate</span>(archivos):</span>
+<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>archivo<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" icon="false"}</span>
+<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output</span></span>
+<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a><span class="in">``` output</span></span>
+<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a><span class="in">Archivos encontrados:</span></span>
+<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a><span class="in">0: high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv</span></span>
+<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a><span class="in">1: high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv</span></span>
+<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a><span class="in">2: high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv</span></span>
+<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a><span class="in">3: invasive_carcinoma_AGSCC_1_IC_18_diag.csv</span></span>
+<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a><span class="in">4: invasive_carcinoma_AGSCC_1_IC_24_diag.csv</span></span>
+<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a><span class="in">5: invasive_carcinoma_AGSCC_1_IC_28_diag.csv</span></span>
+<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a><span class="in">6: light_grade_displasia_F82P1_LGD_5_diag.csv</span></span>
+<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a><span class="in">7: light_grade_displasia_F82P1_LGD_6_diag.csv</span></span>
+<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a><span class="in">8: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv</span></span>
+<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a><span class="in">9: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv</span></span>
+<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a><span class="in">10: stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv</span></span>
+<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a><span class="in">11: stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv</span></span>
+<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a><span class="in">12: stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv</span></span>
+<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a><span class="in">13: stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv</span></span>
+<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-238"><a href="#cb17-238" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-240"><a href="#cb17-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carga de los diagramas de persistencia</span></span>
 <span id="cb17-241"><a href="#cb17-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carga de los diagramas de persistencia</span></span>
+<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a>Una vez obtenidos los diagramas de persistencia de cada muestra, el siguiente paso consiste en cargarlos en memoria para poder compararlos mediante la distancia de Wasserstein.</span>
 <span id="cb17-243"><a href="#cb17-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a>Una vez obtenidos los diagramas de persistencia de cada muestra, el siguiente paso consiste en cargarlos en memoria para poder compararlos mediante la distancia de Wasserstein.</span>
+<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a>Cada archivo CSV contiene las características topológicas identificadas durante el cálculo de homología persistente, incluyendo:</span>
 <span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a>Cada archivo CSV contiene las características topológicas identificadas durante el cálculo de homología persistente, incluyendo:</span>
-<span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>La dimensión homológica (<span class="in">`dimension`</span>).</span>
-<span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El valor de nacimiento (<span class="in">`birth`</span>).</span>
-<span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El valor de muerte (<span class="in">`death`</span>).</span>
+<span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>La dimensión homológica (<span class="in">`dimension`</span>).</span>
+<span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El valor de nacimiento (<span class="in">`birth`</span>).</span>
+<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>El valor de muerte (<span class="in">`death`</span>).</span>
+<span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a>A partir de estos archivos construiremos dos listas independientes:</span>
 <span id="cb17-251"><a href="#cb17-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a>A partir de estos archivos construiremos dos listas independientes:</span>
-<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`diag_dim0`</span>: diagramas correspondientes a los pares nacimiento–muerte asociados con las clases de homología de $H_0$ (componentes conexas).</span>
-<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`diag_dim1`</span>: diagramas correspondientes a pares nacimiento–muerte asociados a clases de homología de $H_1$ (ciclos).</span>
+<span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`diag_dim0`</span>: diagramas correspondientes a los pares nacimiento–muerte asociados con las clases de homología de $H_0$ (componentes conexas).</span>
+<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`diag_dim1`</span>: diagramas correspondientes a pares nacimiento–muerte asociados a clases de homología de $H_1$ (ciclos).</span>
+<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a>En el caso de $H_1$, eliminaremos las características con muerte infinita. Esto se hace para simplificar el cálculo de las distancias y evitar problemas asociados al manejo de valores infinitos.</span>
 <span id="cb17-256"><a href="#cb17-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-257"><a href="#cb17-257" aria-hidden="true" tabindex="-1"></a>En el caso de $H_1$, eliminaremos las características con muerte infinita. Esto se hace para simplificar el cálculo de las distancias y evitar problemas asociados al manejo de valores infinitos.</span>
+<span id="cb17-257"><a href="#cb17-257" aria-hidden="true" tabindex="-1"></a>Recordemos que, al construir una filtración de Vietoris–Rips con un radio suficientemente grande, todas las componentes conexas terminan fusionándose en una sola. Como consecuencia, en dimensión $0$ suele existir una única componente que persiste hasta infinito, representando la componente conexa final del espacio. Dado que esta característica aparece de manera sistemática en todas las muestras, su presencia no aporta información discriminante para la comparación entre diagramas.</span>
 <span id="cb17-258"><a href="#cb17-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-259"><a href="#cb17-259" aria-hidden="true" tabindex="-1"></a>Recordemos que, al construir una filtración de Vietoris–Rips con un radio suficientemente grande, todas las componentes conexas terminan fusionándose en una sola. Como consecuencia, en dimensión $0$ suele existir una única componente que persiste hasta infinito, representando la componente conexa final del espacio. Dado que esta característica aparece de manera sistemática en todas las muestras, su presencia no aporta información discriminante para la comparación entre diagramas.</span>
+<span id="cb17-259"><a href="#cb17-259" aria-hidden="true" tabindex="-1"></a>Por esta razón, es común ignorar los puntos con muerte infinita al calcular distancias entre diagramas de persistencia.</span>
 <span id="cb17-260"><a href="#cb17-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-261"><a href="#cb17-261" aria-hidden="true" tabindex="-1"></a>Por esta razón, es común ignorar los puntos con muerte infinita al calcular distancias entre diagramas de persistencia.</span>
-<span id="cb17-262"><a href="#cb17-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-263"><a href="#cb17-263" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a>diag_dim0 <span class="op">=</span> []</span>
-<span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a>diag_dim1 <span class="op">=</span> []</span>
+<span id="cb17-261"><a href="#cb17-261" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-262"><a href="#cb17-262" aria-hidden="true" tabindex="-1"></a>diag_dim0 <span class="op">=</span> []</span>
+<span id="cb17-263"><a href="#cb17-263" aria-hidden="true" tabindex="-1"></a>diag_dim1 <span class="op">=</span> []</span>
+<span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> archivo <span class="kw">in</span> archivos:</span>
 <span id="cb17-266"><a href="#cb17-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> archivo <span class="kw">in</span> archivos:</span>
+<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(os.path.join(ruta, archivo))</span>
 <span id="cb17-268"><a href="#cb17-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(os.path.join(ruta, archivo))</span>
-<span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-271"><a href="#cb17-271" aria-hidden="true" tabindex="-1"></a>    d0 <span class="op">=</span> (</span>
-<span id="cb17-272"><a href="#cb17-272" aria-hidden="true" tabindex="-1"></a>    df[</span>
-<span id="cb17-273"><a href="#cb17-273" aria-hidden="true" tabindex="-1"></a>        (df[<span class="st">"dimension"</span>] <span class="op">==</span> <span class="dv">0</span>)</span>
-<span id="cb17-274"><a href="#cb17-274" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span> (np.isfinite(df[<span class="st">"death"</span>]))</span>
-<span id="cb17-275"><a href="#cb17-275" aria-hidden="true" tabindex="-1"></a>    ][[<span class="st">"birth"</span>, <span class="st">"death"</span>]]</span>
-<span id="cb17-276"><a href="#cb17-276" aria-hidden="true" tabindex="-1"></a>    .to_numpy()</span>
-<span id="cb17-277"><a href="#cb17-277" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-278"><a href="#cb17-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-279"><a href="#cb17-279" aria-hidden="true" tabindex="-1"></a>    d1 <span class="op">=</span> (</span>
-<span id="cb17-280"><a href="#cb17-280" aria-hidden="true" tabindex="-1"></a>        df[</span>
-<span id="cb17-281"><a href="#cb17-281" aria-hidden="true" tabindex="-1"></a>            (df[<span class="st">"dimension"</span>] <span class="op">==</span> <span class="dv">1</span>)</span>
-<span id="cb17-282"><a href="#cb17-282" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (np.isfinite(df[<span class="st">"death"</span>]))</span>
-<span id="cb17-283"><a href="#cb17-283" aria-hidden="true" tabindex="-1"></a>        ][[<span class="st">"birth"</span>, <span class="st">"death"</span>]]</span>
-<span id="cb17-284"><a href="#cb17-284" aria-hidden="true" tabindex="-1"></a>        .to_numpy()</span>
-<span id="cb17-285"><a href="#cb17-285" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a>    diag_dim0.append(d0)</span>
-<span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a>    diag_dim1.append(d1)</span>
-<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a>    d0 <span class="op">=</span> (</span>
+<span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a>    df[</span>
+<span id="cb17-271"><a href="#cb17-271" aria-hidden="true" tabindex="-1"></a>        (df[<span class="st">"dimension"</span>] <span class="op">==</span> <span class="dv">0</span>)</span>
+<span id="cb17-272"><a href="#cb17-272" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span> (np.isfinite(df[<span class="st">"death"</span>]))</span>
+<span id="cb17-273"><a href="#cb17-273" aria-hidden="true" tabindex="-1"></a>    ][[<span class="st">"birth"</span>, <span class="st">"death"</span>]]</span>
+<span id="cb17-274"><a href="#cb17-274" aria-hidden="true" tabindex="-1"></a>    .to_numpy()</span>
+<span id="cb17-275"><a href="#cb17-275" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-276"><a href="#cb17-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-277"><a href="#cb17-277" aria-hidden="true" tabindex="-1"></a>    d1 <span class="op">=</span> (</span>
+<span id="cb17-278"><a href="#cb17-278" aria-hidden="true" tabindex="-1"></a>        df[</span>
+<span id="cb17-279"><a href="#cb17-279" aria-hidden="true" tabindex="-1"></a>            (df[<span class="st">"dimension"</span>] <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb17-280"><a href="#cb17-280" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (np.isfinite(df[<span class="st">"death"</span>]))</span>
+<span id="cb17-281"><a href="#cb17-281" aria-hidden="true" tabindex="-1"></a>        ][[<span class="st">"birth"</span>, <span class="st">"death"</span>]]</span>
+<span id="cb17-282"><a href="#cb17-282" aria-hidden="true" tabindex="-1"></a>        .to_numpy()</span>
+<span id="cb17-283"><a href="#cb17-283" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-284"><a href="#cb17-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-285"><a href="#cb17-285" aria-hidden="true" tabindex="-1"></a>    diag_dim0.append(d0)</span>
+<span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a>    diag_dim1.append(d1)</span>
+<span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inicialización de las matrices de distancia</span></span>
 <span id="cb17-290"><a href="#cb17-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inicialización de las matrices de distancia</span></span>
+<span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a>Una vez cargados todos los diagramas de persistencia, necesitamos una estructura donde almacenar las distancias de Wasserstein entre cada par de muestras.</span>
 <span id="cb17-292"><a href="#cb17-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a>Una vez cargados todos los diagramas de persistencia, necesitamos una estructura donde almacenar las distancias de Wasserstein entre cada par de muestras.</span>
+<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a>Si disponemos de $n$ muestras, construiremos dos matrices cuadradas de tamaño $n \times n$:</span>
 <span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a>Si disponemos de $n$ muestras, construiremos dos matrices cuadradas de tamaño $n \times n$:</span>
-<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`dist_dim0`</span>: almacenará las distancias entre diagramas de dimensión $0$.</span>
-<span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`dist_dim1`</span>: almacenará las distancias entre diagramas de dimensión $1$.</span>
+<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`dist_dim0`</span>: almacenará las distancias entre diagramas de dimensión $0$.</span>
+<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`dist_dim1`</span>: almacenará las distancias entre diagramas de dimensión $1$.</span>
+<span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a>La entrada $(i,j)$ de cada matriz contendrá la distancia entre las muestras $i$ y $j$.</span>
 <span id="cb17-299"><a href="#cb17-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-300"><a href="#cb17-300" aria-hidden="true" tabindex="-1"></a>La entrada $(i,j)$ de cada matriz contendrá la distancia entre las muestras $i$ y $j$.</span>
+<span id="cb17-300"><a href="#cb17-300" aria-hidden="true" tabindex="-1"></a>Por construcción, estas matrices serán simétricas, ya que la distancia de Wasserstein cumple</span>
 <span id="cb17-301"><a href="#cb17-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-302"><a href="#cb17-302" aria-hidden="true" tabindex="-1"></a>Por construcción, estas matrices serán simétricas, ya que la distancia de Wasserstein cumple</span>
+<span id="cb17-302"><a href="#cb17-302" aria-hidden="true" tabindex="-1"></a>$$W(D_i,D_j)=W(D_j,D_i).$$</span>
 <span id="cb17-303"><a href="#cb17-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-304"><a href="#cb17-304" aria-hidden="true" tabindex="-1"></a>$$W(D_i,D_j)=W(D_j,D_i).$$</span>
+<span id="cb17-304"><a href="#cb17-304" aria-hidden="true" tabindex="-1"></a>Además, la diagonal principal contendrá únicamente ceros, pues la distancia entre un diagrama y sí mismo es igual a cero.</span>
 <span id="cb17-305"><a href="#cb17-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-306"><a href="#cb17-306" aria-hidden="true" tabindex="-1"></a>Además, la diagonal principal contendrá únicamente ceros, pues la distancia entre un diagrama y sí mismo es igual a cero.</span>
-<span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(archivos)</span>
-<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a>dist_dim0 <span class="op">=</span> np.zeros((n, n))</span>
-<span id="cb17-312"><a href="#cb17-312" aria-hidden="true" tabindex="-1"></a>dist_dim1 <span class="op">=</span> np.zeros((n, n))</span>
-<span id="cb17-313"><a href="#cb17-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-306"><a href="#cb17-306" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(archivos)</span>
+<span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a>dist_dim0 <span class="op">=</span> np.zeros((n, n))</span>
+<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a>dist_dim1 <span class="op">=</span> np.zeros((n, n))</span>
+<span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-312"><a href="#cb17-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-313"><a href="#cb17-313" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cálculo de las distancias de Wasserstein</span></span>
 <span id="cb17-314"><a href="#cb17-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-315"><a href="#cb17-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cálculo de las distancias de Wasserstein</span></span>
+<span id="cb17-315"><a href="#cb17-315" aria-hidden="true" tabindex="-1"></a>Una vez cargados todos los diagramas de persistencia, podemos comparar cada muestra con todas las demás mediante la distancia de Wasserstein.</span>
 <span id="cb17-316"><a href="#cb17-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-317"><a href="#cb17-317" aria-hidden="true" tabindex="-1"></a>Una vez cargados todos los diagramas de persistencia, podemos comparar cada muestra con todas las demás mediante la distancia de Wasserstein.</span>
+<span id="cb17-317"><a href="#cb17-317" aria-hidden="true" tabindex="-1"></a>El procedimiento consiste en recorrer todos los pares de diagramas y calcular la distancia correspondiente. El resultado se almacena en las matrices <span class="in">`dist_dim0`</span> y <span class="in">`dist_dim1`</span>, que contendrán las distancias para $dim 0$ y $dim 1$, respectivamente.</span>
 <span id="cb17-318"><a href="#cb17-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-319"><a href="#cb17-319" aria-hidden="true" tabindex="-1"></a>El procedimiento consiste en recorrer todos los pares de diagramas y calcular la distancia correspondiente. El resultado se almacena en las matrices <span class="in">`dist_dim0`</span> y <span class="in">`dist_dim1`</span>, que contendrán las distancias para $dim 0$ y $dim 1$, respectivamente.</span>
+<span id="cb17-319"><a href="#cb17-319" aria-hidden="true" tabindex="-1"></a>En este trabajo utilizaremos la distancia de Wasserstein de orden 1. Sin embargo, existen otras métricas ampliamente utilizadas para comparar diagramas de persistencia, como la distancia de cuello de botella (*bottleneck distance*), la cual también está implementada en GUDHI.</span>
 <span id="cb17-320"><a href="#cb17-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-321"><a href="#cb17-321" aria-hidden="true" tabindex="-1"></a>En este trabajo utilizaremos la distancia de Wasserstein de orden 1. Sin embargo, existen otras métricas ampliamente utilizadas para comparar diagramas de persistencia, como la distancia de cuello de botella (*bottleneck distance*), la cual también está implementada en GUDHI.</span>
-<span id="cb17-322"><a href="#cb17-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-323"><a href="#cb17-323" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-324"><a href="#cb17-324" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb17-321"><a href="#cb17-321" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-322"><a href="#cb17-322" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb17-323"><a href="#cb17-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-324"><a href="#cb17-324" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
 <span id="cb17-325"><a href="#cb17-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-326"><a href="#cb17-326" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb17-327"><a href="#cb17-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-328"><a href="#cb17-328" aria-hidden="true" tabindex="-1"></a>        dist_dim0[i, j] <span class="op">=</span> gw.wasserstein_distance(</span>
-<span id="cb17-329"><a href="#cb17-329" aria-hidden="true" tabindex="-1"></a>            diag_dim0[i],</span>
-<span id="cb17-330"><a href="#cb17-330" aria-hidden="true" tabindex="-1"></a>            diag_dim0[j],</span>
-<span id="cb17-331"><a href="#cb17-331" aria-hidden="true" tabindex="-1"></a>            order<span class="op">=</span><span class="dv">1</span></span>
-<span id="cb17-332"><a href="#cb17-332" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb17-333"><a href="#cb17-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-334"><a href="#cb17-334" aria-hidden="true" tabindex="-1"></a>        dist_dim1[i, j] <span class="op">=</span> gw.wasserstein_distance(</span>
-<span id="cb17-335"><a href="#cb17-335" aria-hidden="true" tabindex="-1"></a>            diag_dim1[i],</span>
-<span id="cb17-336"><a href="#cb17-336" aria-hidden="true" tabindex="-1"></a>            diag_dim1[j],</span>
-<span id="cb17-337"><a href="#cb17-337" aria-hidden="true" tabindex="-1"></a>            order<span class="op">=</span><span class="dv">1</span></span>
-<span id="cb17-338"><a href="#cb17-338" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb17-339"><a href="#cb17-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-340"><a href="#cb17-340" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Alternativa:</span></span>
-<span id="cb17-341"><a href="#cb17-341" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dist_dim0[i, j] = gd.bottleneck_distance(</span></span>
-<span id="cb17-342"><a href="#cb17-342" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     diag_dim0[i],</span></span>
-<span id="cb17-343"><a href="#cb17-343" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     diag_dim0[j]</span></span>
-<span id="cb17-344"><a href="#cb17-344" aria-hidden="true" tabindex="-1"></a>        <span class="co"># )</span></span>
-<span id="cb17-345"><a href="#cb17-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-326"><a href="#cb17-326" aria-hidden="true" tabindex="-1"></a>        dist_dim0[i, j] <span class="op">=</span> gw.wasserstein_distance(</span>
+<span id="cb17-327"><a href="#cb17-327" aria-hidden="true" tabindex="-1"></a>            diag_dim0[i],</span>
+<span id="cb17-328"><a href="#cb17-328" aria-hidden="true" tabindex="-1"></a>            diag_dim0[j],</span>
+<span id="cb17-329"><a href="#cb17-329" aria-hidden="true" tabindex="-1"></a>            order<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb17-330"><a href="#cb17-330" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb17-331"><a href="#cb17-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-332"><a href="#cb17-332" aria-hidden="true" tabindex="-1"></a>        dist_dim1[i, j] <span class="op">=</span> gw.wasserstein_distance(</span>
+<span id="cb17-333"><a href="#cb17-333" aria-hidden="true" tabindex="-1"></a>            diag_dim1[i],</span>
+<span id="cb17-334"><a href="#cb17-334" aria-hidden="true" tabindex="-1"></a>            diag_dim1[j],</span>
+<span id="cb17-335"><a href="#cb17-335" aria-hidden="true" tabindex="-1"></a>            order<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb17-336"><a href="#cb17-336" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb17-337"><a href="#cb17-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-338"><a href="#cb17-338" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Alternativa:</span></span>
+<span id="cb17-339"><a href="#cb17-339" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dist_dim0[i, j] = gd.bottleneck_distance(</span></span>
+<span id="cb17-340"><a href="#cb17-340" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     diag_dim0[i],</span></span>
+<span id="cb17-341"><a href="#cb17-341" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     diag_dim0[j]</span></span>
+<span id="cb17-342"><a href="#cb17-342" aria-hidden="true" tabindex="-1"></a>        <span class="co"># )</span></span>
+<span id="cb17-343"><a href="#cb17-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-344"><a href="#cb17-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-345"><a href="#cb17-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## Construcción de las matrices de distancia</span></span>
 <span id="cb17-346"><a href="#cb17-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-347"><a href="#cb17-347" aria-hidden="true" tabindex="-1"></a><span class="fu">## Construcción de las matrices de distancia</span></span>
+<span id="cb17-347"><a href="#cb17-347" aria-hidden="true" tabindex="-1"></a>Hasta este punto hemos calculado las distancias de Wasserstein entre todos los pares de muestras y las hemos almacenado en arreglos de NumPy.</span>
 <span id="cb17-348"><a href="#cb17-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-349"><a href="#cb17-349" aria-hidden="true" tabindex="-1"></a>Hasta este punto hemos calculado las distancias de Wasserstein entre todos los pares de muestras y las hemos almacenado en arreglos de NumPy.</span>
+<span id="cb17-349"><a href="#cb17-349" aria-hidden="true" tabindex="-1"></a>Para facilitar su exploración e interpretación, convertiremos estas matrices a objetos <span class="in">`DataFrame`</span> de pandas. Esto permitirá etiquetar filas y columnas con los nombres de los archivos correspondientes, haciendo más sencilla la identificación de las comparaciones entre muestras.</span>
 <span id="cb17-350"><a href="#cb17-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-351"><a href="#cb17-351" aria-hidden="true" tabindex="-1"></a>Para facilitar su exploración e interpretación, convertiremos estas matrices a objetos <span class="in">`DataFrame`</span> de pandas. Esto permitirá etiquetar filas y columnas con los nombres de los archivos correspondientes, haciendo más sencilla la identificación de las comparaciones entre muestras.</span>
+<span id="cb17-351"><a href="#cb17-351" aria-hidden="true" tabindex="-1"></a>Cada entrada de la matriz representa la distancia topológica entre dos muestras:</span>
 <span id="cb17-352"><a href="#cb17-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-353"><a href="#cb17-353" aria-hidden="true" tabindex="-1"></a>Cada entrada de la matriz representa la distancia topológica entre dos muestras:</span>
-<span id="cb17-354"><a href="#cb17-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-355"><a href="#cb17-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Valores cercanos a cero indican diagramas muy similares.</span>
-<span id="cb17-356"><a href="#cb17-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Valores grandes indican diferencias más pronunciadas en la organización topológica.</span>
+<span id="cb17-353"><a href="#cb17-353" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Valores cercanos a cero indican diagramas muy similares.</span>
+<span id="cb17-354"><a href="#cb17-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Valores grandes indican diferencias más pronunciadas en la organización topológica.</span>
+<span id="cb17-355"><a href="#cb17-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-356"><a href="#cb17-356" aria-hidden="true" tabindex="-1"></a>La diagonal principal debe contener únicamente ceros, ya que cada muestra se compara consigo misma.</span>
 <span id="cb17-357"><a href="#cb17-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-358"><a href="#cb17-358" aria-hidden="true" tabindex="-1"></a>La diagonal principal debe contener únicamente ceros, ya que cada muestra se compara consigo misma.</span>
-<span id="cb17-359"><a href="#cb17-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-360"><a href="#cb17-360" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-361"><a href="#cb17-361" aria-hidden="true" tabindex="-1"></a>df_dist0 <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb17-362"><a href="#cb17-362" aria-hidden="true" tabindex="-1"></a>    dist_dim0,</span>
-<span id="cb17-363"><a href="#cb17-363" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>archivos,</span>
-<span id="cb17-364"><a href="#cb17-364" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>archivos</span>
-<span id="cb17-365"><a href="#cb17-365" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-366"><a href="#cb17-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-367"><a href="#cb17-367" aria-hidden="true" tabindex="-1"></a>df_dist1 <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb17-368"><a href="#cb17-368" aria-hidden="true" tabindex="-1"></a>    dist_dim1,</span>
-<span id="cb17-369"><a href="#cb17-369" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>archivos,</span>
-<span id="cb17-370"><a href="#cb17-370" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>archivos</span>
-<span id="cb17-371"><a href="#cb17-371" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-372"><a href="#cb17-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-373"><a href="#cb17-373" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_dist0)</span>
-<span id="cb17-374"><a href="#cb17-374" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_dist1)</span>
-<span id="cb17-375"><a href="#cb17-375" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-376"><a href="#cb17-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-377"><a href="#cb17-377" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" icon="false"}</span>
-<span id="cb17-378"><a href="#cb17-378" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output</span></span>
-<span id="cb17-379"><a href="#cb17-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-380"><a href="#cb17-380" aria-hidden="true" tabindex="-1"></a><span class="in">``` output</span></span>
-<span id="cb17-381"><a href="#cb17-381" aria-hidden="true" tabindex="-1"></a><span class="in">                                                    high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \</span></span>
-<span id="cb17-382"><a href="#cb17-382" aria-hidden="true" tabindex="-1"></a><span class="in">high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   </span></span>
-<span id="cb17-383"><a href="#cb17-383" aria-hidden="true" tabindex="-1"></a><span class="in">high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          7710.785536   </span></span>
-<span id="cb17-384"><a href="#cb17-384" aria-hidden="true" tabindex="-1"></a><span class="in">high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                          6388.711787   </span></span>
-<span id="cb17-385"><a href="#cb17-385" aria-hidden="true" tabindex="-1"></a><span class="in">invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               4712.810788   </span></span>
-<span id="cb17-386"><a href="#cb17-386" aria-hidden="true" tabindex="-1"></a><span class="in">invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               2600.703114 </span></span>
-<span id="cb17-387"><a href="#cb17-387" aria-hidden="true" tabindex="-1"></a><span class="in">..........</span></span>
-<span id="cb17-388"><a href="#cb17-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-389"><a href="#cb17-389" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-358"><a href="#cb17-358" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-359"><a href="#cb17-359" aria-hidden="true" tabindex="-1"></a>df_dist0 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb17-360"><a href="#cb17-360" aria-hidden="true" tabindex="-1"></a>    dist_dim0,</span>
+<span id="cb17-361"><a href="#cb17-361" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>archivos,</span>
+<span id="cb17-362"><a href="#cb17-362" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>archivos</span>
+<span id="cb17-363"><a href="#cb17-363" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-364"><a href="#cb17-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-365"><a href="#cb17-365" aria-hidden="true" tabindex="-1"></a>df_dist1 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb17-366"><a href="#cb17-366" aria-hidden="true" tabindex="-1"></a>    dist_dim1,</span>
+<span id="cb17-367"><a href="#cb17-367" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>archivos,</span>
+<span id="cb17-368"><a href="#cb17-368" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>archivos</span>
+<span id="cb17-369"><a href="#cb17-369" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-370"><a href="#cb17-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-371"><a href="#cb17-371" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_dist0)</span>
+<span id="cb17-372"><a href="#cb17-372" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_dist1)</span>
+<span id="cb17-373"><a href="#cb17-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-374"><a href="#cb17-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-375"><a href="#cb17-375" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" icon="false"}</span>
+<span id="cb17-376"><a href="#cb17-376" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output</span></span>
+<span id="cb17-377"><a href="#cb17-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-378"><a href="#cb17-378" aria-hidden="true" tabindex="-1"></a><span class="in">``` output</span></span>
+<span id="cb17-379"><a href="#cb17-379" aria-hidden="true" tabindex="-1"></a><span class="in">                                                    high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \</span></span>
+<span id="cb17-380"><a href="#cb17-380" aria-hidden="true" tabindex="-1"></a><span class="in">high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   </span></span>
+<span id="cb17-381"><a href="#cb17-381" aria-hidden="true" tabindex="-1"></a><span class="in">high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          7710.785536   </span></span>
+<span id="cb17-382"><a href="#cb17-382" aria-hidden="true" tabindex="-1"></a><span class="in">high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                          6388.711787   </span></span>
+<span id="cb17-383"><a href="#cb17-383" aria-hidden="true" tabindex="-1"></a><span class="in">invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               4712.810788   </span></span>
+<span id="cb17-384"><a href="#cb17-384" aria-hidden="true" tabindex="-1"></a><span class="in">invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               2600.703114 </span></span>
+<span id="cb17-385"><a href="#cb17-385" aria-hidden="true" tabindex="-1"></a><span class="in">..........</span></span>
+<span id="cb17-386"><a href="#cb17-386" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-387"><a href="#cb17-387" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-388"><a href="#cb17-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-389"><a href="#cb17-389" aria-hidden="true" tabindex="-1"></a><span class="fu">## Guardado de resultados</span></span>
 <span id="cb17-390"><a href="#cb17-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-391"><a href="#cb17-391" aria-hidden="true" tabindex="-1"></a><span class="fu">## Guardado de resultados</span></span>
+<span id="cb17-391"><a href="#cb17-391" aria-hidden="true" tabindex="-1"></a>En este punto ya hemos construido las matrices de distancias de Wasserstein entre todas las muestras analizadas.</span>
 <span id="cb17-392"><a href="#cb17-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-393"><a href="#cb17-393" aria-hidden="true" tabindex="-1"></a>En este punto ya hemos construido las matrices de distancias de Wasserstein entre todas las muestras analizadas.</span>
+<span id="cb17-393"><a href="#cb17-393" aria-hidden="true" tabindex="-1"></a>El siguiente paso consiste en almacenar estos resultados, ya que serán utilizados posteriormente como entrada para el análisis de clustering jerárquico.</span>
 <span id="cb17-394"><a href="#cb17-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-395"><a href="#cb17-395" aria-hidden="true" tabindex="-1"></a>El siguiente paso consiste en almacenar estos resultados, ya que serán utilizados posteriormente como entrada para el análisis de clustering jerárquico.</span>
+<span id="cb17-395"><a href="#cb17-395" aria-hidden="true" tabindex="-1"></a>De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.</span>
 <span id="cb17-396"><a href="#cb17-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-397"><a href="#cb17-397" aria-hidden="true" tabindex="-1"></a>De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.</span>
+<span id="cb17-397"><a href="#cb17-397" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
 <span id="cb17-398"><a href="#cb17-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-399"><a href="#cb17-399" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-400"><a href="#cb17-400" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear carpeta para almacenar las matrices de distancia</span></span>
-<span id="cb17-401"><a href="#cb17-401" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"/home/jupyter-luisraul/resultados"</span> <span class="co"># cambiar la ruta</span></span>
-<span id="cb17-402"><a href="#cb17-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-403"><a href="#cb17-403" aria-hidden="true" tabindex="-1"></a><span class="co"># Carpeta de salida</span></span>
-<span id="cb17-404"><a href="#cb17-404" aria-hidden="true" tabindex="-1"></a>salida <span class="op">=</span> os.path.join(ruta, <span class="st">"distancias"</span>)</span>
-<span id="cb17-405"><a href="#cb17-405" aria-hidden="true" tabindex="-1"></a>os.makedirs(salida, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb17-406"><a href="#cb17-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-407"><a href="#cb17-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-408"><a href="#cb17-408" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
-<span id="cb17-409"><a href="#cb17-409" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"/home/jupyter-luisraul/resultados/distancias"</span> <span class="co"># Cambiar la ruta</span></span>
-<span id="cb17-410"><a href="#cb17-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-411"><a href="#cb17-411" aria-hidden="true" tabindex="-1"></a>df_dist0.to_csv(</span>
-<span id="cb17-412"><a href="#cb17-412" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim0.csv"</span>)</span>
-<span id="cb17-413"><a href="#cb17-413" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-414"><a href="#cb17-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-415"><a href="#cb17-415" aria-hidden="true" tabindex="-1"></a>df_dist1.to_csv(</span>
-<span id="cb17-416"><a href="#cb17-416" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim1.csv"</span>)</span>
-<span id="cb17-417"><a href="#cb17-417" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-418"><a href="#cb17-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-419"><a href="#cb17-419" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrices guardadas."</span>)</span>
-<span id="cb17-420"><a href="#cb17-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-421"><a href="#cb17-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-422"><a href="#cb17-422" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" icon="false"}</span>
-<span id="cb17-423"><a href="#cb17-423" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output</span></span>
+<span id="cb17-399"><a href="#cb17-399" aria-hidden="true" tabindex="-1"></a><span class="co"># Carpeta de salida</span></span>
+<span id="cb17-400"><a href="#cb17-400" aria-hidden="true" tabindex="-1"></a>salida <span class="op">=</span> os.path.join(ruta, <span class="st">"distancias"</span>)</span>
+<span id="cb17-401"><a href="#cb17-401" aria-hidden="true" tabindex="-1"></a>os.makedirs(salida, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-402"><a href="#cb17-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-403"><a href="#cb17-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-404"><a href="#cb17-404" aria-hidden="true" tabindex="-1"></a><span class="in">``` python</span></span>
+<span id="cb17-405"><a href="#cb17-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-406"><a href="#cb17-406" aria-hidden="true" tabindex="-1"></a>df_dist0.to_csv(</span>
+<span id="cb17-407"><a href="#cb17-407" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim0.csv"</span>)</span>
+<span id="cb17-408"><a href="#cb17-408" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-409"><a href="#cb17-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-410"><a href="#cb17-410" aria-hidden="true" tabindex="-1"></a>df_dist1.to_csv(</span>
+<span id="cb17-411"><a href="#cb17-411" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim1.csv"</span>)</span>
+<span id="cb17-412"><a href="#cb17-412" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-413"><a href="#cb17-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-414"><a href="#cb17-414" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrices guardadas."</span>)</span>
+<span id="cb17-415"><a href="#cb17-415" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-416"><a href="#cb17-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-417"><a href="#cb17-417" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" icon="false"}</span>
+<span id="cb17-418"><a href="#cb17-418" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output</span></span>
+<span id="cb17-419"><a href="#cb17-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-420"><a href="#cb17-420" aria-hidden="true" tabindex="-1"></a><span class="in">``` output</span></span>
+<span id="cb17-421"><a href="#cb17-421" aria-hidden="true" tabindex="-1"></a><span class="in">Matrices guardadas.</span></span>
+<span id="cb17-422"><a href="#cb17-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-423"><a href="#cb17-423" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb17-424"><a href="#cb17-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-425"><a href="#cb17-425" aria-hidden="true" tabindex="-1"></a><span class="in">``` output</span></span>
-<span id="cb17-426"><a href="#cb17-426" aria-hidden="true" tabindex="-1"></a><span class="in">Matrices guardadas.</span></span>
-<span id="cb17-427"><a href="#cb17-427" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-428"><a href="#cb17-428" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-429"><a href="#cb17-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-430"><a href="#cb17-430" aria-hidden="true" tabindex="-1"></a>Al finalizar, tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb17-425"><a href="#cb17-425" aria-hidden="true" tabindex="-1"></a>Al finalizar, tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

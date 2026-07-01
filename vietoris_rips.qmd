@@ -362,7 +362,7 @@ Afortunadamente, no es necesario ejecutar manualmente el análisis archivo por a
 En teoría, todo lo necesario para construir este análisis ya ha sido presentado en las secciones anteriores. El siguiente ejercicio consiste en completar un script que procese automáticamente múltiples muestras y genere un diagrama de persistencia para cada una de ellas.
 
 ::::::: {.callout-note icon="false"}
-## 💻 Ejercicio: procesar múltiples muestras
+##  Ejercicio: procesar múltiples muestras
 
 El ejercicio consiste en automatizar este proceso para todas las muestras disponibles. Para cada archivo `.csv`, deberán construir la nube de puntos, generar el complejo de Vietoris–Rips, obtener los pares nacimiento–muerte del diagrama de persistencia y guardar los resultados en una carpeta de salida.
 

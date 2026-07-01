@@ -55,45 +55,38 @@ Por tanto, muestras con arquitecturas celulares similares deberían producir dis
 
 ## Definición matemática
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="60%"}
+Sean $D_1$ y $D_2$ dos diagramas de persistencia.
 
-Sean \(D_1\) y \(D_2\) dos diagramas de persistencia.
+La distancia de Wasserstein de orden $p$ se define como
 
-La distancia de Wasserstein de orden \(p\) se define como
-
-$$
-W_p(D_1,D_2) = \left( \inf_{\vartheta} \sum_{x\in D_1} |x-\vartheta(x)|_\infty^p \right)^{1/p}.
-$$
+$$W_p(D_1,D_2) = \left( \inf_{\vartheta} \sum_{x\in D_1} |x-\vartheta(x)|_\infty^p \right)^{1/p}.$$
 
 donde:
 
-* \(\vartheta\) representa un emparejamiento admisible entre los puntos de ambos diagramas.
-* \(|\cdot|_\infty\) corresponde a la norma infinito.
-* El ínfimo busca el emparejamiento con costo total mínimo.
+- $\vartheta$ representa un emparejamiento admisible entre los puntos de ambos diagramas.
+- $||\cdot||_{\infty}$ corresponde a la norma infinito.
+- El ínfimo busca el emparejamiento con costo total mínimo.
 
 La distancia de Wasserstein cuantifica la similitud entre dos diagramas de persistencia considerando el desplazamiento acumulado necesario para emparejar sus características topológicas.
 
 En este análisis se ignoran los puntos con muerte infinita, ya que la construcción mediante complejos de Vietoris–Rips produce únicamente una característica infinita por diagrama, asociada a la componente conexa principal. Dado que esta característica aparece de forma consistente en todas las muestras, no aporta información relevante para su comparación.
-
-
 :::
 
 ::: {.column width="40%"}
-![ Distancia de Wasserstein. (a) Proyección ortogonal sobre la diagonal. (b) Intercambio de proyecciones entre diagramas. (c) Emparejamiento óptimo mediante una biyección entre puntos de ambos diagramas. La distancia de Wasserstein evalúa la similitud entre diagramas considerando la suma total de las distancias entre los puntos emparejados.](figures/wasserstein.png)
+![Distancia de Wasserstein. (a) Proyección ortogonal sobre la diagonal. (b) Intercambio de proyecciones entre diagramas. (c) Emparejamiento óptimo mediante una biyección entre puntos de ambos diagramas. La distancia de Wasserstein evalúa la similitud entre diagramas considerando la suma total de las distancias entre los puntos emparejados.](figures/wasserstein.png)
 :::
 :::::
 
-
-Para ilustrar el cálculo de la distancia de Wasserstein entre dos diagramas de persistencia, consideremos los diagramas \(D_1\) y \(D_2\) mostrados en la figura. Cada diagrama representa características topológicas obtenidas a partir de una filtración, donde los puntos corresponden a clases de homología identificadas durante el análisis.
+Para ilustrar el cálculo de la distancia de Wasserstein entre dos diagramas de persistencia, consideremos los diagramas $D_1$ y $D_2$ mostrados en la figura. Cada diagrama representa características topológicas obtenidas a partir de una filtración, donde los puntos corresponden a clases de homología identificadas durante el análisis.
 
 El procedimiento general consiste en:
 
-1. Proyectar puntos sobre la diagonal. Las características con baja persistencia pueden emparejarse con la diagonal, representando estructuras de corta duración.
-2. Equilibrar la cantidad de puntos entre diagramas. Cuando los diagramas contienen diferente número de características, las proyecciones sobre la diagonal permiten completar los emparejamientos necesarios.
-3. Determinar el emparejamiento óptimo. Se busca la correspondencia entre puntos que minimiza el costo total de transporte.
-4. Calcular la distancia. A partir del emparejamiento óptimo se obtiene el valor de la distancia de Wasserstein, que resume la diferencia topológica global entre ambos diagramas.
+1.  Proyectar puntos sobre la diagonal. Las características con baja persistencia pueden emparejarse con la diagonal, representando estructuras de corta duración.
+2.  Equilibrar la cantidad de puntos entre diagramas. Cuando los diagramas contienen diferente número de características, las proyecciones sobre la diagonal permiten completar los emparejamientos necesarios.
+3.  Determinar el emparejamiento óptimo. Se busca la correspondencia entre puntos que minimiza el costo total de transporte.
+4.  Calcular la distancia. A partir del emparejamiento óptimo se obtiene el valor de la distancia de Wasserstein, que resume la diferencia topológica global entre ambos diagramas.
 
 En el contexto de este trabajo, esta métrica permite comparar cuantitativamente la organización espacial celular entre distintas muestras biológicas. Distancias pequeñas indican diagramas topológicamente similares, mientras que distancias mayores sugieren diferencias más marcadas en los patrones espaciales observados.
 
@@ -109,7 +102,7 @@ Cada muestra produce un diagrama que resume su organización espacial celular.
 
 El siguiente paso consiste en comparar estos diagramas utilizando la distancia de Wasserstein.
 
-```text
+``` text
 Carcinoma  ─────┐
                 ├── Wasserstein ──► Distancia(Carcinoma, Displasia)
 Displasia  ─────┘
@@ -122,7 +115,7 @@ Estroma    ─────┘
 
 Si obtenemos, por ejemplo,
 
-```text
+``` text
 Distancia(Carcinoma, Displasia) = 15
 
 Distancia(Carcinoma, Estroma) = 48
@@ -132,7 +125,6 @@ podemos interpretar que el patrón topológico observado en la muestra de carcin
 
 Repitiendo este procedimiento para todos los pares de muestras obtenemos una matriz de distancias, la cual servirá posteriormente como entrada para el análisis de clustering jerárquico.
 
-
 # Implementación computacional
 
 En la sección anterior aprendimos a construir complejos de Vietoris–Rips y a calcular diagramas de persistencia para distintas muestras biológicas.
@@ -140,8 +132,6 @@ En la sección anterior aprendimos a construir complejos de Vietoris–Rips y a 
 Una vez obtenidos estos diagramas surge una pregunta natural:
 
 > ¿Cómo podemos comparar cuantitativamente dos diagramas de persistencia?
-
-Para responder esta pregunta utilizaremos la distancia de Wasserstein, una métrica que permite medir la similitud entre diagramas de persistencia y, por lo tanto, entre las estructuras topológicas observadas en distintas muestras.
 
 Recordemos que cada diagrama resume la evolución de componentes conexas y ciclos a lo largo de una filtración. La distancia de Wasserstein nos permite cuantificar qué tan parecidos o diferentes son dichos patrones topológicos.
 
@@ -159,7 +149,7 @@ En esta sección aprenderemos a:
 
 El flujo general del análisis será:
 
-```text
+``` text
 Diagramas de persistencia
             ↓
  Distancias de Wasserstein
@@ -169,45 +159,44 @@ Diagramas de persistencia
  Clustering jerárquico
 ```
 
-##  Importar bibliotecas
+## Importar bibliotecas
 
 Utilizaremos las siguientes bibliotecas durante esta sección del análisis:
 
-* `os` para la gestión de archivos y directorios.
-* `numpy` para operaciones numéricas y manejo de arreglos.
-* `pandas` para la manipulación de datos en formato tabular.
-* `gudhi.wasserstein` para el cálculo de distancias entre diagramas de persistencia.
+- `os` para la gestión de archivos y directorios.
+- `numpy` para operaciones numéricas y manejo de arreglos.
+- `pandas` para la manipulación de datos en formato tabular.
+- `gudhi.wasserstein` para el cálculo de distancias entre diagramas de persistencia.
 
-::: {.callout-note}
-
-## Mostrar código
-
-```python
+``` python
 import os
 import numpy as np
 import pandas as pd
 import gudhi.wasserstein as gw
+import ot
 ```
 
+::: callout-warning
+## Nota
+
+Se necesita instalar `POT`
+
+``` python
+pip install POT
+```
 :::
 
-##  Definir la carpeta de trabajo
+## Definir la carpeta de trabajo
 
 Los diagramas de persistencia generados en la sección anterior fueron almacenados como archivos CSV.
 
 El siguiente paso consiste en indicar la carpeta donde se encuentran dichos archivos para poder cargarlos y compararlos entre sí mediante la distancia de Wasserstein.
 
-::: {.callout-note}
-
-## Mostrar código
-
-```python
+``` python
 ruta = "/home/jupyter-luisraul/tda-cell-patterns-workshop/data/resultados/" # cambiar dependiendo del usuario
 ```
 
-:::
-
-##  Obtener la lista de diagramas
+## Obtener la lista de diagramas
 
 Una vez definida la carpeta de trabajo, podemos identificar automáticamente todos los diagramas de persistencia disponibles.
 
@@ -215,11 +204,7 @@ La siguiente celda busca todos los archivos con extensión `.csv`, los ordena al
 
 Esto resulta especialmente útil cuando se trabaja con decenas o cientos de muestras, ya que evita tener que especificar manualmente cada archivo.
 
-::: {.callout-note}
-
-## Mostrar código
-
-```python
+``` python
 archivos = sorted(
     [f for f in os.listdir(ruta) if f.endswith(".csv")]
 )
@@ -230,6 +215,26 @@ for i, archivo in enumerate(archivos):
     print(f"{i}: {archivo}")
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+``` output
+Archivos encontrados:
+0: high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv
+1: high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv
+2: high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv
+3: invasive_carcinoma_AGSCC_1_IC_18_diag.csv
+4: invasive_carcinoma_AGSCC_1_IC_24_diag.csv
+5: invasive_carcinoma_AGSCC_1_IC_28_diag.csv
+6: light_grade_displasia_F82P1_LGD_5_diag.csv
+7: light_grade_displasia_F82P1_LGD_6_diag.csv
+8: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv
+9: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv
+10: stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv
+11: stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv
+12: stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv
+13: stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv
+```
 :::
 
 ## Carga de los diagramas de persistencia
@@ -238,26 +243,22 @@ Una vez obtenidos los diagramas de persistencia de cada muestra, el siguiente pa
 
 Cada archivo CSV contiene las características topológicas identificadas durante el cálculo de homología persistente, incluyendo:
 
-* La dimensión homológica (`dimension`).
-* El valor de nacimiento (`birth`).
-* El valor de muerte (`death`).
+- La dimensión homológica (`dimension`).
+- El valor de nacimiento (`birth`).
+- El valor de muerte (`death`).
 
 A partir de estos archivos construiremos dos listas independientes:
 
-* `diag_dim0`: diagramas correspondientes a (H_0) (componentes conexas).
-* `diag_dim1`: diagramas correspondientes a (H_1) (ciclos).
+- `diag_dim0`: diagramas correspondientes a los pares nacimiento–muerte asociados con las clases de homología de $H_0$ (componentes conexas).
+- `diag_dim1`: diagramas correspondientes a pares nacimiento–muerte asociados a clases de homología de $H_1$ (ciclos).
 
-En el caso de (H_1), eliminaremos las características con muerte infinita. Esto se hace para simplificar el cálculo de las distancias y evitar problemas asociados al manejo de valores infinitos.
+En el caso de $H_1$, eliminaremos las características con muerte infinita. Esto se hace para simplificar el cálculo de las distancias y evitar problemas asociados al manejo de valores infinitos.
 
-Recordemos que, al construir una filtración de Vietoris–Rips con un radio suficientemente grande, todas las componentes conexas terminan fusionándose en una sola. Como consecuencia, en dimensión (0) suele existir una única componente que persiste hasta infinito, representando la componente conexa final del espacio. Dado que esta característica aparece de manera sistemática en todas las muestras, su presencia no aporta información discriminante para la comparación entre diagramas.
+Recordemos que, al construir una filtración de Vietoris–Rips con un radio suficientemente grande, todas las componentes conexas terminan fusionándose en una sola. Como consecuencia, en dimensión $0$ suele existir una única componente que persiste hasta infinito, representando la componente conexa final del espacio. Dado que esta característica aparece de manera sistemática en todas las muestras, su presencia no aporta información discriminante para la comparación entre diagramas.
 
 Por esta razón, es común ignorar los puntos con muerte infinita al calcular distancias entre diagramas de persistencia.
 
-::: {.callout-note}
-
-## Mostrar código
-
-```python
+``` python
 diag_dim0 = []
 diag_dim1 = []
 
@@ -285,54 +286,39 @@ for archivo in archivos:
     diag_dim1.append(d1)
 ```
 
-:::
-
 ## Inicialización de las matrices de distancia
 
 Una vez cargados todos los diagramas de persistencia, necesitamos una estructura donde almacenar las distancias de Wasserstein entre cada par de muestras.
 
-Si disponemos de (n) muestras, construiremos dos matrices cuadradas de tamaño (n \times n):
+Si disponemos de $n$ muestras, construiremos dos matrices cuadradas de tamaño $n \times n$:
 
-* `dist_dim0`: almacenará las distancias entre diagramas de dimensión (0) ((H_0)).
-* `dist_dim1`: almacenará las distancias entre diagramas de dimensión (1) ((H_1)).
+- `dist_dim0`: almacenará las distancias entre diagramas de dimensión $0$.
+- `dist_dim1`: almacenará las distancias entre diagramas de dimensión $1$.
 
-La entrada ((i,j)) de cada matriz contendrá la distancia entre las muestras (i) y (j).
+La entrada $(i,j)$ de cada matriz contendrá la distancia entre las muestras $i$ y $j$.
 
 Por construcción, estas matrices serán simétricas, ya que la distancia de Wasserstein cumple
 
-[
-W(D_i,D_j)=W(D_j,D_i).
-]
+$$W(D_i,D_j)=W(D_j,D_i).$$
 
 Además, la diagonal principal contendrá únicamente ceros, pues la distancia entre un diagrama y sí mismo es igual a cero.
 
-::: {.callout-note}
-
-##  Código
-
-```python
+``` python
 n = len(archivos)
 
 dist_dim0 = np.zeros((n, n))
 dist_dim1 = np.zeros((n, n))
 ```
 
-
-:::
-
 ## Cálculo de las distancias de Wasserstein
 
 Una vez cargados todos los diagramas de persistencia, podemos comparar cada muestra con todas las demás mediante la distancia de Wasserstein.
 
-El procedimiento consiste en recorrer todos los pares de diagramas y calcular la distancia correspondiente. El resultado se almacena en las matrices `dist_dim0` y `dist_dim1`, que contendrán las distancias para (H_0) y (H_1), respectivamente.
+El procedimiento consiste en recorrer todos los pares de diagramas y calcular la distancia correspondiente. El resultado se almacena en las matrices `dist_dim0` y `dist_dim1`, que contendrán las distancias para $dim 0$ y $dim 1$, respectivamente.
 
 En este trabajo utilizaremos la distancia de Wasserstein de orden 1. Sin embargo, existen otras métricas ampliamente utilizadas para comparar diagramas de persistencia, como la distancia de cuello de botella (*bottleneck distance*), la cual también está implementada en GUDHI.
 
-::: {.callout-note}
-
-## Mostrar código
-
-```python 
+``` python
 for i in range(n):
 
     for j in range(n):
@@ -356,8 +342,6 @@ for i in range(n):
         # )
 ```
 
-:::
-
 ## Construcción de las matrices de distancia
 
 Hasta este punto hemos calculado las distancias de Wasserstein entre todos los pares de muestras y las hemos almacenado en arreglos de NumPy.
@@ -366,16 +350,12 @@ Para facilitar su exploración e interpretación, convertiremos estas matrices a
 
 Cada entrada de la matriz representa la distancia topológica entre dos muestras:
 
-* Valores cercanos a cero indican diagramas muy similares.
-* Valores grandes indican diferencias más pronunciadas en la organización topológica.
+- Valores cercanos a cero indican diagramas muy similares.
+- Valores grandes indican diferencias más pronunciadas en la organización topológica.
 
 La diagonal principal debe contener únicamente ceros, ya que cada muestra se compara consigo misma.
 
-::: {.callout-note}
-
-## Mostrar código
-
-```python
+``` python
 df_dist0 = pd.DataFrame(
     dist_dim0,
     index=archivos,
@@ -392,6 +372,18 @@ print(df_dist0)
 print(df_dist1)
 ```
 
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+``` output
+                                                    high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          7710.785536   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                          6388.711787   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               4712.810788   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               2600.703114 
+..........
+```
 :::
 
 ## Guardado de resultados
@@ -402,11 +394,15 @@ El siguiente paso consiste en almacenar estos resultados, ya que serán utilizad
 
 De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.
 
-::: {.callout-note}
+``` python
 
-## Código
+# Carpeta de salida
+salida = os.path.join(ruta, "distancias")
+os.makedirs(salida, exist_ok=True)
+```
 
-```python
+``` python
+
 df_dist0.to_csv(
     os.path.join(ruta, "wasserstein_dim0.csv")
 )
@@ -417,6 +413,13 @@ df_dist1.to_csv(
 
 print("Matrices guardadas.")
 ```
-::: 
+
+::: {.callout-tip collapse="true" icon="false"}
+## Output
+
+``` output
+Matrices guardadas.
+```
+:::
 
 Al finalizar, tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico.

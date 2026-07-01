@@ -16,6 +16,8 @@ Los datos utilizados en este proyecto están disponibles en el repositorio del w
 
 Se pueden descargar directamente desde la API de GitHub mediante el siguiente enlace:
 
+Proyecto 1
+
 ```python
 
 api_url = (
@@ -36,7 +38,7 @@ for archivo in archivos:
     print("-", archivo)
 
 # ============================================================
-# 2. RUTA RAW DE GITHUB (CORREGIDA)
+# 2. RUTA RAW DE GITHUB 
 # ============================================================
 
 base_url = (
@@ -46,6 +48,40 @@ base_url = (
 
 
 ```
+
+Proyecto 2
+
+```python
+
+api_url = (
+    "https://api.github.com/repos/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/contents/data/datos_proyecto_2"
+)
+
+contenido = requests.get(api_url).json()
+
+archivos = sorted([
+    f["name"]
+    for f in contenido
+    if f["name"].endswith(".csv")
+])
+
+print("Archivos encontrados:")
+for archivo in archivos:
+    print("-", archivo)
+
+# ============================================================
+# 2. RUTA RAW DE GITHUB
+# ============================================================
+
+base_url = (
+    "https://raw.githubusercontent.com/"
+    "HaydeePeruyero/tda-cell-patterns-workshop/main/data/datos_proyecto_2/"
+)
+
+
+```
+
 
 ## Punto de partida
 
@@ -68,7 +104,7 @@ Se recomienda comenzar con visualizaciones y estadísticas descriptivas que perm
 Construyan y comparen al menos dos complejos simpliciales:
 
 * Vietoris–Rips
-* Čech
+* Alpha
 
 Analicen las diferencias observadas entre ambos enfoques y discutan si las conclusiones obtenidas son similares o distintas.
 

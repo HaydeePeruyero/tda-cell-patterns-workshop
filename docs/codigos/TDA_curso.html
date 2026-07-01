@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Importar bibliotecas – Workshop TDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4e6b27c36803a1a60da7d2284b677a61.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Workshop TDA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Presentación</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../introduccion.html"> 
+<span class="menu-text">Introducción</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../vietoris_rips.html"> 
+<span class="menu-text">Complejo de Vietoris–Rips</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../wasserstein.html"> 
+<span class="menu-text">Distancia de Wasserstein</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../clustering.html"> 
+<span class="menu-text">Clustering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../topkat.html"> 
+<span class="menu-text">TopKAT: Topological Kernel Association Test</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../proyecto.html"> 
+<span class="menu-text">Proyecto Final</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#cargar-datos" id="toc-cargar-datos" class="nav-link active" data-scroll-target="#cargar-datos"><span class="header-section-number">0.1</span> Cargar datos</a></li>
+  <li><a href="#visualización-de-la-nube-de-puntos" id="toc-visualización-de-la-nube-de-puntos" class="nav-link" data-scroll-target="#visualización-de-la-nube-de-puntos"><span class="header-section-number">0.2</span> Visualización de la nube de puntos</a></li>
+  <li><a href="#construcción-del-complejo-de-vietorisrips" id="toc-construcción-del-complejo-de-vietorisrips" class="nav-link" data-scroll-target="#construcción-del-complejo-de-vietorisrips"><span class="header-section-number">0.3</span> Construcción del complejo de Vietoris–Rips</a></li>
+  <li><a href="#advertencia" id="toc-advertencia" class="nav-link" data-scroll-target="#advertencia"><span class="header-section-number">0.4</span> Advertencia</a></li>
+  <li><a href="#visualización-del-complejo-de-vietorisrips" id="toc-visualización-del-complejo-de-vietorisrips" class="nav-link" data-scroll-target="#visualización-del-complejo-de-vietorisrips"><span class="header-section-number">0.5</span> Visualización del complejo de Vietoris–Rips</a></li>
+  <li><a href="#homología-persistente" id="toc-homología-persistente" class="nav-link" data-scroll-target="#homología-persistente"><span class="header-section-number">0.6</span> Homología persistente</a></li>
+  <li><a href="#guardar-resultados" id="toc-guardar-resultados" class="nav-link" data-scroll-target="#guardar-resultados"><span class="header-section-number">0.7</span> Guardar resultados</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">0.8</span> Resumen</a></li>
+  <li><a href="#ejercicio-procesar-múltiples-muestras" id="toc-ejercicio-procesar-múltiples-muestras" class="nav-link" data-scroll-target="#ejercicio-procesar-múltiples-muestras"><span class="header-section-number">0.9</span> Ejercicio: procesar múltiples muestras</a></li>
+  <li><a href="#distancia-de-wasserstein" id="toc-distancia-de-wasserstein" class="nav-link" data-scroll-target="#distancia-de-wasserstein"><span class="header-section-number">1</span> Distancia de Wasserstein</a>
+  <ul class="collapse">
+  <li><a href="#por-qué-necesitamos-una-distancia" id="toc-por-qué-necesitamos-una-distancia" class="nav-link" data-scroll-target="#por-qué-necesitamos-una-distancia"><span class="header-section-number">1.1</span> ¿Por qué necesitamos una distancia?</a></li>
+  <li><a href="#comparando-muestras-biológicas" id="toc-comparando-muestras-biológicas" class="nav-link" data-scroll-target="#comparando-muestras-biológicas"><span class="header-section-number">1.2</span> Comparando muestras biológicas</a></li>
+  <li><a href="#importar-bibliotecas" id="toc-importar-bibliotecas" class="nav-link" data-scroll-target="#importar-bibliotecas"><span class="header-section-number">1.3</span> Importar bibliotecas</a></li>
+  <li><a href="#definir-la-carpeta-de-trabajo" id="toc-definir-la-carpeta-de-trabajo" class="nav-link" data-scroll-target="#definir-la-carpeta-de-trabajo"><span class="header-section-number">1.4</span> Definir la carpeta de trabajo</a></li>
+  <li><a href="#obtener-la-lista-de-diagramas" id="toc-obtener-la-lista-de-diagramas" class="nav-link" data-scroll-target="#obtener-la-lista-de-diagramas"><span class="header-section-number">1.5</span> Obtener la lista de diagramas</a></li>
+  <li><a href="#carga-de-los-diagramas-de-persistencia" id="toc-carga-de-los-diagramas-de-persistencia" class="nav-link" data-scroll-target="#carga-de-los-diagramas-de-persistencia"><span class="header-section-number">1.6</span> Carga de los diagramas de persistencia</a></li>
+  <li><a href="#inicialización-de-las-matrices-de-distancia" id="toc-inicialización-de-las-matrices-de-distancia" class="nav-link" data-scroll-target="#inicialización-de-las-matrices-de-distancia"><span class="header-section-number">1.7</span> Inicialización de las matrices de distancia</a></li>
+  <li><a href="#cálculo-de-las-distancias-de-wasserstein" id="toc-cálculo-de-las-distancias-de-wasserstein" class="nav-link" data-scroll-target="#cálculo-de-las-distancias-de-wasserstein"><span class="header-section-number">1.8</span> Cálculo de las distancias de Wasserstein</a></li>
+  <li><a href="#construcción-de-las-matrices-de-distancia" id="toc-construcción-de-las-matrices-de-distancia" class="nav-link" data-scroll-target="#construcción-de-las-matrices-de-distancia"><span class="header-section-number">1.9</span> Construcción de las matrices de distancia</a></li>
+  <li><a href="#guardado-de-resultados" id="toc-guardado-de-resultados" class="nav-link" data-scroll-target="#guardado-de-resultados"><span class="header-section-number">1.10</span> Guardado de resultados</a></li>
+  </ul></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">2</span> Clustering</a>
+  <ul class="collapse">
+  <li><a href="#métodos-de-clustering" id="toc-métodos-de-clustering" class="nav-link" data-scroll-target="#métodos-de-clustering"><span class="header-section-number">2.1</span> Métodos de clustering</a></li>
+  <li><a href="#clustering-jerárquico" id="toc-clustering-jerárquico" class="nav-link" data-scroll-target="#clustering-jerárquico"><span class="header-section-number">2.2</span> Clustering jerárquico</a></li>
+  <li><a href="#resumen-1" id="toc-resumen-1" class="nav-link" data-scroll-target="#resumen-1"><span class="header-section-number">2.3</span> Resumen</a></li>
+  <li><a href="#importar-bibliotecas-1" id="toc-importar-bibliotecas-1" class="nav-link" data-scroll-target="#importar-bibliotecas-1"><span class="header-section-number">2.4</span> Importar bibliotecas</a></li>
+  <li><a href="#definir-directorios-de-trabajo" id="toc-definir-directorios-de-trabajo" class="nav-link" data-scroll-target="#definir-directorios-de-trabajo"><span class="header-section-number">2.5</span> Definir directorios de trabajo</a></li>
+  <li><a href="#clasificación-automática-de-las-muestras" id="toc-clasificación-automática-de-las-muestras" class="nav-link" data-scroll-target="#clasificación-automática-de-las-muestras"><span class="header-section-number">2.6</span> Clasificación automática de las muestras</a></li>
+  <li><a href="#definición-de-colores-para-las-anotaciones" id="toc-definición-de-colores-para-las-anotaciones" class="nav-link" data-scroll-target="#definición-de-colores-para-las-anotaciones"><span class="header-section-number">2.7</span> Definición de colores para las anotaciones</a></li>
+  </ul></li>
+  <li><a href="#recomendaciones" id="toc-recomendaciones" class="nav-link" data-scroll-target="#recomendaciones"><span class="header-section-number">3</span> Recomendaciones:</a>
+  <ul class="collapse">
+  <li><a href="#construcción-del-clustermap" id="toc-construcción-del-clustermap" class="nav-link" data-scroll-target="#construcción-del-clustermap"><span class="header-section-number">3.1</span> Construcción del clustermap</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Importar bibliotecas</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>En esta etapa construiremos complejos simpliciales y obtendremos los pares de nacimiento-muerte de las las clases de homología persistente a partir de datos espaciales.</p>
+<p>Utilizaremos las siguientes bibliotecas:</p>
+<ul>
+<li><code>os</code> para manejo de archivos y rutas.</li>
+<li><code>numpy</code> para operaciones numéricas.</li>
+<li><code>pandas</code> para manipulación de datos tabulares.</li>
+<li><code>matplotlib</code> para visualización de resultados.</li>
+<li><code>gudhi</code> para la construcción de complejos de Vietoris–Rips y homología persistente.</li>
+</ul>
+<div id="cell-2" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install gudhi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-3" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gudhi <span class="im">as</span> gd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Primero trabajaremos con una única muestra para entender cada paso del proceso. Una vez comprendido el pipeline completo, lo automatizaremos para procesar múltiples muestras de manera simultánea.</p>
+<section id="cargar-datos" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="cargar-datos"><span class="header-section-number">0.1</span> Cargar datos</h2>
+<p>El primer paso consiste en cargar las coordenadas espaciales de las células que fueron obtenidas durante el proceso de segmentación.</p>
+<p>Trabajaremos con un archivo CSV que contiene, entre otras variables, las coordenadas de los centroides celulares:</p>
+<ul>
+<li><code>X_centroid</code></li>
+<li><code>Y_centroid</code></li>
+</ul>
+<p>Cada fila representa una célula y sus coordenadas dentro de la imagen.</p>
+<p>A partir de estas coordenadas construiremos una <strong>nube de puntos</strong> (<em>point cloud</em>), que será la entrada para el análisis topológico.</p>
+<p>La siguiente celda carga el archivo, extrae las coordenadas y las organiza en una matriz denominada <code>puntos</code>, donde cada fila corresponde a una célula y cada columna a una coordenada espacial.</p>
+<div id="cell-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:469,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862083250,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="dc54d1e1-523c-4ac8-afcc-74c1e20434b2">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/HaydeePeruyero/tda-cell-patterns-workshop/main/data/high_grade_displasia_FAAGSCC_13_HGD_15.csv"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> df[<span class="st">""</span>].to_numpy()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">""</span>].to_numpy()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>puntos <span class="op">=</span> np.column_stack((, ))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Número de puntos: </span><span class="sc">{</span><span class="bu">len</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="visualización-de-la-nube-de-puntos" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="visualización-de-la-nube-de-puntos"><span class="header-section-number">0.2</span> Visualización de la nube de puntos</h2>
+<p>Una vez cargadas las coordenadas, es conveniente visualizar la distribución espacial de las células antes de realizar cualquier análisis topológico.</p>
+<p>Cada punto de la gráfica representa una célula identificada en el tejido. Esta representación constituye la nube de puntos (<em>point cloud</em>) sobre la cual construiremos posteriormente el complejo de Vietoris–Rips.</p>
+<p>La siguiente celda genera una visualización simple de las coordenadas celulares.</p>
+<div id="cell-7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:463,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862091755,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="c1007d9a-1ab4-4443-da44-af407e346a57">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(, , s<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Point Cloud (centroides celulares)"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"X"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Y"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="construcción-del-complejo-de-vietorisrips" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="construcción-del-complejo-de-vietorisrips"><span class="header-section-number">0.3</span> Construcción del complejo de Vietoris–Rips</h2>
+<p>A partir de la nube de puntos se construye un complejo de Vietoris–Rips para una secuencia de valores del parámetro de escala <span class="math inline">\(\varepsilon\)</span>. Al variar este parámetro, la conectividad entre las células cambia progresivamente, generando una familia de complejos simpliciales que describe la organización espacial de la muestra a múltiples escalas.</p>
+<p>Esta secuencia de complejos constituye una filtración, sobre la cual se calcula posteriormente la homología persistente.</p>
+<p>En este ejemplo utilizaremos inicialmente:</p>
+<ul>
+<li><span class="math inline">\(\varepsilon = 100\)</span> (solo para este ejemplo)</li>
+<li>dimensión máxima = 2</li>
+</ul>
+<p>La biblioteca GUDHI permite construir el complejo y almacenarlo en una estructura denominada <code>simplex_tree</code>, que posteriormente utilizaremos para calcular homología persistente.</p>
+</section>
+<section id="advertencia" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="advertencia"><span class="header-section-number">0.4</span> Advertencia</h2>
+<p>Para este taller <strong>no utilices un valor de <span class="math inline">\(\varepsilon\)</span> mayor a 100</strong> al construir el complejo de Vietoris–Rips.</p>
+<p>El número de símplices crece rápidamente conforme aumenta ($ $ ), lo que incrementa de manera considerable el consumo de memoria y tiempo de cómputo. En el servidor utilizado para este curso, ejecutar el análisis con valores mayores a 100 podría afectar su rendimiento o incluso provocar que el proceso falle.</p>
+<p>En otros proyectos o en servidores con mayores recursos computacionales, es posible trabajar con valores de () superiores si el análisis lo requiere. Sin embargo, <strong>para este taller se solicita limitar el valor máximo de () a 100</strong> con el fin de preservar la estabilidad y disponibilidad del servidor para todos los usuarios.</p>
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:37,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862102076,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="162f52b6-395f-43c6-a370-1f25cc6f5a3b">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>radio <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rips_complex <span class="op">=</span> gd._______(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    points<span class="op">=</span>______,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    max_edge_length<span class="op">=</span>_______</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#NO CAMBIAR LA DIMENSIÓN MÁXIMA</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>simplex_tree <span class="op">=</span> rips_complex.create_simplex_tree(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    max_dimension<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Número de simplices:"</span>, simplex_tree._ces())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="visualización-del-complejo-de-vietorisrips" class="level2" data-number="0.5">
+<h2 data-number="0.5" class="anchored" data-anchor-id="visualización-del-complejo-de-vietorisrips"><span class="header-section-number">0.5</span> Visualización del complejo de Vietoris–Rips</h2>
+<p>Aunque el complejo de Vietoris–Rips se define como un objeto combinatorio, resulta útil visualizar sus conexiones para comprender cómo la información geométrica de la nube de puntos se transforma en una estructura topológica.</p>
+<p>Esta representación permite identificar visualmente regiones altamente conectadas, posibles agrupamientos y estructuras que podrían dar origen a ciclos topológicos.</p>
+<div id="cell-12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:13114,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862175192,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="a6b0837b-eefc-4b97-b32d-19e7c0c1beff">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(, , color<span class="op">=</span><span class="st">"black"</span>, s<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> simplex <span class="kw">in</span> simplex_tree.g______(<span class="dv">1</span>):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(simplex[___]) <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        i, j <span class="op">=</span> simplex[<span class="dv">0</span>]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        plt.plot(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            [x[i], x[j]],</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            [y[i], y[j]],</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"gray"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Complejo de Rips (r=</span><span class="sc">{</span>radio<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"X"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Y"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="homología-persistente" class="level2" data-number="0.6">
+<h2 data-number="0.6" class="anchored" data-anchor-id="homología-persistente"><span class="header-section-number">0.6</span> Homología persistente</h2>
+<p>Hasta ahora hemos construido y visualizado un complejo de Vietoris–Rips para un valor fijo del parámetro de escala <span class="math inline">\(r\)</span>.</p>
+<p>Sin embargo, una de las ideas centrales de TDA es que la elección de una única escala puede ocultar información relevante. En lugar de analizar un solo complejo, la homología persistente estudia cómo evolucionan las estructuras topológicas cuando el parámetro de escala aumenta progresivamente, es decir, estudia un complejo simplicial filtrado.</p>
+<p>La homología persistente registra estos eventos mediante pares <span class="math inline">\((\text{birth}, \text{death})\)</span>, que indican la escala en la que una clase de homología aparece y la escala en la que desaparece.</p>
+<p>En este taller nos centraremos principalmente en las dimensiones 0 y 1 de la homología persistente:</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: pares nacimiento–muerte correspondientes a componentes conexas.</li>
+<li><span class="math inline">\(H_1\)</span>: pares nacimiento–muerte correspondientes a ciclos o agujeros unidimensionales.</li>
+</ul>
+<p>La biblioteca GUDHI permite calcular automáticamente estos pares o características a partir del complejo construido previamente.</p>
+<div id="cell-14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:48,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862182181,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="b0bd1ec2-80ec-4c93-b2d7-4974199eb11a">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>diag <span class="op">=</span> simplex_tree.____()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeros valores:"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(diag[:<span class="dv">10</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="generación-del-diagrama" class="level3">
+<h3 class="anchored" data-anchor-id="generación-del-diagrama">Generación del diagrama</h3>
+<p>El siguiente código permite visualizar el diagrama de persistencia obtenido a partir del complejo de Vietoris–Rips construido previamente.</p>
+<div id="cell-17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:250,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862187482,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="0029dd28-a08b-4e63-e4f2-f4a46fbfe452">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gd._______persistence_diagram(_______)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Diagrama de persistencia"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+<section id="guardar-resultados" class="level2" data-number="0.7">
+<h2 data-number="0.7" class="anchored" data-anchor-id="guardar-resultados"><span class="header-section-number">0.7</span> Guardar resultados</h2>
+<p>El diagrama de persistencia es una representación gráfica muy útil para visualizar las características topológicas de una muestra. Sin embargo, para realizar comparaciones sistemáticas entre múltiples muestras resulta conveniente almacenar esta información en formato tabular.</p>
+<p>Por ello, extraeremos para cada característica topológica:</p>
+<ul>
+<li>su dimensión, que indica el tipo de característica topológica que representa (0 para componentes conexas, 1 para ciclos)</li>
+<li>el valor de nacimiento (<em>birth</em>),</li>
+<li>el valor de muerte (<em>death</em>).</li>
+</ul>
+<p>Esta tabla será la entrada para las siguientes etapas del análisis, donde calcularemos distancias entre diagramas de persistencia y construiremos matrices de similitud entre muestras.</p>
+<div id="cell-19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:38,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862192922,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="1f32b974-0550-490d-ab60-9a9b15461ae0">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    [[dim, b, d] <span class="cf">for</span> dim, (b, d) <span class="kw">in</span> diag <span class="cf">if</span> dim <span class="op">&lt;=</span> <span class="dv">2</span>],</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"dimension"</span>, <span class="st">"birth"</span>, <span class="st">"death"</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>output.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="0.8">
+<h2 data-number="0.8" class="anchored" data-anchor-id="resumen"><span class="header-section-number">0.8</span> Resumen</h2>
+<p>A partir de las coordenadas celulares hemos construido:</p>
+<ol type="1">
+<li>Una nube de puntos.</li>
+<li>Un complejo de Vietoris–Rips.</li>
+<li>Pares nacimiento–muerte de las clases de homología persistente..</li>
+<li>Un diagrama de persistencia.</li>
+<li>Una tabla con las características topológicas detectadas.</li>
+</ol>
+<p>Hasta este punto hemos trabajado únicamente con una muestra. Sin embargo, en aplicaciones reales normalmente disponemos de múltiples muestras biológicas y necesitamos repetir exactamente el mismo procedimiento para cada una de ellas.</p>
+<p>Afortunadamente, no es necesario ejecutar manualmente el análisis archivo por archivo. Podemos automatizar el proceso utilizando ciclos (<code>for</code>) y aplicar el pipeline completo a todos los archivos de una carpeta.</p>
+<p>En teoría, todo lo necesario para construir este análisis ya ha sido presentado en las secciones anteriores. El siguiente ejercicio consiste en completar un script que procese automáticamente múltiples muestras y genere un diagrama de persistencia para cada una de ellas.</p>
+</section>
+<section id="ejercicio-procesar-múltiples-muestras" class="level2" data-number="0.9">
+<h2 data-number="0.9" class="anchored" data-anchor-id="ejercicio-procesar-múltiples-muestras"><span class="header-section-number">0.9</span> Ejercicio: procesar múltiples muestras</h2>
+<p>El ejercicio consiste en automatizar este proceso para todas las muestras disponibles. Para cada archivo <code>.csv</code>, deberán construir la nube de puntos, generar el complejo de Vietoris–Rips, obtener los pares nacimiento–muerte del diagrama de persistencia y guardar los resultados en una carpeta de salida.</p>
+<p>Complete los espacios faltantes en el código para procesar las <span class="math inline">\(n\)</span> muestras y guardar un archivo de resultados por cada una.</p>
+<p><strong>Nota:</strong> El código mostrado es solo una guía para organizar el proceso. Puede implementar la solución de otra manera, siempre y cuando procese todos los archivos de la carpeta indicada y guarde los resultados correspondientes para cada muestra.</p>
+<div id="cell-24" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gudhi <span class="im">as</span> gd</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. OBTENER LISTA DE ARCHIVOS DESDE GITHUB</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>api_url <span class="op">=</span> (</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://api.github.com/repos/"</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HaydeePeruyero/tda-cell-patterns-workshop/contents/data"</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>contenido <span class="op">=</span> requests.get(api_url).json()</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>archivos <span class="op">=</span> <span class="bu">sorted</span>([</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    f[<span class="st">"name"</span>]</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> contenido</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> f[<span class="st">"name"</span>].endswith(<span class="st">".csv"</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Archivos encontrados:"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> archivo <span class="kw">in</span> archivos:</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span>, archivo)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. RUTA RAW DE GITHUB</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> (</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/"</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HaydeePeruyero/tda-cell-patterns-workshop/main/data/"</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. CREAR CARPETA DE SALIDA</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">"resultados"</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. PROCESAR TODOS LOS ARCHIVOS</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> archivo <span class="kw">in</span> archivos:</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Procesando: </span><span class="sc">{</span>archivo<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cargar datos</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> __________________</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Coordenadas</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> __________________</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> __________________</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Nube de puntos</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>    puntos <span class="op">=</span> __________________</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Complejo de Rips</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>    rips_complex <span class="op">=</span> _____________</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    simplex_tree <span class="op">=</span> ______________</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Homología persistente</span></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>    diag <span class="op">=</span> __________________</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convertir a DataFrame</span></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>        [[dim, b, d] <span class="cf">for</span> dim, (b, d) <span class="kw">in</span> diag <span class="cf">if</span> dim <span class="op">&lt;=</span> <span class="dv">2</span>],</span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>[<span class="st">"dimension"</span>, <span class="st">"birth"</span>, <span class="st">"death"</span>]</span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Guardar resultado</span></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -------------------------</span></span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>    nombre_salida <span class="op">=</span> __________________</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>    output.to_csv(</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>        os.path.join(<span class="st">"resultados"</span>, nombre_salida),</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span><span class="va">False</span></span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Guardado: </span><span class="sc">{</span>nombre_salida<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="distancia-de-wasserstein" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Distancia de Wasserstein</h1>
+<section id="por-qué-necesitamos-una-distancia" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="por-qué-necesitamos-una-distancia"><span class="header-section-number">1.1</span> ¿Por qué necesitamos una distancia?</h2>
+<p>Hasta ahora hemos transformado las coordenadas celulares en diagramas de persistencia mediante complejos de Vietoris–Rips y homología persistente.</p>
+<p>Cada diagrama de persistencia resume la estructura topológica de una muestra biológica. Sin embargo, para responder preguntas biológicas necesitamos una forma de comparar dichos diagramas de manera cuantitativa.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>¿Dos muestras tumorales presentan organizaciones espaciales similares?</li>
+<li>¿Las muestras de pacientes con anemia de Fanconi son más parecidas entre sí que a las muestras no FA?</li>
+<li>¿Existen diferencias topológicas entre epitelio y estroma?</li>
+</ul>
+<p>Para responder estas preguntas necesitamos definir una métrica entre diagramas de persistencia.</p>
+</section>
+<section id="comparando-muestras-biológicas" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="comparando-muestras-biológicas"><span class="header-section-number">1.2</span> Comparando muestras biológicas</h2>
+<p>Supongamos que hemos calculado diagramas de persistencia para distintas muestras:</p>
+<ul>
+<li>Carcinoma</li>
+<li>Displasia</li>
+<li>Estroma adyacente</li>
+</ul>
+<p>Cada muestra produce un diagrama que resume su organización espacial celular.</p>
+<p>El siguiente paso consiste en comparar estos diagramas utilizando la distancia de Wasserstein.</p>
+<pre class="text"><code>Carcinoma  ─────┐
+                ├── Wasserstein ──► Distancia(Carcinoma, Displasia)
+Displasia  ─────┘
+
+
+Carcinoma  ─────┐
+                ├── Wasserstein ──► Distancia(Carcinoma, Estroma)
+Estroma    ─────┘</code></pre>
+<p>Si obtenemos, por ejemplo,</p>
+<pre class="text"><code>Distancia(Carcinoma, Displasia) = 15
+
+Distancia(Carcinoma, Estroma) = 48</code></pre>
+<p>podemos interpretar que el patrón topológico observado en la muestra de carcinoma es más parecido al de la displasia que al del estroma adyacente.</p>
+<p>Repitiendo este procedimiento para todos los pares de muestras obtenemos una matriz de distancias, la cual servirá posteriormente como entrada para el análisis de clustering jerárquico.</p>
+</section>
+<section id="importar-bibliotecas" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="importar-bibliotecas"><span class="header-section-number">1.3</span> Importar bibliotecas</h2>
+<p>Utilizaremos las siguientes bibliotecas durante esta sección del análisis:</p>
+<ul>
+<li><code>os</code> para la gestión de archivos y directorios.</li>
+<li><code>numpy</code> para operaciones numéricas y manejo de arreglos.</li>
+<li><code>pandas</code> para la manipulación de datos en formato tabular.</li>
+<li><code>gudhi.wasserstein</code> para el cálculo de distancias entre diagramas de persistencia.</li>
+</ul>
+<div id="cell-30" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install POT</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-31" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gudhi.wasserstein <span class="im">as</span> gw</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="definir-la-carpeta-de-trabajo" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="definir-la-carpeta-de-trabajo"><span class="header-section-number">1.4</span> Definir la carpeta de trabajo</h2>
+<p>Los diagramas de persistencia generados en la sección anterior fueron almacenados como archivos CSV.</p>
+<p>El siguiente paso consiste en indicar la carpeta donde se encuentran dichos archivos para poder cargarlos y compararlos entre sí mediante la distancia de Wasserstein.</p>
+<div id="cell-33" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">""</span> <span class="co"># cambiar dependiendo del usuario</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="obtener-la-lista-de-diagramas" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="obtener-la-lista-de-diagramas"><span class="header-section-number">1.5</span> Obtener la lista de diagramas</h2>
+<p>Una vez definida la carpeta de trabajo, podemos identificar automáticamente todos los diagramas de persistencia disponibles.</p>
+<p>La siguiente celda busca todos los archivos con extensión <code>.csv</code>, los ordena alfabéticamente y muestra la lista de muestras que serán utilizadas en el análisis.</p>
+<p>Esto resulta especialmente útil cuando se trabaja con decenas o cientos de muestras, ya que evita tener que especificar manualmente cada archivo.</p>
+<div id="cell-35" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:13,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862296413,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="c89d20c7-8efd-4294-9b3b-a0e90cf61abd">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>archivos <span class="op">=</span> <span class="bu">sorted</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(ruta) <span class="cf">if</span> f.endswith(<span class="st">".csv"</span>)]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Archivos encontrados:"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, archivo <span class="kw">in</span> <span class="bu">enumerate</span>(archivos):</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>archivo<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Archivos encontrados:
+0: high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv
+1: high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv
+2: high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv
+3: invasive_carcinoma_AGSCC_1_IC_18_diag.csv
+4: invasive_carcinoma_AGSCC_1_IC_24_diag.csv
+5: invasive_carcinoma_AGSCC_1_IC_28_diag.csv
+6: light_grade_displasia_F82P1_LGD_5_diag.csv
+7: light_grade_displasia_F82P1_LGD_6_diag.csv
+8: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv
+9: stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv
+10: stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv
+11: stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv
+12: stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv
+13: stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv</code></pre>
+</div>
+</div>
+</section>
+<section id="carga-de-los-diagramas-de-persistencia" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="carga-de-los-diagramas-de-persistencia"><span class="header-section-number">1.6</span> Carga de los diagramas de persistencia</h2>
+<p>Una vez obtenidos los diagramas de persistencia de cada muestra, el siguiente paso consiste en cargarlos en memoria para poder compararlos mediante la distancia de Wasserstein.</p>
+<p>Cada archivo CSV contiene las características topológicas identificadas durante el cálculo de homología persistente. A partir de estos archivos construiremos dos listas independientes:</p>
+<ul>
+<li><code>diag_dim0</code>: diagramas correspondientes a los pares nacimiento–muerte asociados con las clases de homología de <span class="math inline">\(H_0\)</span> (componentes conexas).</li>
+<li><code>diag_dim1</code>: diagramas correspondientes a pares nacimiento–muerte asociados a clases de homología de <span class="math inline">\(H_1\)</span> (ciclos).</li>
+</ul>
+<p>En el caso de <span class="math inline">\(H_1\)</span>, eliminaremos las características con muerte infinita. Esto se hace para simplificar el cálculo de las distancias y evitar problemas asociados al manejo de valores infinitos.</p>
+<p>Recordemos que, al construir una filtración de Vietoris–Rips con un radio suficientemente grande, todas las componentes conexas terminan fusionándose en una sola. Como consecuencia, en dimensión <span class="math inline">\(0\)</span> suele existir una única componente que persiste hasta infinito, representando la componente conexa final del espacio. Dado que esta característica aparece de manera sistemática en todas las muestras, su presencia no aporta información discriminante para la comparación entre diagramas.</p>
+<p>Por esta razón, es común ignorar los puntos con muerte infinita al calcular distancias entre diagramas de persistencia.</p>
+<div id="cell-37" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>diag_dim0 <span class="op">=</span> []</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>diag_dim1 <span class="op">=</span> []</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> archivo <span class="kw">in</span> __________:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(os.path.join(ruta, archivo))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    d0 <span class="op">=</span> (</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        df[</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>            (df[<span class="st">"__________"</span>] <span class="op">==</span> __)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (____________________)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        ][[<span class="st">"__________"</span>, <span class="st">"__________"</span>]]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        .to_numpy()</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    d1 <span class="op">=</span> (</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        df[</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>            (df[<span class="st">"__________"</span>] <span class="op">==</span> __)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (____________________)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        ][[<span class="st">"__________"</span>, <span class="st">"__________"</span>]]</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        .to_numpy()</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    diag_dim0.append(____)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    diag_dim1.append(____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="inicialización-de-las-matrices-de-distancia" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="inicialización-de-las-matrices-de-distancia"><span class="header-section-number">1.7</span> Inicialización de las matrices de distancia</h2>
+<p>Una vez cargados todos los diagramas de persistencia, necesitamos una estructura donde almacenar las distancias de Wasserstein entre cada par de muestras.</p>
+<p>Si disponemos de <span class="math inline">\(n\)</span> muestras, construiremos dos matrices cuadradas de tamaño <span class="math inline">\(n \times n\)</span>:</p>
+<ul>
+<li><code>dist_dim0</code>: almacenará las distancias entre diagramas de dimensión <span class="math inline">\(0\)</span>.</li>
+<li><code>dist_dim1</code>: almacenará las distancias entre diagramas de dimensión <span class="math inline">\(1\)</span>.</li>
+</ul>
+<p>La entrada <span class="math inline">\((i,j)\)</span> de cada matriz contendrá la distancia entre las muestras <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span>.</p>
+<p>Por construcción, estas matrices serán simétricas, ya que la distancia de Wasserstein cumple</p>
+<p><span class="math display">\[W(D_i,D_j)=W(D_j,D_i).\]</span></p>
+<p>Además, la diagonal principal contendrá únicamente ceros, pues la distancia entre un diagrama y sí mismo es igual a cero.</p>
+<div id="cell-39" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(archivos)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>dist_dim0 <span class="op">=</span> np.zeros((n, n))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>dist_dim1 <span class="op">=</span> np.zeros((n, n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="cálculo-de-las-distancias-de-wasserstein" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="cálculo-de-las-distancias-de-wasserstein"><span class="header-section-number">1.8</span> Cálculo de las distancias de Wasserstein</h2>
+<p>Una vez cargados todos los diagramas de persistencia, podemos comparar cada muestra con todas las demás mediante la distancia de Wasserstein.</p>
+<p>El procedimiento consiste en recorrer todos los pares de diagramas y calcular la distancia correspondiente. El resultado se almacena en las matrices <code>dist_dim0</code> y <code>dist_dim1</code>, que contendrán las distancias para <span class="math inline">\(dim 0\)</span> y <span class="math inline">\(dim 1\)</span>, respectivamente.</p>
+<p>En este trabajo utilizaremos la distancia de Wasserstein de orden 1. Sin embargo, existen otras métricas ampliamente utilizadas para comparar diagramas de persistencia, como la distancia de cuello de botella (<em>bottleneck distance</em>), la cual también está implementada en GUDHI.</p>
+<div id="cell-41" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        dist_dim0[i, j] <span class="op">=</span>  gw.wasserstein_distance(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            ____________,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            ____________,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            order<span class="op">=</span>__</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        dist_dim1[i, j] <span class="op">=</span>  gw.wasserstein_distance(</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>            ____________,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>            ____________,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>            order<span class="op">=</span>__</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Alternativa:</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dist_dim0[i, j] = gd.bottleneck_distance(</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     diag_dim0[i],</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     diag_dim0[j]</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># )</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="construcción-de-las-matrices-de-distancia" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="construcción-de-las-matrices-de-distancia"><span class="header-section-number">1.9</span> Construcción de las matrices de distancia</h2>
+<p>Hasta este punto hemos calculado las distancias de Wasserstein entre todos los pares de muestras y las hemos almacenado en arreglos de NumPy.</p>
+<p>Para facilitar su exploración e interpretación, convertiremos estas matrices a objetos <code>DataFrame</code> de pandas. Esto permitirá etiquetar filas y columnas con los nombres de los archivos correspondientes, haciendo más sencilla la identificación de las comparaciones entre muestras.</p>
+<p>Cada entrada de la matriz representa la distancia topológica entre dos muestras:</p>
+<ul>
+<li>Valores cercanos a cero indican diagramas muy similares.</li>
+<li>Valores grandes indican diferencias más pronunciadas en la organización topológica.</li>
+</ul>
+<p>La diagonal principal debe contener únicamente ceros, ya que cada muestra se compara consigo misma.</p>
+<div id="cell-43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;jupyter&quot;,&quot;value&quot;:{&quot;outputs_hidden&quot;:true}}" data-outputid="b6218648-42c3-471f-dd68-7bc3953f21c5">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df_dist0 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    dist_dim0,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>________,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>_______</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>df_dist1 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    dist_dim1,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_dist0)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_dist1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                    high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          7710.785536   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                          6388.711787   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               4712.810788   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               2600.703114   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                               3324.071489   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                              7262.814359   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                              5994.057292   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                     10723.908156   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                      4918.287687   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                     10866.227757   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                      1715.687665   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                      8979.059880   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                      8517.136083   
+
+                                                    high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                        7710.785536   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            0.000000   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                        14063.494423   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                              3192.582338   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                              8836.956740   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                              4440.068673   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                             6349.734289   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                             6708.479695   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                     8650.270093   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                     6952.841734   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                     5635.823202   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                     8682.929521   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                    10020.274444   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                     8508.499548   
+
+                                                    high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                        6388.711787   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                        14063.494423   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                            0.000000   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                             11086.580253   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                              6197.740414   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                              9705.892838   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                            11252.837252   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                             9825.020995   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                    14749.002300   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                     8227.005520   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                    16531.538631   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                     5397.197036   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                    10944.265901   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                    11724.276549   
+
+                                                    invasive_carcinoma_AGSCC_1_IC_18_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                   4712.810788   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                    3192.582338   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                   11086.580253   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                            0.000000   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                         5669.933535   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                         1652.853718   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                        6727.799526   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                        6215.027562   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                9899.808181   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                5895.540511   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                7930.446786   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                5897.689365   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                               10007.537764   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                8863.212263   
+
+                                                    invasive_carcinoma_AGSCC_1_IC_24_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                   2600.703114   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                    8836.956740   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                    6197.740414   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                         5669.933535   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                            0.000000   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                         4426.401519   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                        9654.754840   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                        8427.666192   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                               13110.799065   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                7476.151032   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                               12563.144771   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                3851.065698   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                               11433.297731   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                               11016.186763   
+
+                                                    invasive_carcinoma_AGSCC_1_IC_28_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                   3324.071489   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                    4440.068673   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                    9705.892838   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                         1652.853718   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                         4426.401519   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                            0.000000   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                        6236.772428   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                        5419.890236   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                9546.087137   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                4752.274305   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                8377.846184   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                4397.096700   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                8994.931500   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                8022.539452   
+
+                                                    light_grade_displasia_F82P1_LGD_5_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                    7262.814359   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                     6349.734289   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                    11252.837252   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                          6727.799526   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                          9654.754840   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                          6236.772428   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                            0.000000   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                         1490.092701   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                 3628.540938   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                 3212.751006   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                 5598.276956   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                 6804.271980   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                 3841.382604   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                 2585.652629   
+
+                                                    light_grade_displasia_F82P1_LGD_6_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                    5994.057292   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                     6708.479695   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                     9825.020995   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                          6215.027562   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                          8427.666192   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                          5419.890236   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                         1490.092701   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                            0.000000   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                 5037.073539   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                 2087.654322   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                 6936.576654   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                 5423.047961   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                 3866.670808   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                 2811.596990   
+
+                                                    stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                          10723.908156          
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            8650.270093          
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                           14749.002300          
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 9899.808181          
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                13110.799065          
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 9546.087137          
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                3628.540938          
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                5037.073539          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                           0.000000          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                        6719.628905          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                        4062.509114          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                       10302.836059          
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                        4552.818163          
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                        3089.193365          
+
+                                                    stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                           4918.287687          
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            6952.841734          
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                            8227.005520          
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 5895.540511          
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                 7476.151032          
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 4752.274305          
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                3212.751006          
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                2087.654322          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                        6719.628905          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                           0.000000          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                        8351.407805          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                        4063.461742          
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                        4360.639468          
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                        3989.646770          
+
+                                                    stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                          10866.227757      
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            5635.823202      
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                           16531.538631      
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 7930.446786      
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                12563.144771      
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 8377.846184      
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                5598.276956      
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                6936.576654      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                        4062.509114      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                        8351.407805      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                           0.000000      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                       11367.404082      
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                        7736.067206      
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                        5818.869601      
+
+                                                    stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                           1715.687665     
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            8682.929521     
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                            5397.197036     
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 5897.689365     
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                 3851.065698     
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 4397.096700     
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                6804.271980     
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                5423.047961     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                       10302.836059     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                        4063.461742     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                       11367.404082     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                           0.000000     
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                        7937.498006     
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                        7704.123868     
+
+                                                    stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                           8979.059880      
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                           10020.274444      
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                           10944.265901      
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                10007.537764      
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                11433.297731      
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 8994.931500      
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                3841.382604      
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                3866.670808      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                        4552.818163      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                        4360.639468      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                        7736.067206      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                        7937.498006      
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                           0.000000      
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                        1946.966101      
+
+                                                    stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv  
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                           8517.136083     
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            8508.499548     
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                           11724.276549     
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 8863.212263     
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                11016.186763     
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 8022.539452     
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                2585.652629     
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                2811.596990     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                        3089.193365     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                        3989.646770     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                        5818.869601     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                        7704.123868     
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                        1946.966101     
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                           0.000000     
+                                                    high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            0.000000   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                          1079.217145   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                           267.344917   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                795.681617   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                533.410096   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                619.972052   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                               481.445782   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                               469.538733   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                       502.571111   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                       356.712847   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                       568.551869   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                       245.594331   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                       601.704360   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                       471.452953   
+
+                                                    high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                        1079.217145   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            0.000000   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                         1257.814581   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               477.552211   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               949.450021   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                               702.801152   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                             1054.802740   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                              993.167933   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                     1420.442887   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                     1224.132991   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                     1107.916203   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                     1204.409016   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                     1609.242485   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                     1432.316379   
+
+                                                    high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                         267.344917   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                         1257.814581   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                            0.000000   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                               989.216719   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                               702.777143   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                               815.051639   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                              438.409066   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                              469.554438   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                      328.917617   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                      254.612534   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                      516.838108   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                      192.099470   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                      404.200742   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                      304.573709   
+
+                                                    invasive_carcinoma_AGSCC_1_IC_18_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                    795.681617   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                     477.552211   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                     989.216719   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                            0.000000   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                          575.032592   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                          396.169746   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                         870.646290   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                         815.138457   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                1194.248145   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                 975.964445   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                 956.425626   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                 932.205683   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                1351.774483   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                1181.624890   
+
+                                                    invasive_carcinoma_AGSCC_1_IC_24_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                    533.410096   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                     949.450021   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                     702.777143   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                          575.032592   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                            0.000000   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                          356.830089   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                         875.340216   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                         825.786256   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                 961.194708   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                 801.469572   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                 962.140863   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                 663.592693   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                1059.971411   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                 929.749520   
+
+                                                    invasive_carcinoma_AGSCC_1_IC_28_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                    619.972052   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                     702.801152   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                     815.051639   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                          396.169746   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                          356.830089   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                            0.000000   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                         803.126051   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                         762.785558   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                1029.609641   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                 831.209812   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                 901.242352   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                 762.081583   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                1179.952130   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                1012.832152   
+
+                                                    light_grade_displasia_F82P1_LGD_5_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                     481.445782   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                     1054.802740   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                      438.409066   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                           870.646290   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                           875.340216   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                           803.126051   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                            0.000000   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                          248.367851   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                  470.814873   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                  295.642871   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                  253.614865   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                  436.048395   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                  623.363690   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                  456.697778   
+
+                                                    light_grade_displasia_F82P1_LGD_6_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                     469.538733   
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                      993.167933   
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                      469.554438   
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                           815.138457   
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                           825.786256   
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                           762.785558   
+light_grade_displasia_F82P1_LGD_5_diag.csv                                          248.367851   
+light_grade_displasia_F82P1_LGD_6_diag.csv                                            0.000000   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                  524.484944   
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                  341.719911   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                  282.591048   
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                  456.453817   
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                  669.834329   
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                  507.133991   
+
+                                                    stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            502.571111          
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            1420.442887          
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                             328.917617          
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 1194.248145          
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                  961.194708          
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 1029.609641          
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                 470.814873          
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                 524.484944          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                           0.000000          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                         292.003510          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                         462.443560          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                         375.682584          
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                         256.015632          
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                         169.715666          
+
+                                                    stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            356.712847          
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            1224.132991          
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                             254.612534          
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                  975.964445          
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                  801.469572          
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                  831.209812          
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                 295.642871          
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                 341.719911          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                         292.003510          
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                           0.000000          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                         356.988033          
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                         274.711896          
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                         419.147646          
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                         274.162342          
+
+                                                    stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            568.551869      
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            1107.916203      
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                             516.838108      
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                  956.425626      
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                  962.140863      
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                  901.242352      
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                 253.614865      
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                 282.591048      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                         462.443560      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                         356.988033      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                           0.000000      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                         515.688929      
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                         627.623134      
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                         458.049262      
+
+                                                    stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            245.594331     
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            1204.409016     
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                             192.099470     
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                  932.205683     
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                  663.592693     
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                  762.081583     
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                 436.048395     
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                 456.453817     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                         375.682584     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                         274.711896     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                         515.688929     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                           0.000000     
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                         468.556499     
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                         345.769914     
+
+                                                    stroma_ad_light_grade_displasia_F33P1_LGD_7_diag.csv  \
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            601.704360      
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            1609.242485      
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                             404.200742      
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 1351.774483      
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                 1059.971411      
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 1179.952130      
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                 623.363690      
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                 669.834329      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                         256.015632      
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                         419.147646      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                         627.623134      
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                         468.556499      
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                           0.000000      
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                         219.687128      
+
+                                                    stroma_ad_light_grade_displasia_F81P1_LGD_1_diag.csv  
+high_grade_displasia_FAAGSCC_13_HGD_15_diag.csv                                            471.452953     
+high_grade_displasia_FAAGSCC_13_HGD_2_diag.csv                                            1432.316379     
+high_grade_displasia_FAAGSCC_13_HGD_7_diag.csv                                             304.573709     
+invasive_carcinoma_AGSCC_1_IC_18_diag.csv                                                 1181.624890     
+invasive_carcinoma_AGSCC_1_IC_24_diag.csv                                                  929.749520     
+invasive_carcinoma_AGSCC_1_IC_28_diag.csv                                                 1012.832152     
+light_grade_displasia_F82P1_LGD_5_diag.csv                                                 456.697778     
+light_grade_displasia_F82P1_LGD_6_diag.csv                                                 507.133991     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_4...                                         169.715666     
+stroma_ad_high_grade_displasia_FAAGSCC_13_HGD_7...                                         274.162342     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_111_dia...                                         458.049262     
+stroma_ad_invasive_carcinoma_AGSCC_1_IC_99_diag...                                         345.769914     
+stroma_ad_light_grade_displasia_F33P1_LGD_7_dia...                                         219.687128     
+stroma_ad_light_grade_displasia_F81P1_LGD_1_dia...                                           0.000000     </code></pre>
+</div>
+</div>
+</section>
+<section id="guardado-de-resultados" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="guardado-de-resultados"><span class="header-section-number">1.10</span> Guardado de resultados</h2>
+<p>En este punto ya hemos construido las matrices de distancias de Wasserstein entre todas las muestras analizadas.</p>
+<p>El siguiente paso consiste en almacenar estos resultados, ya que serán utilizados posteriormente como entrada para el análisis de clustering jerárquico.</p>
+<p>De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.</p>
+<div id="cell-45" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carpeta de salida</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>salida <span class="op">=</span> os.path.join(ruta, <span class="st">"distancias"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>os.makedirs(salida, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:46,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862583050,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="bfeed72c-2de0-4b92-d7b4-5912c23eac06">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_dist0.to_csv(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim0.csv"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>df_dist1.to_csv(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    os.path.join(ruta, <span class="st">"wasserstein_dim1.csv"</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrices guardadas."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matrices guardadas.</code></pre>
+</div>
+</div>
+<p>Al finalizar, tendremos una matriz de distancias de Wasserstein que cuantifica la similitud topológica entre todas las muestras analizadas. En la siguiente sección utilizaremos estas matrices para construir dendrogramas y clustermaps mediante clustering jerárquico.</p>
+</section>
+</section>
+<section id="clustering" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Clustering</h1>
+<p>Una vez construidas las matrices de distancia de Wasserstein, el siguiente paso consiste en analizar la estructura global de similitud entre muestras.</p>
+<p>El objetivo ahora es pasar de comparaciones pares (muestra vs muestra) a una representación global que permita identificar grupos de comportamiento topológico similar.</p>
+<p>Este tipo de análisis es fundamental porque nos permite responder preguntas como:</p>
+<ul>
+<li>¿Qué muestras comparten patrones espaciales similares?</li>
+<li>¿Existen agrupamientos asociados a condiciones biológicas (FA vs no-FA, carcinoma vs estroma, etc.)?</li>
+<li>¿La estructura del microambiente tumoral induce separaciones naturales en el espacio de muestras?</li>
+</ul>
+<section id="métodos-de-clustering" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="métodos-de-clustering"><span class="header-section-number">2.1</span> Métodos de clustering</h2>
+<p>Existen múltiples enfoques para realizar agrupamiento a partir de una matriz de distancias, entre los más comunes:</p>
+<ul>
+<li>K-means (requiere espacio euclidiano explícito)</li>
+<li>DBSCAN (basado en densidad)</li>
+<li>Clustering espectral</li>
+<li>Clustering jerárquico</li>
+</ul>
+<p>En este trabajo utilizaremos <strong>clustering jerárquico aglomerativo</strong>, ya que:</p>
+<ul>
+<li>trabaja directamente con matrices de distancia,</li>
+<li>no requiere asumir una forma predefinida de los clusters,</li>
+<li>y permite visualizar la estructura de agrupamiento en diferentes escalas.</li>
+</ul>
+</section>
+<section id="clustering-jerárquico" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="clustering-jerárquico"><span class="header-section-number">2.2</span> Clustering jerárquico</h2>
+<p>El clustering jerárquico construye una estructura en forma de árbol (dendrograma) donde:</p>
+<ul>
+<li>cada muestra inicia como un cluster individual,</li>
+<li>los clusters más similares se van fusionando iterativamente,</li>
+<li>hasta formar una única estructura global.</li>
+</ul>
+<p>Este proceso puede visualizarse como una “jerarquía de similitud” entre muestras.</p>
+<section id="método-de-enlace-linkage" class="level3">
+<h3 class="anchored" data-anchor-id="método-de-enlace-linkage">Método de enlace (linkage)</h3>
+<p>Dentro del clustering jerárquico existen distintas formas de definir la distancia entre clusters:</p>
+<ul>
+<li>single linkage (mínimo)</li>
+<li>complete linkage (máximo)</li>
+<li>average linkage (promedio)</li>
+</ul>
+<p>En este trabajo utilizaremos <strong>average linkage</strong>, ya que ha mostrado un comportamiento más estable y consistente en nuestros experimentos, al suavizar la influencia de valores extremos en las distancias.</p>
+</section>
+</section>
+<section id="resumen-1" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="resumen-1"><span class="header-section-number">2.3</span> Resumen</h2>
+<p>A partir de estas matrices construiremos dendrogramas y clustermaps que nos permitirán visualizar la estructura global de similitud entre muestras y explorar posibles asociaciones con variables biológicas como:</p>
+<ul>
+<li>Grado histopatológico (LGD, HGD, IC).</li>
+<li>Estado de anemia de Fanconi (FA y no-FA).</li>
+<li>Compartimento tisular (epitelio y estroma).</li>
+</ul>
+</section>
+<section id="importar-bibliotecas-1" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="importar-bibliotecas-1"><span class="header-section-number">2.4</span> Importar bibliotecas</h2>
+<p>Comenzaremos importando las bibliotecas necesarias para realizar el análisis de clustering y la visualización de los resultados.</p>
+<p>Utilizaremos:</p>
+<ul>
+<li><code>pandas</code> para manipular matrices de distancia.</li>
+<li><code>seaborn</code> para generar clustermaps.</li>
+<li><code>matplotlib</code> para personalizar las figuras.</li>
+<li><code>os</code> para gestionar archivos y directorios.</li>
+<li><code>re</code> para identificar automáticamente características de las muestras a partir de sus nombres.</li>
+</ul>
+<div id="cell-56" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Patch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="definir-directorios-de-trabajo" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="definir-directorios-de-trabajo"><span class="header-section-number">2.5</span> Definir directorios de trabajo</h2>
+<p>Las matrices de distancia calculadas en la sección anterior fueron almacenadas como archivos <code>.csv</code>.</p>
+<p>El siguiente paso consiste en definir la carpeta donde se encuentran dichas matrices y crear un directorio donde se guardarán automáticamente las visualizaciones generadas durante el análisis.</p>
+<div id="cell-58" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ruta de las matrices de distancia</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ruta <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Carpeta de salida</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>salida <span class="op">=</span> os.path.join(ruta, <span class="st">"visualizacion"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>os.makedirs(salida, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="clasificación-automática-de-las-muestras" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="clasificación-automática-de-las-muestras"><span class="header-section-number">2.6</span> Clasificación automática de las muestras</h2>
+<p>Para facilitar la interpretación biológica de los agrupamientos, utilizaremos funciones auxiliares que permiten identificar automáticamente diferentes características de cada muestra a partir de su nombre.</p>
+<p>En particular, clasificaremos cada muestra según:</p>
+<ul>
+<li>El tipo de lesión histopatológica.</li>
+<li>El estado de anemia de Fanconi.</li>
+<li>El compartimento tisular al que pertenece.</li>
+</ul>
+<p>Estas categorías se utilizarán posteriormente para colorear las filas y columnas del clustermap.</p>
+<div id="cell-60" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roi(nombre):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    nombre <span class="op">=</span> nombre.lower()</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"invasive_carcinoma"</span> <span class="kw">in</span> nombre:</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"IC"</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">"high_grade_displasia"</span> <span class="kw">in</span> nombre:</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"HGD"</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">"light_grade_displasia"</span> <span class="kw">in</span> nombre:</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"LGD"</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Other"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-61" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fanconi(nombre):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    nombre <span class="op">=</span> nombre.upper()</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> re.search(<span class="vs">r"_FA"</span>, nombre):</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Fanconi"</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> re.search(<span class="vs">r"_F</span><span class="dv">\d</span><span class="vs">"</span>, nombre):</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Fanconi"</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"No Fanconi"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-62" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fanconi(nombre):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    nombre <span class="op">=</span> nombre.upper()</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> re.search(<span class="vs">r"_FA"</span>, nombre):</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Fanconi"</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> re.search(<span class="vs">r"_F</span><span class="dv">\d</span><span class="vs">"</span>, nombre):</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Fanconi"</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"No Fanconi"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-63" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tejido(nombre):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> nombre.startswith(<span class="st">"stroma_ad_"</span>):</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Stroma"</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Epithelium"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="definición-de-colores-para-las-anotaciones" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="definición-de-colores-para-las-anotaciones"><span class="header-section-number">2.7</span> Definición de colores para las anotaciones</h2>
+<p>Una vez clasificadas las muestras, asignaremos una paleta de colores a cada categoría biológica.</p>
+</section>
+</section>
+<section id="recomendaciones" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Recomendaciones:</h1>
+<ul>
+<li>https://r-charts.com/es/paletas-colores/#discretas</li>
+<li>https://medium.com/data-science-collective/finding-the-best-color-blind-friendly-palette-on-python-seaborn-0546e4ed33f3</li>
+</ul>
+<div id="cell-65" class="cell">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>roi_colors <span class="op">=</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IC"</span>: <span class="st">"#b30000"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HGD"</span>: <span class="st">"#2166ac"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LGD"</span>: <span class="st">"#ffd700"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Other"</span>: <span class="st">"#aaaaaa"</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>fanconi_colors <span class="op">=</span> {</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Fanconi"</span>: <span class="st">"#762a83"</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No Fanconi"</span>: <span class="st">"#1b7837"</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>tejido_colors <span class="op">=</span> {</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Stroma"</span>: <span class="st">"#ff7f00"</span>,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Epithelium"</span>: <span class="st">"#4d4d4d"</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="construcción-del-clustermap" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="construcción-del-clustermap"><span class="header-section-number">3.1</span> Construcción del clustermap</h2>
+<p>Una vez definidas las categorías biológicas y sus respectivos colores, podemos proceder a construir los clustermaps a partir de las matrices de distancia.</p>
+<p>El procedimiento general consiste en:</p>
+<ol type="1">
+<li>Cargar cada matriz de distancia almacenada en formato <code>.csv</code>.</li>
+<li>Obtener los nombres de las muestras presentes en la matriz.</li>
+<li>Asignar automáticamente colores según el tipo de lesión, el estado de Fanconi y el compartimento tisular.</li>
+<li>Aplicar clustering jerárquico utilizando el método <strong>average linkage</strong>.</li>
+<li>Visualizar simultáneamente la matriz de distancias y el dendrograma resultante.</li>
+<li>Guardar la figura para su análisis posterior.</li>
+</ol>
+<p>Las barras de colores añadidas a filas y columnas permiten relacionar visualmente los agrupamientos obtenidos con las características biológicas de cada muestra.</p>
+<div id="cell-67" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:3213,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1782862680781,&quot;user&quot;:{&quot;displayName&quot;:&quot;Luis Raúl Figueroa Martínez&quot;,&quot;userId&quot;:&quot;17795225854732850974&quot;},&quot;user_tz&quot;:360}}" data-outputid="ccbbf863-659f-4ea9-dcd9-439c8b668b10">
+<details open="" class="code-fold">
+<summary>Mostrar código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>archivos <span class="op">=</span> [</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(ruta)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> f.endswith(<span class="st">".csv"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> archivo <span class="kw">in</span> archivos:</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Procesando:"</span>, archivo)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        os.path.join(ruta, archivo),</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        index_col<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    muestras <span class="op">=</span> df.index.tolist()</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    colores <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ROI"</span>: [roi_colors[roi(x)] <span class="cf">for</span> x <span class="kw">in</span> muestras],</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Fanconi"</span>: [fanconi_colors[fanconi(x)] <span class="cf">for</span> x <span class="kw">in</span> muestras],</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Tejido"</span>: [tejido_colors[tejido(x)] <span class="cf">for</span> x <span class="kw">in</span> muestras]</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    }, index<span class="op">=</span>muestras)</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> sns.clustermap(</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>        df,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">"_________"</span>,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>        method<span class="op">=</span><span class="st">"________"</span>,</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>        row_colors<span class="op">=</span>colores,</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>        col_colors<span class="op">=</span>colores,</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>        figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>),</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>        yticklabels<span class="op">=</span><span class="va">False</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>    plt.setp(</span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>        g.ax_heatmap.get_xticklabels(),</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>        rotation<span class="op">=</span><span class="dv">90</span>,</span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">6</span></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>    g.fig.legend(</span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>        handles<span class="op">=</span>[</span>
+<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#b30000"</span>, label<span class="op">=</span><span class="st">"IC"</span>),</span>
+<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#2166ac"</span>, label<span class="op">=</span><span class="st">"HGD"</span>),</span>
+<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#ffd700"</span>, label<span class="op">=</span><span class="st">"LGD"</span>),</span>
+<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#762a83"</span>, label<span class="op">=</span><span class="st">"Fanconi"</span>),</span>
+<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#1b7837"</span>, label<span class="op">=</span><span class="st">"No Fanconi"</span>),</span>
+<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#ff7f00"</span>, label<span class="op">=</span><span class="st">"Stroma"</span>),</span>
+<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a>            Patch(color<span class="op">=</span><span class="st">"#4d4d4d"</span>, label<span class="op">=</span><span class="st">"Epithelium"</span>)</span>
+<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a>        bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="fl">0.5</span>),</span>
+<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a>        loc<span class="op">=</span><span class="st">"center left"</span></span>
+<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a>    nombre <span class="op">=</span> os.path.splitext(archivo)[<span class="dv">0</span>]</span>
+<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a>    plt.savefig(</span>
+<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a>        os.path.join(</span>
+<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a>            salida,</span>
+<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"clustermap_</span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">.png"</span></span>
+<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a>        dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a>        bbox_inches<span class="op">=</span><span class="st">"tight"</span></span>
+<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a>    plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Durante este proceso, el algoritmo reorganiza automáticamente las muestras de acuerdo con sus similitudes topológicas, generando un dendrograma que resume la estructura jerárquica de los agrupamientos. El resultado final es un clustermap anotado que facilita la exploración visual de posibles asociaciones entre la topología de los datos y las características biológicas de las muestras.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

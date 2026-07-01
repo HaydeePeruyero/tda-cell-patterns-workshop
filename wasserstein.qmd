@@ -133,8 +133,6 @@ Una vez obtenidos estos diagramas surge una pregunta natural:
 
 > ¿Cómo podemos comparar cuantitativamente dos diagramas de persistencia?
 
-Para responder esta pregunta utilizaremos la distancia de Wasserstein, una métrica que permite medir la similitud entre diagramas de persistencia y, por lo tanto, entre las estructuras topológicas observadas en distintas muestras.
-
 Recordemos que cada diagrama resume la evolución de componentes conexas y ciclos a lo largo de una filtración. La distancia de Wasserstein nos permite cuantificar qué tan parecidos o diferentes son dichos patrones topológicos.
 
 En esta sección construiremos una matriz de distancias entre muestras a partir de sus diagramas de persistencia. Posteriormente, estas matrices servirán como entrada para métodos de análisis exploratorio como el clustering jerárquico.
@@ -397,8 +395,6 @@ El siguiente paso consiste en almacenar estos resultados, ya que serán utilizad
 De esta forma, se separa el proceso de cómputo (cálculo de diagramas y distancias) del proceso de análisis exploratorio, lo que permite reutilizar las matrices sin necesidad de recalcularlas.
 
 ``` python
-# Crear carpeta para almacenar las matrices de distancia
-ruta = "/home/jupyter-luisraul/resultados" # cambiar la ruta
 
 # Carpeta de salida
 salida = os.path.join(ruta, "distancias")
@@ -406,7 +402,6 @@ os.makedirs(salida, exist_ok=True)
 ```
 
 ``` python
-ruta = "/home/jupyter-luisraul/resultados/distancias" # Cambiar la ruta
 
 df_dist0.to_csv(
     os.path.join(ruta, "wasserstein_dim0.csv")

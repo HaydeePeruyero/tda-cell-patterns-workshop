@@ -51,11 +51,7 @@ En este trabajo utilizaremos **average linkage**, ya que ha mostrado un comporta
 
 # Implementación computacional
 
-En la sección anterior construimos matrices de distancia utilizando la distancia de Wasserstein aplicada a diagramas de persistencia.
-
-Estas matrices resumen la similitud topológica entre todas las muestras analizadas y constituyen el punto de partida para estudiar la organización global de los datos.
-
-Una vez obtenidas las distancias entre pares de muestras surge una pregunta natural:
+En la sección anterior construimos matrices de distancia utilizando la distancia de Wasserstein aplicada a diagramas de persistencia. Una vez obtenidas las distancias entre pares de muestras surge una pregunta natural:
 
 > ¿Cómo podemos identificar grupos de muestras con comportamientos topológicos similares?
 
@@ -259,7 +255,7 @@ Las barras de colores añadidas a filas y columnas permiten relacionar visualmen
 
 ``` python
 # Cambiar a ruta a donde distancias
-ruta = "/home/jupyterluisraul/resultados/distancias"
+ruta = "/home/jupyter-luisraul/resultados/distancias"
 
 archivos = [
     f for f in os.listdir(ruta)
